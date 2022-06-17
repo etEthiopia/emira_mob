@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1076854637047",
+    "project_id": "emiraevisa-278d8",
+    "storage_bucket": "emiraevisa-278d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076854637047:android:e58fd341aaabf937f6eef2",
+        "android_client_info": {
+          "package_name": "com.example.emira_all_in_one_mob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076854637047-m3oifgsena4s5t476ijav5vl90g023cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZtwXbWMryxIQ19pk8M0Vd-dGH1kzSyxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076854637047-m3oifgsena4s5t476ijav5vl90g023cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
