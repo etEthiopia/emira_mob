@@ -1,3 +1,4 @@
+import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -30,8 +31,8 @@ class MyHeaderDrawerState extends State<MyHeaderDrawer> {
               ),
             ),
           ),
-          const Text(
-            "Emira E-Visa",
+          Text(
+            AppLocalizations.of(context)!.translate("emira_full_name"),
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           Text(

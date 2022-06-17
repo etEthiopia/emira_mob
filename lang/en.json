@@ -4,5 +4,106 @@
     "hotel": "Hotel",
     "track": "Track",
     "about": "About",
-    "settings": "Settings"
+    "settings": "Settings",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "home": "Home",
+
+    "since_2002": "Since 2002",
+
+    "about_content": "Emira E-Visa is only the solution for your trip. You Apply for your visas and also book your hotel through the website or our mobile apps in the play store or app store. You book your ticket easily at the airline's company or we can help you to do this  Once arrive in Dubai it's easy to book your tours It's easier and cheaper than booking a package, you are free to go as you like.",
+
+    "steps_header": "Steps To Apply",
+    "step_1_header": "Fill Out Online Application",
+    "step_2_header": "Complete The Payment",
+    "step_3_header": "Receive E-Visa Via Email",
+
+    "book_what_suits": "Book What Suits Your Style!",
+
+    "book_hotel": "Book Hotel",
+    "submit_personal_info": "Submit your personal information, we will contact you via WhatsApp",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone",
+    "email": "Email",
+    "submit": "Submit",
+    "submitted_we_will_contact_you_whatsapp": "Application Submitted, We will contact you via WhatsApp",
+    "ok": "Ok",
+    "error": "Error",
+    "couldnt_submit_try_again": "Couldn't Submit Your Request, Please Try Again",
+
+    "visa_form": "Visa Form",
+    "visa_app_sent": "Visa Application Submitted",
+    "reference_number" : "Reference Number",
+    "check_inbox": "Please, Check Your Email Inbox",
+
+    "details": "Details",
+    "nationality": "Nationality",
+    "passport_no": "Passport Number",
+    "profession": "Profession",
+    "travel_date": "Travel Date",
+    "purpose": "Purpose of Travel",
+    "passport": "Passport",
+    "scanned_passport": "Scanned Passport (JPG, PNG)",
+    "passport_uploaded": "Passport Scan Uploaded!",
+    "couldn't_upload_passport": "Couldn't Upload Passport Scan!",
+    "review": "Review",
+    "full_name": "Full Name",
+    "submit_hint": "Form Requirements Complete! Please Submit Your Application.",
+    "previous": "Previous",
+    "continue": "Continue",
+
+    "first_name_empty": "First Name cannot be empty",
+    "first_name_l_25": "First Name length must be < 25",
+    "first_name_g_2": "First Name length must be > 2",
+
+    "last_name_empty": "Last Name cannot be empty",
+    "last_name_l_25": "Last Name length must be < 25",
+    "last_name_g_2": "Last Name length must be > 2",
+
+    "phone_empty": "Phone cannot be empty",
+    "invalid_phone": "Invalid Phone Number",
+    "phone_format_problem": "Phone must start with '+' or '00'",
+
+    "email_empty": "Email cannot be empty",
+    "invalid_email": "Invalid Email",
+
+    "search": "Search",
+    "type_to_search": "Start typing to search",
+
+    "nationality_empty": "Nationality cannot be empty",
+    "nationality_l_35": "Nationality length must be < 35",
+    "nationality_g_2": "Nationality length must be > 2",
+
+    "passport_empty": "Passport cannot be empty",
+    "passport_l_45": "Passport length must be < 45",
+
+    "profession_empty": "Profession cannot be empty",
+    "profession_l_35": "Profession length must be < 35",
+    "profession_g_1": "Profession length must be > 1",
+
+    "travel_date_empty": "Travel Date cannot be empty",
+
+    "purpose_empty": "Purpose cannot be empty",
+    "purpose_l_55": "Purpose length must be < 55",
+
+
+    "select_visa_type": "Select Visa Type",
+    "currency": "Currency",
+    "already_applied": "Already applied for a visa?",
+    "weekend_contents": "Applications made on weekends (Friday & Saturday) and public holidays may take longer to process.",
+    "none_found": "None Found",
+    "apply": "Apply",
+    "enter_ref_number": "Enter your Reference Number To Track",
+
+    "status": "Status",
+    "approved": "Approved",
+    "pending": "Pending",
+    "rejected": "Rejected",
+
+    "go_back": "Go Back",
+    "choose_language": "Choose Your Preferred Language",
+    "restart": "Restart The App",
+    "restart_content": "Please restart the App to undergo the language change"
+
 }

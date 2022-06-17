@@ -206,7 +206,8 @@ class VisasPageState extends State<VisasPage> {
                 child: Column(
                   children: [
                     Text(
-                      "Already applied for a visa?",
+                      AppLocalizations.of(context)!
+                          .translate("already_applied"),
                       style: TextStyle(color: white, fontSize: 20),
                     ),
                     SizedBox(
@@ -215,7 +216,8 @@ class VisasPageState extends State<VisasPage> {
                     TextField(
                       controller: controllerReference,
                       decoration: InputDecoration(
-                          hintText: "Enter your Reference Number To Track",
+                          hintText: AppLocalizations.of(context)!
+                              .translate("enter_ref_number"),
                           fillColor: white,
                           filled: true,
                           suffixIcon: IconButton(
@@ -273,17 +275,23 @@ class VisasPageState extends State<VisasPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        "Select Visa Type",
-                        style: TextStyle(
-                            color: black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                      Expanded(
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .translate("select_visa_type"),
+                          style: TextStyle(
+                              color: black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
                       ),
                       Row(
                         children: [
                           Text(
-                            "Currency",
+                            AppLocalizations.of(context)!.translate("currency"),
                             style: TextStyle(color: blueblack, fontSize: 15),
                           ),
                           SizedBox(
@@ -327,7 +335,11 @@ class VisasPageState extends State<VisasPage> {
                         )
                       : this.currentAppState == "error"
                           ? Center(
-                              child: errorWidget(context, "", "None Found!"),
+                              child: errorWidget(
+                                  context,
+                                  "",
+                                  AppLocalizations.of(context)!
+                                      .translate("none_found")),
                             )
                           : this.currentAppState == "done"
                               ? Container(
@@ -366,7 +378,10 @@ class VisasPageState extends State<VisasPage> {
                                               Expanded(
                                                 child: Container(
                                                   child: Text(
-                                                    "Applications made on weekends (Friday & Saturday) and public holidays may take longer to process.",
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .translate(
+                                                            "weekend_contents"),
                                                     style: const TextStyle(
                                                         fontSize: 15,
                                                         color: Colors.grey),
@@ -384,7 +399,8 @@ class VisasPageState extends State<VisasPage> {
                                               CrossAxisAlignment.end,
                                           children: [
                                             Text(
-                                              "Status",
+                                              AppLocalizations.of(context)!
+                                                  .translate("status"),
                                               style: TextStyle(
                                                 color: grey,
                                                 fontSize: 15,
@@ -392,7 +408,9 @@ class VisasPageState extends State<VisasPage> {
                                             ),
                                             visaResponse["status"] == 1
                                                 ? Text(
-                                                    "Approved",
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .translate("approved"),
                                                     style: TextStyle(
                                                         color: Colors.green,
                                                         fontSize: 20,
@@ -401,7 +419,10 @@ class VisasPageState extends State<VisasPage> {
                                                   )
                                                 : visaResponse["status"] == 2
                                                     ? Text(
-                                                        "Rejected",
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .translate(
+                                                                "rejected"),
                                                         style: TextStyle(
                                                             color: Colors.red,
                                                             fontSize: 20,
@@ -410,7 +431,10 @@ class VisasPageState extends State<VisasPage> {
                                                                     .bold),
                                                       )
                                                     : Text(
-                                                        "Pending",
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .translate(
+                                                                "pending"),
                                                         style: TextStyle(
                                                             color: grey,
                                                             fontSize: 20,
@@ -556,7 +580,8 @@ class VisasPageState extends State<VisasPage> {
                                     backgroundColor:
                                         MaterialStateProperty.all(grey)),
                                 child: Text(
-                                  "Back To Visa List",
+                                  AppLocalizations.of(context)!
+                                      .translate("go_back"),
                                   style: TextStyle(fontSize: 20),
                                 ),
                               )),

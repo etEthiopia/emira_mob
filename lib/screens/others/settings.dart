@@ -31,28 +31,19 @@ class SettingsPageState extends State<SettingsPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text(
-              // AppLocalizations.of(context)!
-              //     .translate("confirmation_dialog_title"),
-              "Language Changed"),
+          title: Text(AppLocalizations.of(context)!.translate("restart")),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                const Text(
-                  // AppLocalizations.of(context)
-                  //     .translate("restart_confirmation_dialog_text"),
-                  "You Need To Restart The App",
+                Text(
+                  AppLocalizations.of(context)!.translate("restart_content"),
                 ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text(
-                // AppLocalizations.of(context)
-                //     .translate("restart_later_btn_text"),
-                "Ok",
-              ),
+              child: Text(AppLocalizations.of(context)!.translate("ok")),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -109,8 +100,7 @@ class SettingsPageState extends State<SettingsPage> {
                   color: white,
                 ),
                 Text(
-                  // AppLocalizations.of(context).translate("go_back_btn_text"),
-                  "Go Back",
+                  AppLocalizations.of(context)!.translate("go_back"),
                   style: TextStyle(color: white, fontFamily: defaultFont),
                 ),
               ],
@@ -132,8 +122,7 @@ class SettingsPageState extends State<SettingsPage> {
             padding: const EdgeInsets.only(top: 10, left: 5, bottom: 5),
             margin: EdgeInsets.only(left: 20.0),
             child: Text(
-              // AppLocalizations.of(context).translate("choose_lang_text"),
-              "Choose Language",
+              AppLocalizations.of(context)!.translate("choose_language"),
               style: TextStyle(
                   color: black,
                   fontSize: 16,
@@ -155,7 +144,7 @@ class SettingsPageState extends State<SettingsPage> {
                   BoxShadow(
                       color: Colors.black.withAlpha(100), blurRadius: 10.0),
                 ],
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                 gradient: this.lang != null
                     ? (this.lang == "en_US"
                         ? LinearGradient(
@@ -234,7 +223,7 @@ class SettingsPageState extends State<SettingsPage> {
                   BoxShadow(
                       color: Colors.black.withAlpha(100), blurRadius: 10.0),
                 ],
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                 gradient: this.lang != null
                     ? (this.lang == "fr_FR"
                         ? LinearGradient(
@@ -311,7 +300,7 @@ class SettingsPageState extends State<SettingsPage> {
                   BoxShadow(
                       color: Colors.black.withAlpha(100), blurRadius: 10.0),
                 ],
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                 gradient: this.lang != null
                     ? (this.lang == "am_ET"
                         ? LinearGradient(

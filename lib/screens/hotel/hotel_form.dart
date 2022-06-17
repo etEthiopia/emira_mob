@@ -40,28 +40,29 @@ class HotelFormPageState extends State<HotelFormPage> {
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
+
     Widget firstName() {
       return TextFormField(
         keyboardType: TextInputType.name,
         maxLines: 1,
         controller: controllerFirstName,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.person,
             color: Colors.grey,
           ),
-          hintText: 'First Name',
+          hintText: AppLocalizations.of(context)!.translate("first_name"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "First Name cannot be empty";
+            return AppLocalizations.of(context)!.translate("first_name_empty");
           } else if (value.length > 25) {
-            return "First Name length must be < 25";
+            return AppLocalizations.of(context)!.translate("first_name_l_25");
           } else if (value.length < 2) {
-            return "First Name length must be > 2";
+            return AppLocalizations.of(context)!.translate("first_name_g_2");
           }
         },
       );
@@ -72,23 +73,23 @@ class HotelFormPageState extends State<HotelFormPage> {
         keyboardType: TextInputType.name,
         maxLines: 1,
         controller: controllerLastName,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.person,
             color: Colors.grey,
           ),
-          hintText: 'Last Name',
+          hintText: AppLocalizations.of(context)!.translate("last_name"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Last Name cannot be empty";
+            return AppLocalizations.of(context)!.translate("last_name_empty");
           } else if (value.length > 25) {
-            return "Last Name length must be < 25";
+            return AppLocalizations.of(context)!.translate("last_name_l_25");
           } else if (value.length < 2) {
-            return "Last Name length must be > 2";
+            return AppLocalizations.of(context)!.translate("last_name_g_2");
           }
         },
       );
@@ -99,25 +100,26 @@ class HotelFormPageState extends State<HotelFormPage> {
         maxLines: 1,
         keyboardType: TextInputType.phone,
         controller: controllerPhone,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.phone,
             color: Colors.grey,
           ),
-          hintText: 'Phone',
+          hintText: AppLocalizations.of(context)!.translate("phone"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Phone cannot be empty";
+            return AppLocalizations.of(context)!.translate("phone_empty");
           } else if (value.length > 20) {
-            return "Invalid Phone Number";
+            return AppLocalizations.of(context)!.translate("invalid_phone");
           } else if (value.length < 10) {
-            return "Invalid Phone Number";
+            return AppLocalizations.of(context)!.translate("invalid_phone");
           } else if (!value.startsWith("+") && !value.startsWith("00")) {
-            return "Phone must start with '+' or '00'";
+            return AppLocalizations.of(context)!
+                .translate("phone_format_problem");
           }
         },
       );
@@ -128,25 +130,25 @@ class HotelFormPageState extends State<HotelFormPage> {
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         controller: controllerEmail,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.email,
             color: Colors.grey,
           ),
-          hintText: 'Email',
+          hintText: AppLocalizations.of(context)!.translate("email"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Email cannot be empty";
+            return AppLocalizations.of(context)!.translate("email_empty");
           } else if (value.length > 60) {
-            return "Invalid Email";
+            return AppLocalizations.of(context)!.translate("email_empty");
           } else if (value.length < 10) {
-            return "Invalid Email";
+            return AppLocalizations.of(context)!.translate("email_empty");
           } else if (!value.contains(".") || !value.contains("@")) {
-            return "Invalid Email";
+            return AppLocalizations.of(context)!.translate("email_empty");
           }
         },
       );
@@ -179,8 +181,8 @@ class HotelFormPageState extends State<HotelFormPage> {
                     currentState = "none";
                   });
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content:
-                        Text("Couldn't Submit Your Request, Please Try Again"),
+                    content: Text(AppLocalizations.of(context)!
+                        .translate("couldnt_submit_try_again")),
                     duration: Duration(seconds: 5),
                   ));
 
@@ -195,7 +197,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                         side: BorderSide(color: grey))),
                 backgroundColor: MaterialStateProperty.all(grey)),
             child: Text(
-              "Submit",
+              AppLocalizations.of(context)!.translate("submit"),
               style: TextStyle(fontSize: 20),
             ),
           ));
@@ -230,7 +232,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                           color: black,
                           image: DecorationImage(
                             colorFilter: new ColorFilter.mode(
-                                Colors.black.withOpacity(0.7),
+                                Colors.black.withOpacity(0.9),
                                 BlendMode.dstATop),
                             fit: BoxFit.cover,
                             image: NetworkImage(widget.hotel["image"]),
@@ -284,7 +286,10 @@ class HotelFormPageState extends State<HotelFormPage> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: <Widget>[
                                                   Text(
-                                                    "Book Hotel",
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .translate(
+                                                            "book_hotel"),
                                                     style: TextStyle(
                                                         color: blueblack,
                                                         fontWeight:
@@ -293,7 +298,10 @@ class HotelFormPageState extends State<HotelFormPage> {
                                                   ),
                                                   smallVSizedBox(),
                                                   Text(
-                                                    "Submit your personal information, we will contact you via WhatsApp",
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .translate(
+                                                            "submitted_we_will_contact_you_whatsapp"),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: grey,
@@ -318,7 +326,10 @@ class HotelFormPageState extends State<HotelFormPage> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: <Widget>[
                                                   Text(
-                                                    "Book Hotel",
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .translate(
+                                                            "book_hotel"),
                                                     style: TextStyle(
                                                         color: blueblack,
                                                         fontWeight:
@@ -327,7 +338,10 @@ class HotelFormPageState extends State<HotelFormPage> {
                                                   ),
                                                   smallVSizedBox(),
                                                   Text(
-                                                    "Submit your personal information, we will contact you via WhatsApp",
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .translate(
+                                                            "submit_personal_info"),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: grey,
@@ -363,10 +377,20 @@ class HotelFormPageState extends State<HotelFormPage> {
                                           padding: EdgeInsets.only(top: 70),
                                           child: loadingWidget(context))
                                       : this.currentState == "error"
-                                          ? errorWidget(context, "", "Error")
+                                          ? errorWidget(
+                                              context,
+                                              "",
+                                              AppLocalizations.of(context)!
+                                                  .translate("error"),
+                                            )
                                           : this.currentState == "done"
-                                              ? doneWidget(context, "",
-                                                  "We Will Contact You Via WhatsApp")
+                                              ? doneWidget(
+                                                  context,
+                                                  "",
+                                                  AppLocalizations.of(context)!
+                                                      .translate(
+                                                          "submitted_we_will_contact_you_whatsapp"),
+                                                )
                                               : SizedBox(
                                                   height: 0,
                                                 )

@@ -85,7 +85,7 @@ class MainPage extends StatefulWidget {
 
 class MainPageState extends State<MainPage> {
   var currentPage = DrawerSections.home;
-  var currentTitle = "Emira E-Visa";
+  var currentTitle = "emira_full_name";
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,8 @@ class MainPageState extends State<MainPage> {
       );
     }
     return Scaffold(
-      appBar: cleanAppBar(title: currentTitle),
+      appBar: cleanAppBar(
+          title: AppLocalizations.of(context)!.translate(currentTitle)),
       body: container,
       drawer: Drawer(
         child: SingleChildScrollView(
@@ -138,8 +139,8 @@ class MainPageState extends State<MainPage> {
       child: Column(
         // shows the list of menu drawer
         children: [
-          menuItem(1, "Home", Icons.home,
-              currentPage == DrawerSections.home ? true : false),
+          menuItem(1, AppLocalizations.of(context)!.translate("home"),
+              Icons.home, currentPage == DrawerSections.home ? true : false),
           menuItem(
               2,
               AppLocalizations.of(context)!.translate("visa"),
@@ -152,9 +153,15 @@ class MainPageState extends State<MainPage> {
           //     AppLocalizations.of(context)!.translate("track"),
           //     Icons.track_changes,
           //     currentPage == DrawerSections.track ? true : false),
-          menuItem(4, "FAQ", Icons.question_mark_rounded,
+          menuItem(
+              4,
+              AppLocalizations.of(context)!.translate("faq"),
+              Icons.question_mark_rounded,
               currentPage == DrawerSections.faq ? true : false),
-          menuItem(5, "Contact", Icons.phone,
+          menuItem(
+              5,
+              AppLocalizations.of(context)!.translate("contact"),
+              Icons.phone,
               currentPage == DrawerSections.contact ? true : false),
           const Divider(),
           menuItem(
@@ -176,22 +183,22 @@ class MainPageState extends State<MainPage> {
           setState(() {
             if (id == 1) {
               currentPage = DrawerSections.home;
-              currentTitle = "Home";
+              currentTitle = "home";
             } else if (id == 2) {
               currentPage = DrawerSections.visa;
-              currentTitle = "Visa";
+              currentTitle = "visa";
             } else if (id == 3) {
               currentPage = DrawerSections.hotel;
-              currentTitle = "Hotels";
+              currentTitle = "hotel";
             } else if (id == 4) {
               currentPage = DrawerSections.faq;
-              currentTitle = "FAQs";
+              currentTitle = "faq";
             } else if (id == 5) {
               currentPage = DrawerSections.contact;
-              currentTitle = "Contact Emira";
+              currentTitle = "contact";
             } else if (id == 6) {
               currentPage = DrawerSections.settings;
-              currentTitle = "Settings";
+              currentTitle = "settings";
             }
           });
         },

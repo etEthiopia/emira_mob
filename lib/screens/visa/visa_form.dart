@@ -77,7 +77,8 @@ class VisaFormPageState extends State<VisaFormPage> {
         content: Container(
             height: 100,
             child: Center(
-              child: const Text("All Done!\nPlease Submit Your Application",
+              child: Text(
+                  AppLocalizations.of(context)!.translate("submit_hint"),
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             )),
         state: StepState.complete,
@@ -343,28 +344,29 @@ class DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
+
     Widget firstName() {
       return TextFormField(
         keyboardType: TextInputType.name,
         maxLines: 1,
         controller: controllerFirstName,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.person,
             color: Colors.grey,
           ),
-          hintText: 'First Name',
+          hintText: AppLocalizations.of(context)!.translate("first_name"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "First Name cannot be empty";
+            return AppLocalizations.of(context)!.translate("first_name_empty");
           } else if (value.length > 25) {
-            return "First Name length must be < 25";
+            return AppLocalizations.of(context)!.translate("first_name_l_25");
           } else if (value.length < 2) {
-            return "First Name length must be > 2";
+            return AppLocalizations.of(context)!.translate("first_name_g_2");
           }
         },
       );
@@ -375,23 +377,23 @@ class DetailsState extends State<Details> {
         keyboardType: TextInputType.name,
         maxLines: 1,
         controller: controllerLastName,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.person,
             color: Colors.grey,
           ),
-          hintText: 'Last Name',
+          hintText: AppLocalizations.of(context)!.translate("last_name"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Last Name cannot be empty";
+            return AppLocalizations.of(context)!.translate("last_name_empty");
           } else if (value.length > 25) {
-            return "Last Name length must be < 25";
+            return AppLocalizations.of(context)!.translate("last_name_l_25");
           } else if (value.length < 2) {
-            return "Last Name length must be > 2";
+            return AppLocalizations.of(context)!.translate("last_name_g_2");
           }
         },
       );
@@ -402,25 +404,26 @@ class DetailsState extends State<Details> {
         maxLines: 1,
         keyboardType: TextInputType.phone,
         controller: controllerPhone,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.phone,
             color: Colors.grey,
           ),
-          hintText: 'Phone',
+          hintText: AppLocalizations.of(context)!.translate("phone"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Phone cannot be empty";
+            return AppLocalizations.of(context)!.translate("phone_empty");
           } else if (value.length > 20) {
-            return "Invalid Phone Number";
+            return AppLocalizations.of(context)!.translate("invalid_phone");
           } else if (value.length < 10) {
-            return "Invalid Phone Number";
+            return AppLocalizations.of(context)!.translate("invalid_phone");
           } else if (!value.startsWith("+") && !value.startsWith("00")) {
-            return "Phone must start with '+' or '00'";
+            return AppLocalizations.of(context)!
+                .translate("phone_format_problem");
           }
         },
       );
@@ -431,25 +434,25 @@ class DetailsState extends State<Details> {
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         controller: controllerEmail,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.email,
             color: Colors.grey,
           ),
-          hintText: 'Email',
+          hintText: AppLocalizations.of(context)!.translate("email"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Email cannot be empty";
+            return AppLocalizations.of(context)!.translate("email_empty");
           } else if (value.length > 60) {
-            return "Invalid Email";
+            return AppLocalizations.of(context)!.translate("email_empty");
           } else if (value.length < 10) {
-            return "Invalid Email";
+            return AppLocalizations.of(context)!.translate("email_empty");
           } else if (!value.contains(".") || !value.contains("@")) {
-            return "Invalid Email";
+            return AppLocalizations.of(context)!.translate("email_empty");
           }
         },
       );
@@ -475,9 +478,10 @@ class DetailsState extends State<Details> {
                   topRight: const Radius.circular(20.0),
                 ),
                 //Optional. Styles the search field.
-                inputDecoration: const InputDecoration(
-                  labelText: 'Search',
-                  hintText: 'Start typing to search',
+                inputDecoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate("search"),
+                  hintText:
+                      AppLocalizations.of(context)!.translate("type_to_search"),
                   prefixIcon: Icon(Icons.search),
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -488,23 +492,23 @@ class DetailsState extends State<Details> {
                 controllerCitizenship.text = country.name;
               });
         },
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.location_on,
             color: Colors.grey,
           ),
-          hintText: 'Nationality',
+          hintText: AppLocalizations.of(context)!.translate("nationality"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Citizenship cannot be empty";
+            return AppLocalizations.of(context)!.translate("nationality_empty");
           } else if (value.length > 35) {
-            return "Citizenship length must be < 25";
+            return AppLocalizations.of(context)!.translate("nationality_l_35");
           } else if (value.length < 2) {
-            return "Citizenship length must be > 2";
+            return AppLocalizations.of(context)!.translate("nationality_g_2");
           }
         },
       );
@@ -515,21 +519,21 @@ class DetailsState extends State<Details> {
         keyboardType: TextInputType.text,
         maxLines: 1,
         controller: controllerPassportNumber,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.confirmation_number,
             color: Colors.grey,
           ),
-          hintText: 'Passport Number',
+          hintText: AppLocalizations.of(context)!.translate("passport_no"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Passport cannot be empty";
+            return AppLocalizations.of(context)!.translate("passport_empty");
           } else if (value.length > 45) {
-            return "Passport length must be < 5";
+            return AppLocalizations.of(context)!.translate("passport_l_45");
           }
         },
       );
@@ -540,21 +544,23 @@ class DetailsState extends State<Details> {
         keyboardType: TextInputType.text,
         maxLines: 1,
         controller: controllerProfession,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.cases_sharp,
             color: Colors.grey,
           ),
-          hintText: 'Profession',
+          hintText: AppLocalizations.of(context)!.translate("profession"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
-          if (value!.length > 35) {
-            return "Profession length must be < 55";
-          } else if (value.length < 2) {
-            return "Citizenship length must be > 2";
+          if (value!.trim().isEmpty) {
+            return AppLocalizations.of(context)!.translate("profession_empty");
+          } else if (value.length > 35) {
+            return AppLocalizations.of(context)!.translate("profession_l_55");
+          } else if (value.length < 1) {
+            return AppLocalizations.of(context)!.translate("profession_g_1");
           }
         },
       );
@@ -565,12 +571,12 @@ class DetailsState extends State<Details> {
         keyboardType: TextInputType.datetime,
         maxLines: 1,
         controller: controllerTravelDate,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.calendar_today,
             color: Colors.grey,
           ),
-          hintText: 'Travel Date',
+          hintText: AppLocalizations.of(context)!.translate("travel_date"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
@@ -602,7 +608,7 @@ class DetailsState extends State<Details> {
 
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Travel Date cannot be empty";
+            return AppLocalizations.of(context)!.translate("travel_date_empty");
           }
         },
       );
@@ -613,21 +619,21 @@ class DetailsState extends State<Details> {
         keyboardType: TextInputType.text,
         maxLines: 1,
         controller: controllerPurpose,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.grade_outlined,
             color: Colors.grey,
           ),
-          hintText: 'Purpose of Travel',
+          hintText: AppLocalizations.of(context)!.translate("purpose"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
         validator: (value) {
           if (value!.trim().isEmpty) {
-            return "Purpose cannot be empty";
+            return AppLocalizations.of(context)!.translate("purpose_empty");
           } else if (value.length > 55) {
-            return "Purpose length must be < 55";
+            return AppLocalizations.of(context)!.translate("purpose_l_55");
           }
         },
       );
@@ -744,7 +750,7 @@ class ContactState extends State<Contact> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                        width: 300,
+                        // width: 300,
                         child: Material(
                             color: red,
                             borderRadius: BorderRadius.circular(15.0),
@@ -802,7 +808,8 @@ class ContactState extends State<Contact> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Scanned Passport (JPG, PNG)",
+                                        AppLocalizations.of(context)!
+                                            .translate("scanned_passport"),
                                         style: TextStyle(
                                             fontSize: 18, color: white),
                                       ),
@@ -820,7 +827,8 @@ class ContactState extends State<Contact> {
                     ? Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
-                          "Passport Scan Uploaded!",
+                          AppLocalizations.of(context)!
+                              .translate("passport_uploaded"),
                           style: TextStyle(fontSize: 20),
                         ),
                       )
@@ -828,7 +836,8 @@ class ContactState extends State<Contact> {
                         ? Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              "Couldn't Upload Passport Scan!",
+                              AppLocalizations.of(context)!
+                                  .translate("couldn't_upload_passport"),
                               style: TextStyle(fontSize: 20, color: red),
                             ),
                           )
@@ -870,7 +879,7 @@ class UploadState extends State<Upload> {
       return Row(
         children: <Widget>[
           Text(
-            "$title: ",
+            "${AppLocalizations.of(context)!.translate("couldn't_upload_passport")}: ",
             style: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.bold, color: blueblack),
           ),
@@ -896,21 +905,21 @@ class UploadState extends State<Upload> {
         child: orientation == Orientation.portrait
             ? Column(
                 children: <Widget>[
-                  formItem(title: "Full Name", data: name),
+                  formItem(title: "full_name", data: name),
                   smallVSizedBox(),
-                  formItem(title: "Citizenship", data: citizenship!),
+                  formItem(title: "nationality", data: citizenship!),
                   smallVSizedBox(),
-                  formItem(title: "Phone", data: phone!),
+                  formItem(title: "phone", data: phone!),
                   smallVSizedBox(),
-                  formItem(title: "Email", data: email!),
+                  formItem(title: "email", data: email!),
                   smallVSizedBox(),
-                  formItem(title: "Passport Number", data: passportNumber!),
+                  formItem(title: "passport_no", data: passportNumber!),
                   smallVSizedBox(),
-                  formItem(title: "Profession", data: profession!),
+                  formItem(title: "profession", data: profession!),
                   smallVSizedBox(),
-                  formItem(title: "Travel Date", data: travelDate!),
+                  formItem(title: "travel_date", data: travelDate!),
                   smallVSizedBox(),
-                  formItem(title: "Purpose", data: purpose!),
+                  formItem(title: "purpose", data: purpose!),
                 ],
               )
             : Column(
@@ -918,12 +927,12 @@ class UploadState extends State<Upload> {
                   Row(
                     children: [
                       Expanded(
-                        child: formItem(title: "Full Name", data: name),
+                        child: formItem(title: "full_name", data: name),
                       ),
                       smallHSizedBox(),
                       Expanded(
                         child:
-                            formItem(title: "Citizenship", data: citizenship!),
+                            formItem(title: "nationality", data: citizenship!),
                       )
                     ],
                   ),
@@ -931,11 +940,11 @@ class UploadState extends State<Upload> {
                   Row(
                     children: [
                       Expanded(
-                        child: formItem(title: "Phone", data: phone!),
+                        child: formItem(title: "phone", data: phone!),
                       ),
                       smallHSizedBox(),
                       Expanded(
-                        child: formItem(title: "Email", data: email!),
+                        child: formItem(title: "email", data: email!),
                       )
                     ],
                   ),
@@ -944,11 +953,11 @@ class UploadState extends State<Upload> {
                     children: [
                       Expanded(
                         child: formItem(
-                            title: "Passport Number", data: passportNumber!),
+                            title: "passport_no", data: passportNumber!),
                       ),
                       smallHSizedBox(),
                       Expanded(
-                        child: formItem(title: "Profession", data: profession!),
+                        child: formItem(title: "profession", data: profession!),
                       )
                     ],
                   ),
@@ -957,11 +966,11 @@ class UploadState extends State<Upload> {
                     children: [
                       Expanded(
                         child:
-                            formItem(title: "Travel Date", data: travelDate!),
+                            formItem(title: "travel_date", data: travelDate!),
                       ),
                       smallHSizedBox(),
                       Expanded(
-                        child: formItem(title: "Purpose", data: purpose!),
+                        child: formItem(title: "purpose", data: purpose!),
                       )
                     ],
                   ),

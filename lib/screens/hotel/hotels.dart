@@ -44,8 +44,6 @@ class HotelsPageState extends State<HotelsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<int> numbers = [1, 2, 3, 5, 8, 13, 21, 34, 55];
-
     final Size size = MediaQuery.of(context).size;
     final Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
@@ -60,7 +58,7 @@ class HotelsPageState extends State<HotelsPage> {
                 height: 20,
               ),
               Text(
-                "Book Whats Suits Your Style!",
+                AppLocalizations.of(context)!.translate("book_what_suits"),
                 style: TextStyle(
                     color: black, fontWeight: FontWeight.bold, fontSize: 25),
               ),
@@ -146,7 +144,7 @@ class HotelsPageState extends State<HotelsPage> {
               color: black,
               image: DecorationImage(
                 colorFilter: new ColorFilter.mode(
-                    Colors.black.withOpacity(0.7), BlendMode.dstATop),
+                    Colors.black.withOpacity(0.9), BlendMode.dstATop),
                 fit: BoxFit.cover,
                 image: NetworkImage(hotel["image"]),
               )),
@@ -163,8 +161,8 @@ class HotelsPageState extends State<HotelsPage> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(12.0),
-                      // decoration:
-                      //     BoxDecoration(color: blueblack.withOpacity(0.5)),
+                      decoration:
+                          BoxDecoration(color: blueblack.withOpacity(0.5)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -179,8 +177,8 @@ class HotelsPageState extends State<HotelsPage> {
                     ),
                     Container(
                       padding: EdgeInsets.all(12.0),
-                      // decoration:
-                      //     BoxDecoration(color: blueblack.withOpacity(0.5)),
+                      decoration:
+                          BoxDecoration(color: blueblack.withOpacity(0.5)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -208,8 +206,8 @@ class HotelsPageState extends State<HotelsPage> {
                         Container(
                           padding: EdgeInsets.fromLTRB(12, 6, 12, 12),
                           width: double.infinity,
-                          // decoration:
-                          //     BoxDecoration(color: blueblack.withOpacity(0.5)),
+                          decoration:
+                              BoxDecoration(color: blueblack.withOpacity(0.5)),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

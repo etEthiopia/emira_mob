@@ -4,5 +4,71 @@
     "hotel": "ሆቴል",
     "track": "መከታተያ",
     "about": "ስለ እኛ",
-    "settings": "ማስተካከያ"
+    "settings": "ማስተካከያ",
+    "faq": "ጥያቄዎች",
+    "contact": "ያግኙን",
+    "home": "መነሻ",
+
+    "since_2002": "ከ2002 ዓ.ም ጀምሮ",
+
+    "about_content": "ኢሚራ ኢ ቪዛ ለጉዞዎ መፍትሄ ብቻ ነው። ለቪዛዎ ያመልክቱ እና ሆቴልዎን በድር ጣቢያው ወይም በሞባይል አፕሊኬሽኑ በፕሌይ ስቶር ወይም አፕ ስቶር ያስይዙታል። ቲኬትዎን በቀላሉ በአየር መንገዱ ኩባንያ ያስይዙታል ወይም ይህን እንዲያደርጉ ልንረዳዎ እንችላለን። ዱባይ ከደረሱ በኋላ ጉብኝቶችዎን ማስያዝ ቀላል ነው ጥቅል ከማስያዝ ቀላል እና ርካሽ ነው፣ እንደፈለጉ መሄድ ይችላሉ።",
+
+    "steps_header": "እርምጃዎች",
+    "step_1_header": "የመስመር ላይ ማመልከቻ ይሙሉ",
+    "step_2_header": "ክፍያውን ያጠናቅቁ",
+    "step_3_header": "ኢ-ቪዛ በኢሜል ይቀበሉ",
+
+    "book_what_suits": "ለእርስዎ ዘይቤ የሚስማማውን ይያዙ!",
+
+    "book_hotel": "ሆቴል ይያዙ",
+    "submit_personal_info": "ግላዊ መረጃዎን ያስገቡ፣ በዋትስአፕ እናገኝዎታለን",
+    "first_name": "የመጀመሪያ ስም",
+    "last_name": "የአያት ስም",
+    "phone": "ስልክ",
+    "email": "ኢሜይል",
+    "submit": "አስረክብ",
+    "submitted_we_will_contact_you_whatsapp": "ማመልከቻዎ ተልኳል, በዋትስአፕ እናገኝዎታለን",
+    "ok": "እሺ",
+    "error": "ችግር",
+    "couldnt_submit_try_again": "Couldn't Submit Your Request, Please Try Again",
+
+    "visa_form": "የቪዛ ቅጽ",
+    "visa_app_sent": "የቪዛ ማመልከቻ ገብቷል",
+    "reference_number" : "የማጣቀሻ ቁጥር",
+    "check_inbox": "እባኮትን የኢሜል ሳጥንዎን ያረጋግጡ",
+
+    "details": "ዝርዝሮች",
+    "nationality": "ዜግነት",
+    "passport_no": "የፓስፖርት ቁጥር",
+    "profession": "ሙያ",
+    "travel_date": "የጉዞ ቀን",
+    "purpose": "የጉዞ ዓላማ",
+    "passport": "ፓስፖርት",
+    "scanned_passport": "ስካን የተደረገ ፓስፖርት (JPG, PNG)",
+    "passport_uploaded": "የፓስፖርት ስካን ተጭኗል!",
+    "couldn't_upload_passport": "ፓስፖርት መስቀል አልተቻለም!",
+    "review": "ግምገማ",
+    "full_name": "ሙሉ ስም",
+    "submit_hint": "የቅጽ መስፈርቶች ተጠናቀዋል! እባክዎ ማመልከቻዎን ያስገቡ።",
+    "previous": "ተመለስ",
+    "continue": "ቀጥል",
+
+
+    "select_visa_type": "የቪዛ ዓይነትን ይምረጡ",
+    "currency": "ምንዛሬ",
+    "already_applied": "አስቀድመው ለቪዛ አመልክተዋል?",
+    "weekend_contents": "በሳምንቱ መጨረሻ (አርብ እና ቅዳሜ) እና በህዝባዊ በዓላት ላይ የሚደረጉ ማመልከቻዎች ለማስተናገድ ብዙ ጊዜ ሊወስዱ ይችላሉ።",
+    "none_found": "ምንም አልተገኘም",
+    "apply": "አመልክት",
+    "enter_ref_number": "ለመከታተል የማጣቀሻ ቁጥርዎን ያስገቡ",
+
+    "status": "ሁኔታ",
+    "approved": "ጸድቋል",
+    "pending": "በመጠባበቅ ላይ",
+    "rejected": "ውድቅ ተደርጓል",
+
+    "go_back": "ተመለስ",
+    "choose_language": "የእርስዎን ተመራጭ ቋንቋ ይምረጡ",
+    "restart": "መተግበሪያውን እንደገና ያስጀምሩ",
+    "restart_content": "የቋንቋ ለውጥ ለማድረግ እባክዎ መተግበሪያውን እንደገና ያስጀምሩ"
 }

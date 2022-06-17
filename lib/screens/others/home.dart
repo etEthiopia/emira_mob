@@ -92,7 +92,8 @@ class HomePageState extends State<HomePage> {
                                           color: white),
                                     ),
                                     Text(
-                                      "Since 2002",
+                                      AppLocalizations.of(context)!
+                                          .translate("since_2002"),
                                       style: TextStyle(
                                           fontFamily: defaultFont,
                                           fontSize: 15,
@@ -126,7 +127,7 @@ class HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
                             Text(
-                              "About",
+                              AppLocalizations.of(context)!.translate("about"),
                               style: TextStyle(
                                   fontFamily: defaultFont,
                                   fontWeight: FontWeight.bold,
@@ -137,7 +138,8 @@ class HomePageState extends State<HomePage> {
                               height: 5,
                             ),
                             Text(
-                              "Emira E-Visa is only the solution for your trip. You Apply for your visas and also book your hotel through the website or our mobile apps in the play store or app store. You book your ticket easily at the airline's company or we can help you to do this Once arrive in Dubai it's easy to book your tours It's easier and cheaper than booking a package, you are free to go as you like.",
+                              AppLocalizations.of(context)!
+                                  .translate("about_content"),
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                   fontFamily: defaultFont,
@@ -151,7 +153,7 @@ class HomePageState extends State<HomePage> {
                     ),
                     Center(
                       child: Text(
-                        "Steps To Apply",
+                        AppLocalizations.of(context)!.translate("steps_header"),
                         style: TextStyle(
                             fontFamily: defaultFont,
                             color: red,
@@ -173,7 +175,9 @@ class HomePageState extends State<HomePage> {
                       ),
                       endChild: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Fill Out Online Application",
+                        child: Text(
+                            AppLocalizations.of(context)!
+                                .translate("step_1_header"),
                             style: TextStyle(
                                 color: blueblack,
                                 fontWeight: FontWeight.bold,
@@ -204,7 +208,9 @@ class HomePageState extends State<HomePage> {
                       ),
                       startChild: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Complete The Payment",
+                        child: Text(
+                            AppLocalizations.of(context)!
+                                .translate("step_2_header"),
                             textAlign: TextAlign.right,
                             style: TextStyle(
                                 color: blueblack,
@@ -233,7 +239,9 @@ class HomePageState extends State<HomePage> {
                       ),
                       endChild: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Receive E-Visa Via Email",
+                        child: Text(
+                            AppLocalizations.of(context)!
+                                .translate("step_3_header"),
                             style: TextStyle(
                                 color: blueblack,
                                 fontWeight: FontWeight.bold,
@@ -261,7 +269,7 @@ class HomePageState extends State<HomePage> {
                 children: [
                   Icon(Icons.home, size: 30),
                   Text(
-                    "Home",
+                    AppLocalizations.of(context)!.translate("home"),
                     style: TextStyle(
                         fontFamily: defaultFont,
                         fontWeight: FontWeight.bold,
@@ -277,7 +285,7 @@ class HomePageState extends State<HomePage> {
                 children: [
                   Icon(Icons.airplane_ticket, size: 30),
                   Text(
-                    "Visa",
+                    AppLocalizations.of(context)!.translate("visa"),
                     style: TextStyle(
                         fontFamily: defaultFont,
                         fontWeight: FontWeight.bold,
@@ -293,7 +301,7 @@ class HomePageState extends State<HomePage> {
                 children: [
                   Icon(Icons.hotel, size: 30),
                   Text(
-                    "Hotel",
+                    AppLocalizations.of(context)!.translate("hotel"),
                     style: TextStyle(
                         fontFamily: defaultFont,
                         fontWeight: FontWeight.bold,

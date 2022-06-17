@@ -46,8 +46,7 @@ class VisaDetailPageState extends State<VisaDetailPage> {
                       height: 100,
                       decoration: BoxDecoration(color: background3),
                       child: Center(
-                          child: Image.asset(
-                              "assets/images/${widget.visa['image']}",
+                          child: Image.asset("assets/images/visa.png",
                               fit: BoxFit.cover)))
                   : SizedBox(
                       height: 0,
@@ -153,13 +152,13 @@ class VisaDetailPageState extends State<VisaDetailPage> {
                                       ],
                                     ),
                                     const SizedBox(height: 30.0),
-                                    Text(
-                                      "Description".toUpperCase(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14.0),
-                                    ),
-                                    const SizedBox(height: 10.0),
+                                    // Text(
+                                    //   "Description".toUpperCase(),
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.w600,
+                                    //       fontSize: 14.0),
+                                    // ),
+                                    // const SizedBox(height: 10.0),
                                     Text(
                                       "${widget.visa['description']}",
                                       textAlign: TextAlign.justify,
@@ -185,8 +184,8 @@ class VisaDetailPageState extends State<VisaDetailPage> {
                                             );
                                           },
                                           child: Text(
-                                            // AppLocalizations.of(context).translate("go_back_btn_text"),
-                                            "Apply Now",
+                                            AppLocalizations.of(context)!
+                                                .translate("apply"),
                                             style: TextStyle(
                                                 color: white,
                                                 fontFamily: defaultFont),

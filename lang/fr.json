@@ -4,5 +4,71 @@
     "hotel": "Hôtel",
     "track": "Pister",
     "about": "À propos de",
-    "settings": "Réglages"
+    "settings": "Réglages",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "home": "Maison",
+
+    "since_2002": "Depuis 2002",
+
+    "about_content": "Emira E-Visa n'est que la solution pour votre voyage. Vous demandez vos visas et réservez également votre hôtel via le site Web ou nos applications mobiles dans le Play Store ou l'App Store. Vous réservez votre billet facilement auprès de la compagnie aérienne ou nous pouvons vous aider à le faire Une fois arrivé à Dubaï, il est facile de réserver vos visites C'est plus facile et moins cher que de réserver un forfait, vous êtes libre d'y aller comme bon vous semble.",
+
+    "steps_header": "Étapes pour postuler",
+    "step_1_header": "Remplir la demande en ligne",
+    "step_2_header": "Effectuez le paiement",
+    "step_3_header": "Recevoir un E-Visa par e-mail",
+
+    "book_what_suits": "Réservez ce qui convient à votre style !",
+
+    "book_hotel": "Réserver un hôtel",
+    "submit_personal_info": "Soumettez vos informations personnelles, nous vous contacterons via WhatsApp",
+    "first_name": "Prénom",
+    "last_name": "Nom de famille",
+    "phone": "Téléphoner",
+    "email": "E-mail",
+    "submit": "Soumettre",
+    "submitted_we_will_contact_you_whatsapp": "Candidature soumise, nous vous contacterons via WhatsApp",
+    "ok": "D'accord",
+    "error": "Erreur",
+    "couldnt_submit_try_again": "Impossible de soumettre votre demande, veuillez réessayer",
+
+    "visa_form": "Formulaire de visa",
+    "visa_app_sent": "Demande de visa soumise",
+    "reference_number" : "Numéro de réference",
+    "check_inbox": "S'il vous plaît, vérifiez votre boîte de réception",
+
+    "details": "Détails",
+    "nationality": "Nationalité",
+    "passport_no": "Numéro de passeport",
+    "profession": "Profession",
+    "travel_date": "Date de voyage",
+    "purpose": "Raison du voyage",
+    "passport": "Passeport",
+    "scanned_passport": "Passeport numérisé (JPG, PNG)",
+    "passport_uploaded": "Numérisation de passeport téléchargée !",
+    "couldn't_upload_passport": "Impossible de télécharger la numérisation du passeport !",
+    "review": "Examen",
+    "full_name": "Nom et prénom",
+    "submit_hint": "Exigences du formulaire remplies ! Veuillez soumettre votre candidature.",
+    "previous": "Précédent",
+    "continue": "Continuer",
+
+
+    "select_visa_type": "Sélectionnez le type de visa",
+    "currency": "Devise",
+    "already_applied": "Déjà demandé un visa ?",
+    "weekend_contents": "Les demandes faites le week-end (vendredi et samedi) et les jours fériés peuvent prendre plus de temps à traiter.",
+    "none_found": "Personne n'est trouve",
+    "apply": "Appliquer",
+    "enter_ref_number": "Entrez votre numéro de référence à suivre",
+
+    "status": "Statut",
+    "approved": "Approuvé",
+    "pending": "En attente",
+    "rejected": "Rejeté",
+
+    "go_back": "Retourner",
+    "choose_language": "Choisissez votre langue préférée",
+    "restart": "Redémarrez l'application",
+    "restart_content": "Veuillez redémarrer l'application pour subir le changement de langue"
 }

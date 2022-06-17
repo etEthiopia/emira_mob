@@ -1,3 +1,4 @@
+import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
@@ -165,9 +166,7 @@ Widget doneWidget(context, route, text) {
                         Navigator.pop(context);
                       },
                       child: Text(
-                        // AppLocalizations.of(context)
-                        //     .translate("continue_btn_text"),
-                        "Ok",
+                        AppLocalizations.of(context)!.translate("ok"),
                         style: TextStyle(color: white, fontFamily: defaultFont),
                       ),
                     ),
@@ -208,9 +207,7 @@ Widget doneWidget(context, route, text) {
                         Navigator.pushReplacementNamed(context, '/$route');
                       },
                       child: Text(
-                        // AppLocalizations.of(context)
-                        //     .translate("retry_btn_text"),
-                        "Ok",
+                        AppLocalizations.of(context)!.translate("ok"),
                         style: TextStyle(color: white, fontFamily: defaultFont),
                       ),
                     ),
