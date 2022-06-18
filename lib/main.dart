@@ -183,13 +183,13 @@ class MainPageState extends State<MainPage> {
           setState(() {
             if (id == 1) {
               currentPage = DrawerSections.home;
-              currentTitle = "home";
+              currentTitle = "emira_full_name";
             } else if (id == 2) {
               currentPage = DrawerSections.visa;
-              currentTitle = "visa";
+              currentTitle = "emira_full_name";
             } else if (id == 3) {
               currentPage = DrawerSections.hotel;
-              currentTitle = "hotel";
+              currentTitle = "emira_full_name";
             } else if (id == 4) {
               currentPage = DrawerSections.faq;
               currentTitle = "faq";
@@ -210,16 +210,17 @@ class MainPageState extends State<MainPage> {
                 child: Icon(
                   icon,
                   size: 20,
-                  color: black,
+                  color: red,
                 ),
               ),
               Expanded(
                 flex: 3,
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    color: Colors.black,
+                  style: TextStyle(
+                    color: blueblack,
                     fontSize: 16,
+                    fontFamily: defaultFont,
                   ),
                 ),
               ),

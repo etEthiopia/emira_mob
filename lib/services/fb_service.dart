@@ -100,6 +100,7 @@ class FBService {
 
   static Future<List<dynamic>> fetchHotels() async {
     try {
+      hotelStatus = "loading";
       final va = FirebaseFirestore.instance
           .collection("hoteltypes")
           .where("status", isEqualTo: true)
@@ -111,13 +112,19 @@ class FBService {
         snapshot.docs.toList().forEach((element) {
           vs.add({...element.data(), "id": element.id});
         });
+        hotelTypes = vs;
+        hotelStatus = "done";
         print(vs);
         return vs;
       } else {
+        hotelTypes = [];
+        hotelStatus = "done";
         print("nothing");
         return [];
       }
     } catch (e) {
+      hotelTypes = [];
+      hotelStatus = "error";
       print(e);
       return [];
     }
@@ -125,6 +132,7 @@ class FBService {
 
   static Future<List<dynamic>> fetchFAQs() async {
     try {
+      faqStatus = "loading";
       final va = FirebaseFirestore.instance.collection("faqs");
 
       final snapshot = await va.get();
@@ -133,13 +141,18 @@ class FBService {
         snapshot.docs.toList().forEach((element) {
           vs.add({...element.data(), "id": element.id});
         });
-        print(vs);
+        faqStatus = "done";
+        faqList = vs;
         return vs;
       } else {
+        faqStatus = "done";
+        faqList = [];
         print("nothing");
         return [];
       }
     } catch (e) {
+      faqStatus = "error";
+      faqList = [];
       print(e);
       return [];
     }

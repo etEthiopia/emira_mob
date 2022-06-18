@@ -1,5 +1,5 @@
 {
-    "emira_full_name": "ኢሚራ ኢ ቪዛ",
+    "emira_full_name": "ኢሚራ ኢ:ቪዛ",
     "visa": "ቪዛ",
     "hotel": "ሆቴል",
     "track": "መከታተያ",
@@ -36,6 +36,8 @@
     "visa_app_sent": "የቪዛ ማመልከቻ ገብቷል",
     "reference_number" : "የማጣቀሻ ቁጥር",
     "check_inbox": "እባኮትን የኢሜል ሳጥንዎን ያረጋግጡ",
+
+    "e_visa": "ኢ:ቪዛ",
 
     "details": "ዝርዝሮች",
     "nationality": "ዜግነት",

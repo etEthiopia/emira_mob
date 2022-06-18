@@ -19,6 +19,7 @@ class SplashPageState extends State<SplashPage> {
   void initState() {
     FBService.fetchVisas();
     FBService.fetchRate();
+    FBService.fetchHotels();
     AppLocalizations.getCurrentCurrency().then((locale) => {
           Timer(
               Duration(seconds: 2),

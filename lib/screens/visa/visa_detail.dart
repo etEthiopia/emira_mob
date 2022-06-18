@@ -3,6 +3,7 @@
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/screens/visa/visa_form.dart';
 import 'package:emira_all_in_one_mob/services/const_data.dart';
+import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
@@ -21,7 +22,7 @@ class VisaDetailPageState extends State<VisaDetailPage> {
   @override
   Widget build(BuildContext context) {
     int convertedPrice = (widget.visa["price"].toDouble() *
-            RATE_TYPES[AppLocalizations.currency])
+            FBService.rateTypes[AppLocalizations.currency])
         .round();
     String formatedPrice =
         "${formatAmount(convertedPrice, AppLocalizations.currency)} ${AppLocalizations.currency}";

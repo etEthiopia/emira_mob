@@ -138,7 +138,9 @@ class SettingsPageState extends State<SettingsPage> {
                 ? (this.lang == "en_US" ? double.infinity : size.width * 0.75)
                 : size.width * 0.75,
             margin: EdgeInsets.all(20.0),
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            padding: EdgeInsets.symmetric(
+                horizontal: this.lang == "en_US" ? 30 : 30,
+                vertical: this.lang == "en_US" ? 22 : 20),
             decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -217,7 +219,9 @@ class SettingsPageState extends State<SettingsPage> {
                 ? (this.lang == "fr_FR" ? double.infinity : size.width * 0.75)
                 : size.width * 0.75,
             margin: EdgeInsets.all(20.0),
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            padding: EdgeInsets.symmetric(
+                horizontal: this.lang == "fr_FR" ? 30 : 30,
+                vertical: this.lang == "fr_FR" ? 22 : 20),
             decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -294,7 +298,9 @@ class SettingsPageState extends State<SettingsPage> {
                 ? (this.lang == "am_ET" ? double.infinity : size.width * 0.75)
                 : size.width * 0.75,
             margin: EdgeInsets.all(20.0),
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            padding: EdgeInsets.symmetric(
+                horizontal: this.lang == "am_ET" ? 30 : 30,
+                vertical: this.lang == "am_ET" ? 22 : 20),
             decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(

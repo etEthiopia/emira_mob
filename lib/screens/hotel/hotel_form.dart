@@ -301,7 +301,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                                                     AppLocalizations.of(
                                                             context)!
                                                         .translate(
-                                                            "submitted_we_will_contact_you_whatsapp"),
+                                                            "submit_personal_info"),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: grey,
@@ -379,7 +379,6 @@ class HotelFormPageState extends State<HotelFormPage> {
                                       : this.currentState == "error"
                                           ? errorWidget(
                                               context,
-                                              "",
                                               AppLocalizations.of(context)!
                                                   .translate("error"),
                                             )

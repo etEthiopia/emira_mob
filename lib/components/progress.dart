@@ -7,12 +7,13 @@ import 'package:flutter/material.dart';
 Widget loadingWidget(context) {
   return Padding(
     padding: const EdgeInsets.all(30.0),
-    child: SpinKitFadingCube(
+    child: SpinKitDoubleBounce(
       size:
           MediaQuery.of(context).orientation == Orientation.portrait ? 100 : 50,
       itemBuilder: (BuildContext context, int index) {
         return DecoratedBox(
           decoration: BoxDecoration(
+            shape: BoxShape.circle,
             color: index.isEven ? grey : lightgrey,
           ),
         );
@@ -22,7 +23,7 @@ Widget loadingWidget(context) {
 }
 
 // Error
-Widget errorWidget(context, route, text) {
+Widget errorWidget(context, text) {
   return Container(
       padding: const EdgeInsets.only(top: 50, left: 50, right: 50, bottom: 10),
       child: MediaQuery.of(context).orientation == Orientation.portrait
@@ -99,24 +100,24 @@ Widget errorWidget(context, route, text) {
                 const SizedBox(
                   height: 30,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Material(
-                    color: blueblack,
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/$route');
-                      },
-                      child: Text(
-                        // AppLocalizations.of(context)
-                        //     .translate("retry_btn_text"),
-                        "Retry",
-                        style: TextStyle(color: white, fontFamily: defaultFont),
-                      ),
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   child: Material(
+                //     color: blueblack,
+                //     borderRadius: BorderRadius.circular(15.0),
+                //     child: TextButton(
+                //       onPressed: () {
+                //         Navigator.pushReplacementNamed(context, '/$route');
+                //       },
+                //       child: Text(
+                //         // AppLocalizations.of(context)
+                //         //     .translate("retry_btn_text"),
+                //         "Retry",
+                //         style: TextStyle(color: white, fontFamily: defaultFont),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ));
 }

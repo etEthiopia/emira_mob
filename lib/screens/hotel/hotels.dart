@@ -1,9 +1,11 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
+import 'package:emira_all_in_one_mob/components/progress.dart';
 import 'package:emira_all_in_one_mob/main.dart';
 import 'package:emira_all_in_one_mob/screens/hotel/hotel_form.dart';
 import 'package:emira_all_in_one_mob/services/const_data.dart';
+import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
@@ -21,8 +23,10 @@ class HotelsPageState extends State<HotelsPage> {
   List<Widget> itemsData = [];
   List<Widget> hItemsData = [];
 
+  String hotelStatus = FBService.hotelStatus;
+
   void getPostsData() {
-    List<dynamic> responseList = HOTEL_TYPES;
+    List<dynamic> responseList = FBService.hotelTypes;
     List<Widget> listItems = [];
     List<Widget> hIistItems = [];
 
@@ -36,10 +40,52 @@ class HotelsPageState extends State<HotelsPage> {
     });
   }
 
+  void getHotelData() {
+    setState(() {
+      hotelStatus = "loading";
+    });
+    FBService.fetchHotels().then((value) {
+      setState(() {
+        hotelStatus = "done";
+      });
+      getPostsData();
+    }).catchError((e) {
+      print("error");
+      setState(() {
+        hotelStatus = "error";
+      });
+    });
+  }
+
+  Widget retryBtn() {
+    return TextButton(
+        style: ButtonStyle(
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            )),
+            backgroundColor: MaterialStateProperty.all(Color(0xFF4D5761))),
+        onPressed: () {
+          getHotelData();
+        },
+        child: Icon(
+          Icons.refresh,
+          size: 30,
+          color: white,
+        ));
+  }
+
   @override
   void initState() {
     super.initState();
-    getPostsData();
+    print(FBService.hotelStatus);
+    if (FBService.hotelStatus == "done") {
+      getPostsData();
+    }
+    if (hotelStatus == "done") {
+      getPostsData();
+    } else {
+      getHotelData();
+    }
   }
 
   @override
@@ -52,57 +98,83 @@ class HotelsPageState extends State<HotelsPage> {
       body: Container(
           height: size.height,
           padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                AppLocalizations.of(context)!.translate("book_what_suits"),
-                style: TextStyle(
-                    color: black, fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              orientation == Orientation.portrait
-                  ? Expanded(
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          controller: controller,
-                          itemCount: HOTEL_TYPES.length,
-                          itemBuilder: (context, index) {
-                            return itemsData[index];
+          child: hotelStatus == "loading"
+              ? loadingWidget(context)
+              : hotelStatus == "done"
+                  ? FBService.hotelTypes.length > 0
+                      ? Column(
+                          children: <Widget>[
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!
+                                  .translate("book_what_suits"),
+                              style: TextStyle(
+                                  color: black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            orientation == Orientation.portrait
+                                ? Expanded(
+                                    child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        controller: controller,
+                                        itemCount: FBService.hotelTypes.length,
+                                        itemBuilder: (context, index) {
+                                          return itemsData[index];
 
-                            // return Opacity(
-                            //   opacity: scale,
-                            //   child: Transform(
-                            //     transform: Matrix4.identity()..scale(scale, scale),
-                            //     alignment: Alignment.bottomCenter,
-                            //     child: Align(
-                            //         heightFactor: 0.7,
-                            //         alignment: Alignment.topCenter,
-                            //         child: itemsData[index]),
-                            //   ),
-                            // );
-                          }))
-                  : Expanded(
-                      // padding: EdgeInsets.symmetric(
-                      //     horizontal: 16.0, vertical: 24.0),
-                      // height: MediaQuery.of(context).size.height * 0.35,
-                      child: Container(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            controller: controller,
-                            itemCount: HOTEL_TYPES.length,
-                            itemBuilder: (context, index) {
-                              return hItemsData[index];
-                            }),
-                      ),
-                    ),
-            ],
-          )),
+                                          // return Opacity(
+                                          //   opacity: scale,
+                                          //   child: Transform(
+                                          //     transform: Matrix4.identity()..scale(scale, scale),
+                                          //     alignment: Alignment.bottomCenter,
+                                          //     child: Align(
+                                          //         heightFactor: 0.7,
+                                          //         alignment: Alignment.topCenter,
+                                          //         child: itemsData[index]),
+                                          //   ),
+                                          // );
+                                        }))
+                                : Expanded(
+                                    // padding: EdgeInsets.symmetric(
+                                    //     horizontal: 16.0, vertical: 24.0),
+                                    // height: MediaQuery.of(context).size.height * 0.35,
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: 5),
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          controller: controller,
+                                          itemCount:
+                                              FBService.hotelTypes.length,
+                                          itemBuilder: (context, index) {
+                                            return hItemsData[index];
+                                          }),
+                                    ),
+                                  ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            errorWidget(
+                                context,
+                                AppLocalizations.of(context)!
+                                    .translate("none_found")),
+                            retryBtn()
+                          ],
+                        )
+                  : Column(
+                      children: [
+                        errorWidget(
+                            context,
+                            AppLocalizations.of(context)!
+                                .translate("none_found")),
+                        retryBtn()
+                      ],
+                    )),
     );
   }
 
@@ -167,7 +239,7 @@ class HotelsPageState extends State<HotelsPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           //this loop will allow us to add as many star as the rating
-                          for (var i = 0; i < hotel["rating"]; i++)
+                          for (var i = 0; i < hotel["star"]; i++)
                             Icon(
                               Icons.star,
                               color: Color.fromARGB(255, 255, 195, 66),
@@ -309,7 +381,7 @@ class HotelsPageState extends State<HotelsPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             //this loop will allow us to add as many star as the rating
-                            for (var i = 0; i < hotel["rating"]; i++)
+                            for (var i = 0; i < hotel["star"]; i++)
                               Icon(
                                 Icons.star,
                                 color: Color.fromARGB(255, 255, 195, 66),

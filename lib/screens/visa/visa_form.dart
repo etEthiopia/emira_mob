@@ -37,6 +37,8 @@ class VisaFormPageState extends State<VisaFormPage> {
     DetailsState.controllerTravelDate.text = "";
     DetailsState.controllerPurpose.text = "";
     ContactState.passportUploaded = "none";
+    currentAppState = "none";
+    currentStep = 0;
     super.dispose();
   }
 
@@ -55,25 +57,25 @@ class VisaFormPageState extends State<VisaFormPage> {
 
     List<Step> steps = [
       Step(
-        title: const Text('Details'),
+        title: Text(AppLocalizations.of(context)!.translate("details")),
         content: Details(),
         state: currentStep == 0 ? StepState.editing : StepState.indexed,
         isActive: true,
       ),
       Step(
-        title: const Text('Documents'),
+        title: Text(AppLocalizations.of(context)!.translate("passport")),
         content: Contact(),
         state: currentStep == 1 ? StepState.editing : StepState.indexed,
         isActive: true,
       ),
       Step(
-        title: const Text('Review'),
+        title: Text(AppLocalizations.of(context)!.translate("review")),
         content: Upload(mapData),
         state: currentStep == 2 ? StepState.editing : StepState.indexed,
         isActive: true,
       ),
       Step(
-        title: const Text('Checkout'),
+        title: Text(AppLocalizations.of(context)!.translate("submit")),
         content: Container(
             height: 100,
             child: Center(
@@ -92,10 +94,9 @@ class VisaFormPageState extends State<VisaFormPage> {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text(
-                // AppLocalizations.of(context)!
-                //     .translate("confirmation_dialog_title"),
-                "Visa Application Sent"),
+            title: Text(
+              AppLocalizations.of(context)!.translate("visa_app_sent"),
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -112,10 +113,10 @@ class VisaFormPageState extends State<VisaFormPage> {
                   ),
                   Row(
                     children: [
-                      const Text(
-                        // AppLocalizations.of(context)
-                        //     .translate("restart_confirmation_dialog_text"),
-                        "Reference Number : ",
+                      Text(
+                        AppLocalizations.of(context)!
+                                .translate("reference_number") +
+                            ": ",
                       ),
                       Text(
                         ref,
@@ -126,20 +127,14 @@ class VisaFormPageState extends State<VisaFormPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    // AppLocalizations.of(context)
-                    //     .translate("restart_confirmation_dialog_text"),
-                    "Please, check your email inbox",
-                  ),
+                  Text(AppLocalizations.of(context)!.translate("check_inbox")),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text(
-                  // AppLocalizations.of(context)
-                  //     .translate("restart_later_btn_text"),
-                  "Ok",
+                child: Text(
+                  AppLocalizations.of(context)!.translate("ok"),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -159,8 +154,11 @@ class VisaFormPageState extends State<VisaFormPage> {
 
     return Scaffold(
       appBar: widget.title
-          ? cleanAppBar(title: "VisaForm Emira")
-          : flatAppBar(title: "Visa Form"),
+          ? cleanAppBar(
+              title: AppLocalizations.of(context)!.translate("visa_form"))
+          : flatAppBar(
+              title: AppLocalizations.of(context)!.translate("visa_form"),
+            ),
       body: currentAppState == "loading"
           ? Container(
               child: Center(
@@ -181,7 +179,8 @@ class VisaFormPageState extends State<VisaFormPage> {
                                 onPressed: () {},
                                 child: TextButton(
                                   child: Text(
-                                    "Previous",
+                                    AppLocalizations.of(context)!
+                                        .translate("previous"),
                                     style: TextStyle(
                                         color: blueblack, fontSize: 20),
                                   ),
@@ -205,10 +204,18 @@ class VisaFormPageState extends State<VisaFormPage> {
                                       borderRadius: BorderRadius.circular(20.0),
                                       side: BorderSide(color: grey))),
                               backgroundColor: MaterialStateProperty.all(grey)),
-                          child: Text(
-                            currentStep == 3 ? "Submit" : "Continue",
-                            style: TextStyle(fontSize: 20),
-                          ),
+                          child: Padding(
+                              padding:
+                                  EdgeInsets.all(currentStep == 3 ? 10 : 0),
+                              child: Text(
+                                currentStep == 3
+                                    ? AppLocalizations.of(context)!
+                                        .translate("submit")
+                                    : AppLocalizations.of(context)!
+                                        .translate("continue"),
+                                style: TextStyle(
+                                    fontSize: currentStep == 3 ? 30 : 20),
+                              )),
                           onPressed: () {
                             setState(() {
                               if (currentStep < steps.length - 1) {
@@ -261,8 +268,8 @@ class VisaFormPageState extends State<VisaFormPage> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
                                     backgroundColor: red,
-                                    content: Text(
-                                        "Couldn't Submit Your Application, Please Try Again"),
+                                    content: Text(AppLocalizations.of(context)!
+                                        .translate("couldnt_submit_try_again")),
                                     duration: Duration(seconds: 4),
                                   ));
                                   // print(e);
@@ -276,32 +283,31 @@ class VisaFormPageState extends State<VisaFormPage> {
                   );
                 },
                 onStepTapped: (step) {
-                  // if(step < currentStep){
-                  // setState(() {
-                  //  currentStep = step;
-                  // });
-                  // }
-                  // else{
-                  //   setState(() {
-                  //             if (currentStep < steps.length - 1) {
-                  //               if (currentStep == 0 &&
-                  //                   DetailsState.formKey.currentState!.validate()) {
-                  //                 currentStep = currentStep + 1;
-                  //               } else if (currentStep == 1 &&
-                  //                   ContactState.formKey.currentState!.validate()) {
-                  //                 currentStep = currentStep + 1;
-                  //               } else if (currentStep == 2) {
-                  //                 currentStep = currentStep + 1;
-                  //               }
-                  //             } else {
-                  //               currentStep = 0;
-                  //             }
-                  //           });
-                  // }
+                  if (step < currentStep) {
+                    setState(() {
+                      currentStep = step;
+                    });
+                  } else {
+                    setState(() {
+                      if (currentStep < steps.length - 1) {
+                        if (currentStep == 0 &&
+                            DetailsState.formKey.currentState!.validate()) {
+                          currentStep = currentStep + 1;
+                        } else if (currentStep == 1 &&
+                            ContactState.formKey.currentState!.validate()) {
+                          currentStep = currentStep + 1;
+                        } else if (currentStep == 2) {
+                          currentStep = currentStep + 1;
+                        }
+                      } else {
+                        currentStep = 0;
+                      }
+                    });
+                  }
 
-                  setState(() {
-                    currentStep = step;
-                  });
+                  // setState(() {
+                  //   currentStep = step;
+                  // });
                 },
               ),
             ),
@@ -879,7 +885,7 @@ class UploadState extends State<Upload> {
       return Row(
         children: <Widget>[
           Text(
-            "${AppLocalizations.of(context)!.translate("couldn't_upload_passport")}: ",
+            "${AppLocalizations.of(context)!.translate(title)} : ",
             style: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.bold, color: blueblack),
           ),
