@@ -106,6 +106,10 @@
     "go_back": "Go Back",
     "choose_language": "Choose Your Preferred Language",
     "restart": "Restart The App",
-    "restart_content": "Please restart the App to undergo the language change"
+    "restart_content": "Please restart the App to undergo the language change",
+
+    "address": "Adresse",
+    "whatsapp": "WhatsApp",
+    "messenger": "Messenger"
 
 }

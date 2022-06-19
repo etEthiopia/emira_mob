@@ -23,53 +23,58 @@ class ContactUsPageState extends State<ContactUsPage> {
         children: <Widget>[
           CurvedListItem(
             title: '+971 58 870 5940',
+            label: "phone",
             color: lightgrey,
             nextColor: grey,
             textColor: blueblack,
             icon: Icon(
               Icons.phone,
-              size: 30,
+              size: 25,
               color: blueblack,
             ),
           ),
           CurvedListItem(
             title: 'contact@emiravisa.com',
+            label: "email",
             color: grey,
             nextColor: background3,
             icon: Icon(
               Icons.email,
-              size: 30,
+              size: 25,
               color: white,
             ),
           ),
           CurvedListItem(
             title: 'Dubai Business Bay Tower',
+            label: "address",
             color: background3,
             textColor: blueblack,
             nextColor: grey,
             icon: Icon(
               Icons.location_on,
-              size: 30,
+              size: 25,
               color: blueblack,
             ),
           ),
           CurvedListItem(
             title: '+971588705940',
+            label: "whatsapp",
             color: grey,
             nextColor: background2,
             icon: Icon(
               Icons.whatsapp,
               color: white,
-              size: 30,
+              size: 25,
             ),
           ),
           CurvedListItem(
             title: 'EMIRAVISA',
+            label: "messenger",
             color: background2,
             textColor: blueblack,
             icon: Icon(
               Icons.facebook,
-              size: 30,
+              size: 25,
               color: blueblack,
             ),
           ),
@@ -82,6 +87,7 @@ class ContactUsPageState extends State<ContactUsPage> {
 class CurvedListItem extends StatelessWidget {
   const CurvedListItem({
     required this.title,
+    required this.label,
     required this.color,
     required this.icon,
     // required this.people,
@@ -91,6 +97,7 @@ class CurvedListItem extends StatelessWidget {
   });
 
   final String title;
+  final String label;
   final Color color;
   final Color textColor;
   // final String people;
@@ -116,7 +123,21 @@ class CurvedListItem extends StatelessWidget {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              icon,
+              Row(
+                children: [
+                  icon,
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.translate(label),
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(
                 height: 2,
               ),
@@ -124,7 +145,7 @@ class CurvedListItem extends StatelessWidget {
                 title,
                 style: TextStyle(
                     color: textColor,
-                    fontSize: 22,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold),
               ),
               Row(),

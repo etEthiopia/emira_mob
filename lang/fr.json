@@ -72,5 +72,9 @@
     "go_back": "Retourner",
     "choose_language": "Choisissez votre langue préférée",
     "restart": "Redémarrez l'application",
-    "restart_content": "Veuillez redémarrer l'application pour subir le changement de langue"
+    "restart_content": "Veuillez redémarrer l'application pour subir le changement de langue",
+
+    "address": "Address",
+    "whatsapp": "WhatsApp",
+    "messenger": "Messenger"
 }
