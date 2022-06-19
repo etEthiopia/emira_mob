@@ -275,7 +275,7 @@ class VisasPageState extends State<VisasPage> {
                                               FBService.trackVisa(
                                                       reference:
                                                           controllerReference
-                                                              .text)
+                                                              .text.toUpperCase())
                                                   .then((value) {
                                                 if (value != null) {
                                                   setState(() {
