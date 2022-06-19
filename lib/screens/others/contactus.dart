@@ -29,7 +29,7 @@ class ContactUsPageState extends State<ContactUsPage> {
             textColor: blueblack,
             icon: Icon(
               Icons.phone,
-              size: 25,
+              size: 22,
               color: blueblack,
             ),
           ),
@@ -40,7 +40,7 @@ class ContactUsPageState extends State<ContactUsPage> {
             nextColor: background3,
             icon: Icon(
               Icons.email,
-              size: 25,
+              size: 22,
               color: white,
             ),
           ),
@@ -52,7 +52,7 @@ class ContactUsPageState extends State<ContactUsPage> {
             nextColor: grey,
             icon: Icon(
               Icons.location_on,
-              size: 25,
+              size: 22,
               color: blueblack,
             ),
           ),
@@ -64,7 +64,7 @@ class ContactUsPageState extends State<ContactUsPage> {
             icon: Icon(
               Icons.whatsapp,
               color: white,
-              size: 25,
+              size: 22,
             ),
           ),
           CurvedListItem(
@@ -74,7 +74,7 @@ class ContactUsPageState extends State<ContactUsPage> {
             textColor: blueblack,
             icon: Icon(
               Icons.facebook,
-              size: 25,
+              size: 22,
               color: blueblack,
             ),
           ),
@@ -117,8 +117,8 @@ class CurvedListItem extends StatelessWidget {
         ),
         padding: const EdgeInsets.only(
           left: 32,
-          top: 40.0,
-          bottom: 30,
+          top: 60.0,
+          bottom: 20,
         ),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +133,7 @@ class CurvedListItem extends StatelessWidget {
                     AppLocalizations.of(context)!.translate(label),
                     style: TextStyle(
                       color: textColor,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
                 ],
