@@ -1,7 +1,6 @@
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
-//import 'package:url_launcher/url_launcher.dart';
 
 String formatAmount(price, currency) {
   String oprice = price.toString();
@@ -32,15 +31,3 @@ Future<FilePickerResult?> selectFile(BuildContext context) async {
     return null;
   }
 }
-
-// void openVisa(url) async {
-//   print(url);
-//   var urllaunchable =
-//       await canLaunchUrl(url); //canLaunch is from url_launcher package
-//   if (urllaunchable) {
-//     await launchUrl(url);
-//   } else {
-//     print("cant");
-//     throw Exception("URL can't be launched.");
-//   }
-// }

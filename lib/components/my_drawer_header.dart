@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';

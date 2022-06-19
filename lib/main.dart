@@ -1,14 +1,10 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
-import 'package:emira_all_in_one_mob/screens/hotel/hotels.dart';
-import 'package:emira_all_in_one_mob/screens/others/about.dart';
 import 'package:emira_all_in_one_mob/screens/others/contactus.dart';
 import 'package:emira_all_in_one_mob/screens/others/faq.dart';
 import 'package:emira_all_in_one_mob/screens/others/home.dart';
 import 'package:emira_all_in_one_mob/screens/others/splash_screen.dart';
-import 'package:emira_all_in_one_mob/screens/visa/track.dart';
-import 'package:emira_all_in_one_mob/screens/visa/visas.dart';
 import 'package:emira_all_in_one_mob/screens/others/settings.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
@@ -16,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'components/my_drawer_header.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
 
 const storage = FlutterSecureStorage();

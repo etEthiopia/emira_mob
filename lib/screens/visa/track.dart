@@ -2,7 +2,6 @@
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:flutter/material.dart';
-import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 
 class TrackPage extends StatefulWidget {
   final bool title;

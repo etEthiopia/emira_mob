@@ -2,9 +2,7 @@
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
-import 'package:emira_all_in_one_mob/main.dart';
 import 'package:emira_all_in_one_mob/screens/hotel/hotel_form.dart';
-import 'package:emira_all_in_one_mob/services/const_data.dart';
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +28,10 @@ class HotelsPageState extends State<HotelsPage> {
     List<Widget> listItems = [];
     List<Widget> hIistItems = [];
 
-    responseList.forEach((post) {
+    for (var post in responseList) {
       listItems.add(hotelCard(post));
       hIistItems.add(hHotelCard(post));
-    });
+    }
     setState(() {
       itemsData = listItems;
       hItemsData = hIistItems;
@@ -50,7 +48,7 @@ class HotelsPageState extends State<HotelsPage> {
       });
       getPostsData();
     }).catchError((e) {
-      print("error");
+      //print("error");
       setState(() {
         hotelStatus = "error";
       });
@@ -63,7 +61,8 @@ class HotelsPageState extends State<HotelsPage> {
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             )),
-            backgroundColor: MaterialStateProperty.all(Color(0xFF4D5761))),
+            backgroundColor:
+                MaterialStateProperty.all(const Color(0xFF4D5761))),
         onPressed: () {
           getHotelData();
         },
@@ -77,7 +76,7 @@ class HotelsPageState extends State<HotelsPage> {
   @override
   void initState() {
     super.initState();
-    print(FBService.hotelStatus);
+    //print(FBService.hotelStatus);
     if (FBService.hotelStatus == "done") {
       getPostsData();
     }
@@ -97,11 +96,11 @@ class HotelsPageState extends State<HotelsPage> {
       appBar: widget.title ? cleanAppBar(title: "Hotels") : null,
       body: Container(
           height: size.height,
-          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: hotelStatus == "loading"
               ? loadingWidget(context)
               : hotelStatus == "done"
-                  ? FBService.hotelTypes.length > 0
+                  ? FBService.hotelTypes.isNotEmpty
                       ? Column(
                           children: <Widget>[
                             const SizedBox(
@@ -144,7 +143,7 @@ class HotelsPageState extends State<HotelsPage> {
                                     //     horizontal: 16.0, vertical: 24.0),
                                     // height: MediaQuery.of(context).size.height * 0.35,
                                     child: Container(
-                                      padding: EdgeInsets.only(bottom: 5),
+                                      padding: const EdgeInsets.only(bottom: 5),
                                       child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
                                           controller: controller,
@@ -180,7 +179,7 @@ class HotelsPageState extends State<HotelsPage> {
 
   Widget hotelCard(dynamic hotel) {
     return Card(
-      margin: EdgeInsets.only(bottom: 22.0),
+      margin: const EdgeInsets.only(bottom: 22.0),
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
@@ -211,11 +210,11 @@ class HotelsPageState extends State<HotelsPage> {
                   ],
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
-                  stops: [0.0, 1.0],
+                  stops: const [0.0, 1.0],
                   tileMode: TileMode.clamp),
               color: black,
               image: DecorationImage(
-                colorFilter: new ColorFilter.mode(
+                colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.9), BlendMode.dstATop),
                 fit: BoxFit.cover,
                 image: NetworkImage(hotel["image"]),
@@ -223,7 +222,7 @@ class HotelsPageState extends State<HotelsPage> {
           height: 300.0,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.all(0.0),
+            padding: const EdgeInsets.all(0.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,7 +231,7 @@ class HotelsPageState extends State<HotelsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       decoration:
                           BoxDecoration(color: blueblack.withOpacity(0.5)),
                       child: Row(
@@ -240,7 +239,7 @@ class HotelsPageState extends State<HotelsPage> {
                         children: [
                           //this loop will allow us to add as many star as the rating
                           for (var i = 0; i < hotel["star"]; i++)
-                            Icon(
+                            const Icon(
                               Icons.star,
                               color: Color.fromARGB(255, 255, 195, 66),
                             ),
@@ -248,7 +247,7 @@ class HotelsPageState extends State<HotelsPage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       decoration:
                           BoxDecoration(color: blueblack.withOpacity(0.5)),
                       child: Row(
@@ -257,7 +256,7 @@ class HotelsPageState extends State<HotelsPage> {
                           //this loop will allow us to add as many star as the rating
                           Text(
                             hotel["price"],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25.0,
                               fontWeight: FontWeight.w800,
@@ -269,14 +268,14 @@ class HotelsPageState extends State<HotelsPage> {
                   ],
                 ),
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     width: double.infinity,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(12, 6, 12, 12),
+                          padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
                           width: double.infinity,
                           decoration:
                               BoxDecoration(color: blueblack.withOpacity(0.5)),
@@ -285,18 +284,18 @@ class HotelsPageState extends State<HotelsPage> {
                               children: [
                                 Text(
                                   hotel["title"],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 22.0,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 3.0,
                                 ),
                                 Text(
                                   hotel["description"],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w600,
@@ -318,13 +317,13 @@ class HotelsPageState extends State<HotelsPage> {
 
   Widget hHotelCard(dynamic hotel) {
     return Card(
-      margin: EdgeInsets.only(right: 22.0),
+      margin: const EdgeInsets.only(right: 22.0),
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
       elevation: 10.0,
-      child: Container(
+      child: SizedBox(
         width: 400,
         child: InkWell(
           onTap: () {
@@ -346,10 +345,10 @@ class HotelsPageState extends State<HotelsPage> {
                     ],
                     begin: Alignment.bottomLeft,
                     end: Alignment.topRight,
-                    stops: [0.0, 1.0],
+                    stops: const [0.0, 1.0],
                     tileMode: TileMode.clamp),
                 image: DecorationImage(
-                  colorFilter: new ColorFilter.mode(
+                  colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.7), BlendMode.dstATop),
                   fit: BoxFit.cover,
                   image: NetworkImage(hotel["image"]),
@@ -365,7 +364,7 @@ class HotelsPageState extends State<HotelsPage> {
             // height: 300.0,
             // width: double.infinity,
             child: Padding(
-              padding: EdgeInsets.all(0.0),
+              padding: const EdgeInsets.all(0.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -374,7 +373,7 @@ class HotelsPageState extends State<HotelsPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(12.0),
                         // decoration:
                         //     BoxDecoration(color: blueblack.withOpacity(0.5)),
                         child: Row(
@@ -382,7 +381,7 @@ class HotelsPageState extends State<HotelsPage> {
                           children: [
                             //this loop will allow us to add as many star as the rating
                             for (var i = 0; i < hotel["star"]; i++)
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 color: Color.fromARGB(255, 255, 195, 66),
                               ),
@@ -390,7 +389,7 @@ class HotelsPageState extends State<HotelsPage> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(12.0),
                         // decoration:
                         //     BoxDecoration(color: blueblack.withOpacity(0.5)),
                         child: Row(
@@ -399,7 +398,7 @@ class HotelsPageState extends State<HotelsPage> {
                             //this loop will allow us to add as many star as the rating
                             Text(
                               hotel["price"],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 25.0,
                                 fontWeight: FontWeight.w800,
@@ -411,14 +410,14 @@ class HotelsPageState extends State<HotelsPage> {
                     ],
                   ),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       width: double.infinity,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            padding: EdgeInsets.fromLTRB(12, 6, 12, 12),
+                            padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
                             width: double.infinity,
                             // decoration:
                             //     BoxDecoration(color: blueblack.withOpacity(0.5)),
@@ -427,18 +426,18 @@ class HotelsPageState extends State<HotelsPage> {
                                 children: [
                                   Text(
                                     hotel["title"],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 22.0,
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 3.0,
                                   ),
                                   Text(
                                     hotel["description"],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w600,

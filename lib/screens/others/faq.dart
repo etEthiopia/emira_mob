@@ -1,8 +1,7 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, unnecessary_const
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
-import 'package:emira_all_in_one_mob/services/const_data.dart';
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +24,14 @@ class FAQPageState extends State<FAQPage> {
         iconColor: red,
         title: Text(
           qa["question"],
-          style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
         ),
         children: <Widget>[
           ListTile(
             minVerticalPadding: 15,
             title: Text(
               qa["answer"],
-              style: TextStyle(fontSize: 17),
+              style: const TextStyle(fontSize: 17),
             ),
           )
         ],
@@ -46,7 +45,8 @@ class FAQPageState extends State<FAQPage> {
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             )),
-            backgroundColor: MaterialStateProperty.all(Color(0xFF4D5761))),
+            backgroundColor:
+                MaterialStateProperty.all(const Color(0xFF4D5761))),
         onPressed: () {
           getFAQData();
         },
@@ -66,7 +66,7 @@ class FAQPageState extends State<FAQPage> {
         faqStatus = "done";
       });
     }).catchError((e) {
-      print("error");
+      //print("error");
       setState(() {
         faqStatus = "error";
       });
@@ -87,16 +87,17 @@ class FAQPageState extends State<FAQPage> {
           body: faqStatus == "loading"
               ? loadingWidget(context)
               : faqStatus == "done"
-                  ? FBService.faqList.length > 0
+                  ? FBService.faqList.isNotEmpty
                       ? Column(
                           children: [
                             Container(
                               margin: const EdgeInsets.only(bottom: 10),
                               height: 200,
                               width: 200,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/logo.png'),
+                                  image: const AssetImage(
+                                      'assets/images/logo.png'),
                                 ),
                               ),
                             ),
@@ -106,7 +107,7 @@ class FAQPageState extends State<FAQPage> {
                               child: ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
-                                physics: BouncingScrollPhysics(),
+                                physics: const BouncingScrollPhysics(),
                                 itemCount: FBService.faqList.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return _buildPlayerModelList(

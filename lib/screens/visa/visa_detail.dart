@@ -2,7 +2,6 @@
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/screens/visa/visa_form.dart';
-import 'package:emira_all_in_one_mob/services/const_data.dart';
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -43,13 +42,13 @@ class VisaDetailPageState extends State<VisaDetailPage> {
             children: <Widget>[
               orientation == Orientation.portrait
                   ? Container(
-                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                      padding: const EdgeInsets.only(top: 20, bottom: 10),
                       height: 100,
                       decoration: BoxDecoration(color: background3),
                       child: Center(
                           child: Image.asset("assets/images/visa.png",
                               fit: BoxFit.cover)))
-                  : SizedBox(
+                  : const SizedBox(
                       height: 0,
                     ),
               Container(
@@ -57,7 +56,7 @@ class VisaDetailPageState extends State<VisaDetailPage> {
                 color: background3,
                 margin: orientation == Orientation.portrait
                     ? const EdgeInsets.only(top: 100)
-                    : EdgeInsets.only(
+                    : const EdgeInsets.only(
                         top: 0,
                       ),
                 child: Container(
@@ -69,10 +68,10 @@ class VisaDetailPageState extends State<VisaDetailPage> {
                             blurRadius: 10.0),
                       ],
                       borderRadius: orientation == Orientation.portrait
-                          ? BorderRadius.only(
+                          ? const BorderRadius.only(
                               topLeft: Radius.circular(20),
                               topRight: Radius.circular(20))
-                          : BorderRadius.all(Radius.zero)),
+                          : const BorderRadius.all(Radius.zero)),
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.only(top: 16.0, bottom: 20.0),
                     child: Column(
@@ -98,7 +97,8 @@ class VisaDetailPageState extends State<VisaDetailPage> {
                                             children: [
                                               Container(
                                                   padding:
-                                                      EdgeInsets.only(left: 40),
+                                                      const EdgeInsets.only(
+                                                          left: 40),
                                                   height: 70,
                                                   decoration: BoxDecoration(
                                                       color: white),
@@ -106,7 +106,7 @@ class VisaDetailPageState extends State<VisaDetailPage> {
                                                       child: Image.asset(
                                                           "assets/images/${widget.visa['image']}",
                                                           fit: BoxFit.cover))),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
                                               Text(
@@ -163,12 +163,12 @@ class VisaDetailPageState extends State<VisaDetailPage> {
                                     Text(
                                       "${widget.visa['description']}",
                                       textAlign: TextAlign.justify,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w300,
                                           fontSize: 17.0),
                                     ),
                                     const SizedBox(height: 10.0),
-                                    Container(
+                                    SizedBox(
                                       width: double.infinity,
                                       child: Material(
                                         color: red,

@@ -2,9 +2,7 @@
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
-import 'package:emira_all_in_one_mob/screens/visa/visa_form.dart';
 import 'package:emira_all_in_one_mob/services/api_service.dart';
-import 'package:emira_all_in_one_mob/services/const_data.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
@@ -20,10 +18,10 @@ class HotelFormPage extends StatefulWidget {
 
 class HotelFormPageState extends State<HotelFormPage> {
   final formKey = GlobalKey<FormState>();
-  TextEditingController controllerFirstName = new TextEditingController();
-  TextEditingController controllerLastName = new TextEditingController();
-  TextEditingController controllerPhone = new TextEditingController();
-  TextEditingController controllerEmail = new TextEditingController();
+  TextEditingController controllerFirstName = TextEditingController();
+  TextEditingController controllerLastName = TextEditingController();
+  TextEditingController controllerPhone = TextEditingController();
+  TextEditingController controllerEmail = TextEditingController();
   String currentState = "none";
 
   @override
@@ -47,12 +45,12 @@ class HotelFormPageState extends State<HotelFormPage> {
         maxLines: 1,
         controller: controllerFirstName,
         decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.person,
             color: Colors.grey,
           ),
           hintText: AppLocalizations.of(context)!.translate("first_name"),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
@@ -64,6 +62,7 @@ class HotelFormPageState extends State<HotelFormPage> {
           } else if (value.length < 2) {
             return AppLocalizations.of(context)!.translate("first_name_g_2");
           }
+          return null;
         },
       );
     }
@@ -74,12 +73,12 @@ class HotelFormPageState extends State<HotelFormPage> {
         maxLines: 1,
         controller: controllerLastName,
         decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.person,
             color: Colors.grey,
           ),
           hintText: AppLocalizations.of(context)!.translate("last_name"),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
@@ -91,6 +90,7 @@ class HotelFormPageState extends State<HotelFormPage> {
           } else if (value.length < 2) {
             return AppLocalizations.of(context)!.translate("last_name_g_2");
           }
+          return null;
         },
       );
     }
@@ -101,12 +101,12 @@ class HotelFormPageState extends State<HotelFormPage> {
         keyboardType: TextInputType.phone,
         controller: controllerPhone,
         decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.phone,
             color: Colors.grey,
           ),
           hintText: AppLocalizations.of(context)!.translate("phone"),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
@@ -121,6 +121,7 @@ class HotelFormPageState extends State<HotelFormPage> {
             return AppLocalizations.of(context)!
                 .translate("phone_format_problem");
           }
+          return null;
         },
       );
     }
@@ -131,12 +132,12 @@ class HotelFormPageState extends State<HotelFormPage> {
         keyboardType: TextInputType.emailAddress,
         controller: controllerEmail,
         decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.email,
             color: Colors.grey,
           ),
           hintText: AppLocalizations.of(context)!.translate("email"),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
           ),
         ),
@@ -150,6 +151,7 @@ class HotelFormPageState extends State<HotelFormPage> {
           } else if (!value.contains(".") || !value.contains("@")) {
             return AppLocalizations.of(context)!.translate("email_empty");
           }
+          return null;
         },
       );
     }
@@ -161,7 +163,7 @@ class HotelFormPageState extends State<HotelFormPage> {
           child: ElevatedButton(
             onPressed: () {
               if (formKey.currentState!.validate()) {
-                this.setState(() {
+                setState(() {
                   currentState = "loading";
                 });
                 APIService.applyHotel(
@@ -171,22 +173,22 @@ class HotelFormPageState extends State<HotelFormPage> {
                         email: controllerEmail.text,
                         selectedhotel: widget.hotel["id"])
                     .then((value) {
-                  this.setState(() {
+                  setState(() {
                     currentState = "done";
                   });
-                  print(value);
+                  //print(value);
                   // _showMyDialog(value);
                 }).catchError((e) {
-                  this.setState(() {
+                  setState(() {
                     currentState = "none";
                   });
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(AppLocalizations.of(context)!
                         .translate("couldnt_submit_try_again")),
-                    duration: Duration(seconds: 5),
+                    duration: const Duration(seconds: 5),
                   ));
 
-                  //print(e);
+                  ////print(e);
                 });
               }
             },
@@ -198,7 +200,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                 backgroundColor: MaterialStateProperty.all(grey)),
             child: Text(
               AppLocalizations.of(context)!.translate("submit"),
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ));
     }
@@ -226,19 +228,19 @@ class HotelFormPageState extends State<HotelFormPage> {
             children: <Widget>[
               orientation == Orientation.portrait
                   ? Container(
-                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                      padding: const EdgeInsets.only(top: 20, bottom: 10),
                       height: 300,
                       decoration: BoxDecoration(
                           color: black,
                           image: DecorationImage(
-                            colorFilter: new ColorFilter.mode(
+                            colorFilter: ColorFilter.mode(
                                 Colors.black.withOpacity(0.9),
                                 BlendMode.dstATop),
                             fit: BoxFit.cover,
                             image: NetworkImage(widget.hotel["image"]),
                           )),
-                      child: Center(child: Text("")))
-                  : SizedBox(
+                      child: const Center(child: Text("")))
+                  : const SizedBox(
                       height: 0,
                     ),
               Container(
@@ -246,7 +248,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                 color: Colors.transparent,
                 margin: orientation == Orientation.portrait
                     ? const EdgeInsets.only(top: 290)
-                    : EdgeInsets.only(
+                    : const EdgeInsets.only(
                         top: 0,
                       ),
                 child: Container(
@@ -258,10 +260,10 @@ class HotelFormPageState extends State<HotelFormPage> {
                             blurRadius: 10.0),
                       ],
                       borderRadius: orientation == Orientation.portrait
-                          ? BorderRadius.only(
+                          ? const BorderRadius.only(
                               topLeft: Radius.circular(20),
                               topRight: Radius.circular(20))
-                          : BorderRadius.all(Radius.zero)),
+                          : const BorderRadius.all(Radius.zero)),
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.only(top: 16.0, bottom: 20.0),
                     child: Column(
@@ -270,7 +272,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              this.currentState == "none"
+                              currentState == "none"
                                   ? Form(
                                       key: formKey,
                                       autovalidateMode:
@@ -372,17 +374,18 @@ class HotelFormPageState extends State<HotelFormPage> {
                                               ),
                                       ),
                                     )
-                                  : this.currentState == "loading"
+                                  : currentState == "loading"
                                       ? Padding(
-                                          padding: EdgeInsets.only(top: 70),
+                                          padding:
+                                              const EdgeInsets.only(top: 70),
                                           child: loadingWidget(context))
-                                      : this.currentState == "error"
+                                      : currentState == "error"
                                           ? errorWidget(
                                               context,
                                               AppLocalizations.of(context)!
                                                   .translate("error"),
                                             )
-                                          : this.currentState == "done"
+                                          : currentState == "done"
                                               ? doneWidget(
                                                   context,
                                                   "",
@@ -390,7 +393,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                                                       .translate(
                                                           "submitted_we_will_contact_you_whatsapp"),
                                                 )
-                                              : SizedBox(
+                                              : const SizedBox(
                                                   height: 0,
                                                 )
                             ],

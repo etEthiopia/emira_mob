@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, must_be_immutable
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/screens/hotel/hotels.dart';
@@ -21,12 +21,12 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int page = 0;
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    //print(widget.page);
+    ////print(widget.page);
     setState(() {
       page = widget.page;
     });
@@ -34,8 +34,8 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("w:" + widget.page.toString());
-    print("c:" + page.toString());
+    //print("w:" + widget.page.toString());
+    //print("c:" + page.toString());
     if (page != widget.page) {
       setState(() {
         page = widget.page;
@@ -55,8 +55,8 @@ class HomePageState extends State<HomePage> {
                         viewportFraction: 1.0,
                         autoPlay: true,
                         hasPagination: true,
-                        items: IMAGES_LIST.map((url) {
-                          int ix = IMAGES_LIST.indexOf(url);
+                        items: imagesList.map((url) {
+                          int ix = imagesList.indexOf(url);
                           return Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -70,9 +70,9 @@ class HomePageState extends State<HomePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      WELCOME_LIST[ix],
+                                      welcomeList[ix],
                                       style: TextStyle(
-                                          shadows: <Shadow>[
+                                          shadows: const <Shadow>[
                                             Shadow(
                                               offset: Offset(2.0, 2.0),
                                               blurRadius: 3.0,
@@ -109,11 +109,12 @@ class HomePageState extends State<HomePage> {
                         }).toList()),
                     Container(
                         width: double.infinity,
-                        margin: EdgeInsets.all(20.0),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                        margin: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 20),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           gradient: LinearGradient(
                               colors: [
                                 grey,
@@ -121,7 +122,7 @@ class HomePageState extends State<HomePage> {
                               ],
                               begin: Alignment.bottomLeft,
                               end: Alignment.topRight,
-                              stops: [0.0, 1.0],
+                              stops: const [0.0, 1.0],
                               tileMode: TileMode.clamp),
                         ),
                         child: Column(
@@ -134,7 +135,7 @@ class HomePageState extends State<HomePage> {
                                   color: white,
                                   fontSize: 30),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
@@ -148,7 +149,7 @@ class HomePageState extends State<HomePage> {
                             ),
                           ],
                         )),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Center(
@@ -253,8 +254,8 @@ class HomePageState extends State<HomePage> {
                 ))
               ]))
             : page == 1
-                ? VisasPage()
-                : HotelsPage(),
+                ? const VisasPage()
+                : const HotelsPage(),
         bottomNavigationBar: CurvedNavigationBar(
           index: page,
           key: _bottomNavigationKey,
@@ -263,11 +264,11 @@ class HomePageState extends State<HomePage> {
           height: 60,
           items: <Widget>[
             Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.home, size: 30),
+                  const Icon(Icons.home, size: 30),
                   Text(
                     AppLocalizations.of(context)!.translate("home"),
                     style: TextStyle(
@@ -279,11 +280,11 @@ class HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.airplane_ticket, size: 30),
+                  const Icon(Icons.airplane_ticket, size: 30),
                   Text(
                     AppLocalizations.of(context)!.translate("visa"),
                     style: TextStyle(
@@ -295,11 +296,11 @@ class HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.hotel, size: 30),
+                  const Icon(Icons.hotel, size: 30),
                   Text(
                     AppLocalizations.of(context)!.translate("hotel"),
                     style: TextStyle(
@@ -312,7 +313,7 @@ class HomePageState extends State<HomePage> {
             ),
           ],
           onTap: (index) {
-            //print(index);
+            ////print(index);
             widget.page = index;
             setState(() {
               page = index;

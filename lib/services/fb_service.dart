@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
@@ -33,11 +32,9 @@ class FBService {
       if (snapshot.exists) {
         return snapshot.data();
       } else {
-        print("nothing");
         return null;
       }
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -55,12 +52,10 @@ class FBService {
         rateTypes["ETB"] = trate["ETB"];
         return rateTypes;
       } else {
-        print("nothing");
         currencyStatus = "error";
         return null;
       }
     } catch (e) {
-      print(e);
       currencyStatus = "error";
       return null;
     }
@@ -68,7 +63,6 @@ class FBService {
 
   static Future<List<dynamic>> fetchVisas() async {
     try {
-      print("fetching visa");
       visaStatus = "loading";
       final va = FirebaseFirestore.instance
           .collection("visatypes")
@@ -81,12 +75,10 @@ class FBService {
         snapshot.docs.toList().forEach((element) {
           vs.add({...element.data(), "id": element.id});
         });
-        print(vs);
         visaTypes = vs;
         visaStatus = "done";
         return vs;
       } else {
-        print("nothing");
         visaTypes = [];
         visaStatus = "done";
         return [];
@@ -114,18 +106,18 @@ class FBService {
         });
         hotelTypes = vs;
         hotelStatus = "done";
-        print(vs);
+
         return vs;
       } else {
         hotelTypes = [];
         hotelStatus = "done";
-        print("nothing");
+
         return [];
       }
     } catch (e) {
       hotelTypes = [];
       hotelStatus = "error";
-      print(e);
+      //print(e);
       return [];
     }
   }
@@ -147,13 +139,12 @@ class FBService {
       } else {
         faqStatus = "done";
         faqList = [];
-        print("nothing");
+
         return [];
       }
     } catch (e) {
       faqStatus = "error";
       faqList = [];
-      print(e);
       return [];
     }
   }
@@ -169,33 +160,24 @@ class FBService {
         final downloadTask = FirebaseStorage.instance
             .refFromURL(ref)
             .writeToFile(downloadToFile);
-        print(downloadToFile);
         downloadTask.snapshotEvents.listen((taskSnapshot) async {
           switch (taskSnapshot.state) {
             case TaskState.running:
-              print("running");
-              // TODO: Handle this case.
+              //print("running");
               break;
             case TaskState.paused:
-              print("paused");
-              // TODO: Handle this case.
+              //print("paused");
               break;
             case TaskState.success:
-              print("success");
-              print(downloadToFile);
               downloadToFile.create(recursive: true);
               Uint8List bytes = await downloadToFile.readAsBytes();
               await downloadToFile.writeAsBytes(bytes);
-              //print(bytes);
-              // TODO: Handle this case.
               break;
             case TaskState.canceled:
-              print("canceled");
-              // TODO: Handle this case.
+              //print("canceled");
               break;
             case TaskState.error:
-              print("error");
-              // TODO: Handle this case.
+              //print("error");
               break;
           }
         });
@@ -204,9 +186,12 @@ class FBService {
       } else {
         return false;
       }
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       // e.g, e.code == 'canceled'
-      print('Download error: $e');
+      //print('Download error: $e');
+      return false;
+    } catch (e) {
+      // print(e);
       return false;
     }
   }
@@ -222,7 +207,8 @@ class FBService {
 
         final length = await file.length();
         if (length > 2097152) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("File size must be less than 2MB"),
             duration: Duration(seconds: 2),
           ));
@@ -235,7 +221,8 @@ class FBService {
             final url = await ref.getDownloadURL();
             return url;
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("Passport must be a JPG or PNG"),
               duration: Duration(seconds: 2),
             ));
@@ -246,29 +233,30 @@ class FBService {
         return "";
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Couldn't Upload Your Passport"),
         duration: Duration(seconds: 2),
       ));
-      print('error occured');
+      //print('error occured');
       return "";
     }
   }
 
   static Future<bool> askPermission(BuildContext context) async {
     final status = await Permission.manageExternalStorage.request();
-    print("ask permission");
+    //print("ask permission");
     if (status == PermissionStatus.granted) {
-      print('Permission granted');
+      //print('Permission granted');
       return true;
     } else if (status == PermissionStatus.denied) {
-      print(
-          'Denied. Show a dialog with a reason and again ask for the permission.');
+      // print(
+      //     'Denied. Show a dialog with a reason and again ask for the permission.');
       //askPermission(context);
     } else if (status == PermissionStatus.permanentlyDenied) {}
 
     if (status != PermissionStatus.granted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Please Allow Emira E-Visa to Read and Write Files"),
         duration: Duration(seconds: 5),
       ));

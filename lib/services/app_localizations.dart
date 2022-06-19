@@ -31,12 +31,7 @@ class AppLocalizations {
     return true;
   }
 
-  // String? translate(String key) {
-  //   return _localizedStrings[key];
-  // }
-
   String translate(String key) {
-// Returns a localized text
     String? text = _localizedStrings[key];
     if (text == null) return "";
     return text;

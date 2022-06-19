@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:emira_all_in_one_mob/main.dart';
-import 'package:emira_all_in_one_mob/screens/others/home.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +21,9 @@ class SplashPageState extends State<SplashPage> {
     FBService.fetchHotels();
     AppLocalizations.getCurrentCurrency().then((locale) => {
           Timer(
-              Duration(seconds: 2),
+              const Duration(seconds: 2),
               () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => MainPage())))
+                  builder: (BuildContext context) => const MainPage())))
         });
     super.initState();
   }
@@ -32,9 +31,9 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
-    var assetsImage = new AssetImage(
+    var assetsImage = const AssetImage(
         'assets/images/logo.png'); //<- Creates an object that fetches an image.
-    var image = new Image(
+    var image = Image(
         image: assetsImage,
         height: 300); //<- Creates a widget that displays an image.
 
@@ -47,7 +46,7 @@ class SplashPageState extends State<SplashPage> {
               Colors.blue, //<- background color to combine with the picture :-)
         ),*/
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Stack(
@@ -60,7 +59,7 @@ class SplashPageState extends State<SplashPage> {
                           alignment: Alignment.bottomCenter,
                         ),
                       )
-                    : SizedBox(
+                    : const SizedBox(
                         height: 0,
                       ),
                 Center(

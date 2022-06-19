@@ -4,8 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class APIService {
-  static String SERVER_IP = "serene-ocean-60681.herokuapp.com";
-  //serene-ocean-60681.herokuapp.com
+  static const String serverIP = "serene-ocean-60681.herokuapp.com";
 
   // Apply For A Visa
   static Future<String> applyVisa({
@@ -22,8 +21,8 @@ class APIService {
     required String selectedvisa,
   }) async {
     try {
-      var url = Uri.https(SERVER_IP, '/applications');
-      print(selectedvisa);
+      var url = Uri.https(serverIP, '/applications');
+      // print(selectedvisa);
       var res = await http
           .post(url,
               headers: {'Content-Type': 'application/json; charset=UTF-8'},
@@ -44,34 +43,34 @@ class APIService {
                 "selectedvisa": selectedvisa,
                 "client": "android"
               }))
-          .timeout(Duration(seconds: 60));
+          .timeout(const Duration(seconds: 60));
       if (res.statusCode == 201) {
         if (json.decode(res.body)['success']) {
-          print(json.decode(res.body)['reference']);
+          //print(json.decode(res.body)['reference']);
           return json.decode(res.body)['reference'];
         } else {
-          print('Wrong Request');
+          //print('Wrong Request');
           throw Exception('Wrong Request');
         }
       } else {
-        print('Wrong Connection ${res.statusCode}');
-        print(res.body);
+        //print('Wrong Connection ${res.statusCode}');
+        //print(res.body);
         throw Exception('Wrong Connection');
       }
     } catch (e) {
       if (e is SocketException) {
         if (e.toString().contains("Network is unreachable")) {
-          print('Internet Error');
+          //print('Internet Error');
           throw Exception("Check Your Connection");
         } else if (e.toString().contains("Connection refused")) {
-          print('Error from Server');
+          //print('Error from Server');
           throw Exception("Sorry, We couldn't reach the server");
         } else {
-          print('Connection Error $e');
+          //print('Connection Error $e');
           throw Exception("Sorry, We couldn't get a response from our server");
         }
       } else {
-        print(e);
+        //print(e);
         throw Exception("Sorry, We couldn't get a response from our server");
       }
     }
@@ -86,7 +85,7 @@ class APIService {
     required String selectedhotel,
   }) async {
     try {
-      var url = Uri.https(SERVER_IP, '/hotels');
+      var url = Uri.https(serverIP, '/hotels');
 
       var res = await http
           .post(url,
@@ -99,33 +98,33 @@ class APIService {
                 "hotel_id": selectedhotel,
                 "client": "android"
               }))
-          .timeout(Duration(seconds: 60));
+          .timeout(const Duration(seconds: 60));
       if (res.statusCode == 201) {
         if (json.decode(res.body)['success']) {
-          print(json.decode(res.body)['reference']);
+          //print(json.decode(res.body)['reference']);
           return true;
         } else {
-          print('Wrong Request');
+          //print('Wrong Request');
           throw Exception('Wrong Request');
         }
       } else {
-        print('Wrong Connection ${res.statusCode}');
+        //print('Wrong Connection ${res.statusCode}');
         throw Exception('Wrong Connection');
       }
     } catch (e) {
       if (e is SocketException) {
         if (e.toString().contains("Network is unreachable")) {
-          print('Internet Error');
+          //print('Internet Error');
           throw Exception("Check Your Connection");
         } else if (e.toString().contains("Connection refused")) {
-          print('Error from Server');
+          //print('Error from Server');
           throw Exception("Sorry, We couldn't reach the server");
         } else {
-          print('Connection Error $e');
+          //print('Connection Error $e');
           throw Exception("Sorry, We couldn't get a response from our server");
         }
       } else {
-        print(e);
+        // print(e);
         throw Exception("Sorry, We couldn't get a response from our server");
       }
     }

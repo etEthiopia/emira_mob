@@ -9,7 +9,7 @@ Color black = const Color(0xFF000000);
 Color white = const Color(0xFFFFFFFF);
 
 Color background = const Color(0xFFFFFFFF);
-Color background2 = Color.fromARGB(255, 235, 235, 235);
-Color background3 = Color.fromARGB(255, 207, 207, 207);
+Color background2 = const Color.fromARGB(255, 235, 235, 235);
+Color background3 = const Color.fromARGB(255, 207, 207, 207);
 
 String defaultFont = 'Lato';

@@ -1,15 +1,13 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, unnecessary_new, sized_box_for_whitespace, unnecessary_this
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
 import 'package:emira_all_in_one_mob/screens/visa/visa_detail.dart';
-import 'package:emira_all_in_one_mob/services/const_data.dart';
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/services/utils.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
-import "package:intl/intl.dart";
 import 'package:url_launcher/link.dart';
 
 class VisasPage extends StatefulWidget {
@@ -37,9 +35,9 @@ class VisasPageState extends State<VisasPage> {
   void getPostsData() {
     List<dynamic> responseList = FBService.visaTypes;
     List<Widget> listItems = [];
-    print("currency");
-    print(AppLocalizations.currency);
-    print(AppLocalizations.currency == "");
+    //print("currency");
+    //print(AppLocalizations.currency);
+    //print(AppLocalizations.currency == "");
     String currency = AppLocalizations.currency;
     //AppLocalizations.currency;
     if (FBService.rateTypes["USD"] == 0) {
@@ -50,17 +48,17 @@ class VisasPageState extends State<VisasPage> {
       AppLocalizations.currency = "USD";
     }
 
-    responseList.forEach((post) {
+    for (var post in responseList) {
       double? ratee = 1;
       if (FBService.rateTypes[currency] != null) {
         ratee = FBService.rateTypes[currency];
       }
-      // print("before");
+      // //print("before");
       dynamic convertedPrice =
           (double.parse(post["price"].toString()) * ratee!).round();
-      // print("after");
+      // //print("after");
       String formatedPrice =
-          "${formatAmount(convertedPrice, currency)} ${currency}";
+          "${formatAmount(convertedPrice, currency)} $currency";
       if (currency == "MGA") {
         formatedPrice.replaceAll(",", ".");
       }
@@ -78,8 +76,7 @@ class VisasPageState extends State<VisasPage> {
             height: 150,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
-                borderRadius:
-                    const BorderRadius.all(const Radius.circular(20.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -137,7 +134,7 @@ class VisasPageState extends State<VisasPage> {
               ),
             )),
       ));
-    });
+    }
     setState(() {
       itemsData = listItems;
     });
@@ -159,13 +156,13 @@ class VisasPageState extends State<VisasPage> {
         });
         getPostsData();
       }).catchError((e) {
-        print("error");
+        //print("error");
         setState(() {
           currencyStatus = "error";
         });
       });
     }).catchError((e) {
-      print("error");
+      //print("error");
       setState(() {
         visaStatus = "error";
       });
@@ -178,7 +175,8 @@ class VisasPageState extends State<VisasPage> {
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             )),
-            backgroundColor: MaterialStateProperty.all(Color(0xFF4D5761))),
+            backgroundColor:
+                MaterialStateProperty.all(const Color(0xFF4D5761))),
         onPressed: () {
           getVisaAndRateData();
         },
@@ -201,8 +199,8 @@ class VisasPageState extends State<VisasPage> {
   @override
   void initState() {
     super.initState();
-    print(FBService.visaStatus);
-    print(FBService.currencyStatus);
+    //print(FBService.visaStatus);
+    //print(FBService.currencyStatus);
     if (FBService.visaStatus == "done" && FBService.currencyStatus == "done") {
       getPostsData();
     }
@@ -234,16 +232,16 @@ class VisasPageState extends State<VisasPage> {
             child: visaStatus == "loading" || currencyStatus == "loading"
                 ? loadingWidget(context)
                 : visaStatus == "done" && currencyStatus == "done"
-                    ? FBService.visaTypes.length > 0 &&
-                            FBService.rateTypes.length > 0
+                    ? FBService.visaTypes.isNotEmpty &&
+                            FBService.rateTypes.isNotEmpty
                         ? Column(
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                     right: 20, left: 20, bottom: 30, top: 5),
                                 decoration: BoxDecoration(
                                     color: grey,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         bottomLeft: Radius.circular(20),
                                         bottomRight: Radius.circular(20))),
                                 child: Column(
@@ -254,7 +252,7 @@ class VisasPageState extends State<VisasPage> {
                                       style:
                                           TextStyle(color: white, fontSize: 20),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     TextField(
@@ -275,7 +273,8 @@ class VisasPageState extends State<VisasPage> {
                                               FBService.trackVisa(
                                                       reference:
                                                           controllerReference
-                                                              .text.toUpperCase())
+                                                              .text
+                                                              .toUpperCase())
                                                   .then((value) {
                                                 if (value != null) {
                                                   setState(() {
@@ -288,26 +287,27 @@ class VisasPageState extends State<VisasPage> {
                                                   });
                                                 }
                                               }).catchError((e) {
-                                                print("error");
+                                                //print("error");
                                                 setState(() {
                                                   currentAppState = "error";
                                                 });
                                               });
                                             },
-                                            icon: Icon(Icons.search),
+                                            icon: const Icon(Icons.search),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20),
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   color: Colors.transparent)),
                                           enabledBorder: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20),
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                   color: Colors.transparent)),
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 5)),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 10, vertical: 5)),
                                     )
                                   ],
                                 ),
@@ -315,8 +315,8 @@ class VisasPageState extends State<VisasPage> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              if (this.track)
-                                SizedBox(
+                              if (track)
+                                const SizedBox(
                                   height: 20,
                                 )
                               else
@@ -337,7 +337,7 @@ class VisasPageState extends State<VisasPage> {
                                               fontSize: 20),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Row(
@@ -348,7 +348,7 @@ class VisasPageState extends State<VisasPage> {
                                             style: TextStyle(
                                                 color: blueblack, fontSize: 15),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           DropdownButton(
@@ -412,8 +412,7 @@ class VisasPageState extends State<VisasPage> {
                                                       borderRadius:
                                                           const BorderRadius
                                                                   .all(
-                                                              const Radius
-                                                                      .circular(
+                                                              Radius.circular(
                                                                   20.0)),
                                                       color: Colors.white,
                                                       boxShadow: [
@@ -469,7 +468,7 @@ class VisasPageState extends State<VisasPage> {
                                                             ],
                                                           ),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           width: 10,
                                                         ),
                                                         Column(
@@ -495,7 +494,7 @@ class VisasPageState extends State<VisasPage> {
                                                                             context)!
                                                                         .translate(
                                                                             "approved"),
-                                                                    style: TextStyle(
+                                                                    style: const TextStyle(
                                                                         color: Colors
                                                                             .green,
                                                                         fontSize:
@@ -509,7 +508,7 @@ class VisasPageState extends State<VisasPage> {
                                                                     ? Text(
                                                                         AppLocalizations.of(context)!
                                                                             .translate("rejected"),
-                                                                        style: TextStyle(
+                                                                        style: const TextStyle(
                                                                             color: Colors
                                                                                 .red,
                                                                             fontSize:
@@ -528,7 +527,7 @@ class VisasPageState extends State<VisasPage> {
                                                                             fontWeight:
                                                                                 FontWeight.bold),
                                                                       ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             visaResponse["status"] ==
@@ -536,74 +535,7 @@ class VisasPageState extends State<VisasPage> {
                                                                     visaResponse[
                                                                             "evisa"] !=
                                                                         null
-                                                                ?
-                                                                // Container(
-                                                                //     child:
-                                                                //         Material(
-                                                                //     color: red,
-                                                                //     borderRadius:
-                                                                //         BorderRadius.circular(
-                                                                //             15.0),
-                                                                //     child:
-                                                                //         Padding(
-                                                                //       padding: EdgeInsets.symmetric(
-                                                                //           horizontal:
-                                                                //               10,
-                                                                //           vertical:
-                                                                //               0),
-                                                                //       child: TextButton(
-                                                                //           onPressed: () {
-                                                                //             // this.setState(() {
-                                                                //             //   currentAppState =
-                                                                //             //       "loading";
-                                                                //             // });
-                                                                //             // // controllerReference.text
-                                                                //             // FBService.downloadFile(
-                                                                //             //         visaResponse[
-                                                                //             //             "evisa"],
-                                                                //             //         "evisa_${DateTime.now().second}",
-                                                                //             //         context)
-                                                                //             //     .then(
-                                                                //             //         (value) => {
-                                                                //             //               if (value)
-                                                                //             //                 {
-                                                                //             //                   this.setState(() {
-                                                                //             //                     currentAppState = "done";
-                                                                //             //                   })
-                                                                //             //                 }
-                                                                //             //               else
-                                                                //             //                 {
-                                                                //             //                   setState(() {
-                                                                //             //                     currentAppState = "error";
-                                                                //             //                   })
-                                                                //             //                 }
-                                                                //             //             })
-                                                                //             //     .catchError(
-                                                                //             //         (e) {
-                                                                //             //   setState(() {
-                                                                //             //     currentAppState =
-                                                                //             //         "error";
-                                                                //             //   });
-                                                                //             // });
-                                                                //           },
-                                                                //           child: Row(
-                                                                //             mainAxisAlignment:
-                                                                //                 MainAxisAlignment.start,
-                                                                //             children: [
-                                                                //               Text(
-                                                                //                 "E-Visa",
-                                                                //                 style: TextStyle(fontSize: 18, color: white),
-                                                                //               ),
-                                                                //               Icon(
-                                                                //                 Icons.download,
-                                                                //                 size: 20,
-                                                                //                 color: white,
-                                                                //               ),
-                                                                //             ],
-                                                                //           )),
-                                                                //     ),
-                                                                //   ))
-                                                                Link(
+                                                                ? Link(
                                                                     target:
                                                                         LinkTarget
                                                                             .blank,
@@ -615,12 +547,12 @@ class VisasPageState extends State<VisasPage> {
                                                                         ElevatedButton(
                                                                             style:
                                                                                 ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: grey))), backgroundColor: MaterialStateProperty.all(blueblack)),
+                                                                            onPressed: followLink,
                                                                             child: Text(
                                                                               AppLocalizations.of(context)!.translate("e_visa"),
-                                                                              style: TextStyle(fontSize: 25),
-                                                                            ),
-                                                                            onPressed: followLink))
-                                                                : SizedBox(
+                                                                              style: const TextStyle(fontSize: 25),
+                                                                            )))
+                                                                : const SizedBox(
                                                                     height: 50,
                                                                   ),
                                                           ],
@@ -628,7 +560,7 @@ class VisasPageState extends State<VisasPage> {
                                                       ],
                                                     ),
                                                   ))
-                                              : SizedBox(
+                                              : const SizedBox(
                                                   height: 0,
                                                 )
                                   : Expanded(
@@ -694,8 +626,8 @@ class VisasPageState extends State<VisasPage> {
                                                 child: Text(
                                                   AppLocalizations.of(context)!
                                                       .translate("go_back"),
-                                                  style:
-                                                      TextStyle(fontSize: 20),
+                                                  style: const TextStyle(
+                                                      fontSize: 20),
                                                 ),
                                               )),
                                         )

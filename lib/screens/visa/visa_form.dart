@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, must_be_immutable
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
@@ -44,7 +44,7 @@ class VisaFormPageState extends State<VisaFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    var mapData = Map<String, String>();
+    var mapData = <String, String>{};
     mapData["fname"] = DetailsState.controllerFirstName.text;
     mapData["lname"] = DetailsState.controllerLastName.text;
     mapData["phone"] = DetailsState.controllerPhone.text;
@@ -76,7 +76,7 @@ class VisaFormPageState extends State<VisaFormPage> {
       ),
       Step(
         title: Text(AppLocalizations.of(context)!.translate("submit")),
-        content: Container(
+        content: SizedBox(
             height: 100,
             child: Center(
               child: Text(
@@ -114,9 +114,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                   Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!
-                                .translate("reference_number") +
-                            ": ",
+                        "${AppLocalizations.of(context)!.translate("reference_number")}: ",
                       ),
                       Text(
                         ref,
@@ -166,7 +164,7 @@ class VisaFormPageState extends State<VisaFormPage> {
             ))
           : Container(
               child: Stepper(
-                currentStep: this.currentStep,
+                currentStep: currentStep,
                 steps: steps,
                 type: StepperType.vertical,
                 controlsBuilder: (context, _) {
@@ -256,7 +254,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                                             ContactState.passportUploaded,
                                         selectedvisa: widget.visa["id"])
                                     .then((value) {
-                                  print(value);
+                                  //print(value);
                                   _showMyDialog(value);
                                   setState(() {
                                     currentAppState = "none";
@@ -316,36 +314,33 @@ class VisaFormPageState extends State<VisaFormPage> {
 }
 
 class Details extends StatefulWidget {
+  const Details({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return DetailsState();
   }
 }
 
 class DetailsState extends State<Details> {
   static final formKey = GlobalKey<FormState>();
-  static TextEditingController controllerFirstName =
-      new TextEditingController();
-  static TextEditingController controllerLastName = new TextEditingController();
+  static TextEditingController controllerFirstName = TextEditingController();
+  static TextEditingController controllerLastName = TextEditingController();
 
-  static TextEditingController controllerPhone = new TextEditingController();
+  static TextEditingController controllerPhone = TextEditingController();
 
-  static TextEditingController controllerEmail = new TextEditingController();
+  static TextEditingController controllerEmail = TextEditingController();
 
-  static TextEditingController controllerCitizenship =
-      new TextEditingController();
+  static TextEditingController controllerCitizenship = TextEditingController();
 
   static TextEditingController controllerPassportNumber =
-      new TextEditingController();
+      TextEditingController();
 
-  static TextEditingController controllerProfession =
-      new TextEditingController();
+  static TextEditingController controllerProfession = TextEditingController();
 
-  static TextEditingController controllerTravelDate =
-      new TextEditingController();
+  static TextEditingController controllerTravelDate = TextEditingController();
 
-  static TextEditingController controllerPurpose = new TextEditingController();
+  static TextEditingController controllerPurpose = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -374,6 +369,7 @@ class DetailsState extends State<Details> {
           } else if (value.length < 2) {
             return AppLocalizations.of(context)!.translate("first_name_g_2");
           }
+          return null;
         },
       );
     }
@@ -401,6 +397,7 @@ class DetailsState extends State<Details> {
           } else if (value.length < 2) {
             return AppLocalizations.of(context)!.translate("last_name_g_2");
           }
+          return null;
         },
       );
     }
@@ -431,6 +428,7 @@ class DetailsState extends State<Details> {
             return AppLocalizations.of(context)!
                 .translate("phone_format_problem");
           }
+          return null;
         },
       );
     }
@@ -460,6 +458,7 @@ class DetailsState extends State<Details> {
           } else if (!value.contains(".") || !value.contains("@")) {
             return AppLocalizations.of(context)!.translate("email_empty");
           }
+          return null;
         },
       );
     }
@@ -480,8 +479,8 @@ class DetailsState extends State<Details> {
                 bottomSheetHeight: 500, // Optional. Country list modal height
                 //Optional. Sets the border radius for the bottomsheet.
                 borderRadius: const BorderRadius.only(
-                  topLeft: const Radius.circular(20.0),
-                  topRight: const Radius.circular(20.0),
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
                 ),
                 //Optional. Styles the search field.
                 inputDecoration: InputDecoration(
@@ -516,6 +515,7 @@ class DetailsState extends State<Details> {
           } else if (value.length < 2) {
             return AppLocalizations.of(context)!.translate("nationality_g_2");
           }
+          return null;
         },
       );
     }
@@ -541,6 +541,7 @@ class DetailsState extends State<Details> {
           } else if (value.length > 45) {
             return AppLocalizations.of(context)!.translate("passport_l_45");
           }
+          return null;
         },
       );
     }
@@ -565,9 +566,10 @@ class DetailsState extends State<Details> {
             return AppLocalizations.of(context)!.translate("profession_empty");
           } else if (value.length > 35) {
             return AppLocalizations.of(context)!.translate("profession_l_55");
-          } else if (value.length < 1) {
+          } else if (value.isEmpty) {
             return AppLocalizations.of(context)!.translate("profession_g_1");
           }
+          return null;
         },
       );
     }
@@ -597,25 +599,27 @@ class DetailsState extends State<Details> {
               lastDate: DateTime(2101));
 
           if (pickedDate != null) {
-            print(
-                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+            // print(
+            //     pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
             String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-            print(
-                formattedDate); //formatted date output using intl package =>  2021-03-16
+            // print(
+            //     formattedDate); //formatted date output using intl package =>  2021-03-16
             //you can implement different kind of Date Format here according to your requirement
 
             controllerTravelDate.text =
                 formattedDate; //set output date to TextField value.
 
-          } else {
-            print("Date is not selected");
           }
+          // else {
+          //   print("Date is not selected");
+          // }
         },
 
         validator: (value) {
           if (value!.trim().isEmpty) {
             return AppLocalizations.of(context)!.translate("travel_date_empty");
           }
+          return null;
         },
       );
     }
@@ -641,6 +645,7 @@ class DetailsState extends State<Details> {
           } else if (value.length > 55) {
             return AppLocalizations.of(context)!.translate("purpose_l_55");
           }
+          return null;
         },
       );
     }
@@ -657,7 +662,6 @@ class DetailsState extends State<Details> {
       );
     }
 
-    // TODO: implement build
     return Container(
         child: Form(
             key: formKey,
@@ -725,26 +729,26 @@ class DetailsState extends State<Details> {
 }
 
 class Contact extends StatefulWidget {
+  const Contact({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return ContactState();
   }
 }
 
 class ContactState extends State<Contact> {
   static final formKey = GlobalKey<FormState>();
-  static TextEditingController controllerEmail = new TextEditingController();
-  static TextEditingController controllerAddress = new TextEditingController();
-  static TextEditingController controllerMobileNo = new TextEditingController();
+  static TextEditingController controllerEmail = TextEditingController();
+  static TextEditingController controllerAddress = TextEditingController();
+  static TextEditingController controllerMobileNo = TextEditingController();
   String fileuploaded = "none";
   static String passportUploaded = "none";
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return fileuploaded == "uploading"
-        ? Container(height: 200, child: loadingWidget(context))
+        ? SizedBox(height: 200, child: loadingWidget(context))
         : Container(
             child: Form(
             key: formKey,
@@ -773,11 +777,11 @@ class ContactState extends State<Contact> {
                                         });
                                         FBService.uploadFile(value, context)
                                             .then((v) {
-                                          print("v");
-                                          print(v);
+                                          // print("v");
+                                          // print(v);
                                           if (v != "") {
                                             passportUploaded = v;
-                                            print(v);
+                                            //print(v);
                                             setState(() {
                                               fileuploaded = "done";
                                             });
@@ -791,7 +795,7 @@ class ContactState extends State<Contact> {
                                           // print(v);
                                         }).catchError((e) {
                                           passportUploaded = "none";
-                                          print(e);
+                                          //print(e);
                                           setState(() {
                                             fileuploaded = "error";
                                           });
@@ -804,7 +808,7 @@ class ContactState extends State<Contact> {
                                       }
                                     }).catchError((e) {
                                       passportUploaded = "none";
-                                      print(e);
+                                      //print(e);
                                       setState(() {
                                         fileuploaded = "error";
                                       });
@@ -857,13 +861,12 @@ class ContactState extends State<Contact> {
 }
 
 class Upload extends StatefulWidget {
-  var mapInfo = Map<String, String>();
+  var mapInfo = <String, String>{};
 
-  Upload(this.mapInfo);
+  Upload(this.mapInfo, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return UploadState();
   }
 }
@@ -906,7 +909,6 @@ class UploadState extends State<Upload> {
       );
     }
 
-    // TODO: implement build
     return Container(
         child: orientation == Orientation.portrait
             ? Column(

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, unnecessary_null_comparison
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/main.dart';
@@ -58,7 +58,7 @@ class SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     changeLang(String lang, String country) async {
-      if (this.lang != lang + "_" + country) {
+      if (this.lang != "${lang}_$country") {
         Locale locale = Locale(lang, country);
         await AppLocalizations.storelang(locale);
         _showMyDialog();
@@ -134,21 +134,21 @@ class SettingsPageState extends State<SettingsPage> {
             height: 10,
           ),
           Container(
-            width: this.lang != null
-                ? (this.lang == "en_US" ? double.infinity : size.width * 0.75)
+            width: lang != null
+                ? (lang == "en_US" ? double.infinity : size.width * 0.75)
                 : size.width * 0.75,
             margin: EdgeInsets.all(20.0),
             padding: EdgeInsets.symmetric(
-                horizontal: this.lang == "en_US" ? 30 : 30,
-                vertical: this.lang == "en_US" ? 22 : 20),
+                horizontal: lang == "en_US" ? 30 : 30,
+                vertical: lang == "en_US" ? 22 : 20),
             decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withAlpha(100), blurRadius: 10.0),
                 ],
                 borderRadius: BorderRadius.all(Radius.circular(15)),
-                gradient: this.lang != null
-                    ? (this.lang == "en_US"
+                gradient: lang != null
+                    ? (lang == "en_US"
                         ? LinearGradient(
                             colors: [
                               blueblack,
@@ -156,7 +156,7 @@ class SettingsPageState extends State<SettingsPage> {
                             ],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
-                            stops: [0.0, 1.0],
+                            stops: const [0.0, 1.0],
                             tileMode: TileMode.clamp)
                         : LinearGradient(
                             colors: [
@@ -165,7 +165,7 @@ class SettingsPageState extends State<SettingsPage> {
                             ],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
-                            stops: [0.0, 1.0],
+                            stops: const [0.0, 1.0],
                             tileMode: TileMode.clamp))
                     : LinearGradient(
                         colors: [
@@ -174,11 +174,11 @@ class SettingsPageState extends State<SettingsPage> {
                         ],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
-                        stops: [0.0, 1.0],
+                        stops: const [0.0, 1.0],
                         tileMode: TileMode.clamp)),
             child: SizedBox(
-              width: this.lang != null
-                  ? (this.lang == "en_US" ? double.infinity : size.width * 0.75)
+              width: lang != null
+                  ? (lang == "en_US" ? double.infinity : size.width * 0.75)
                   : size.width * 0.75,
               child: Material(
                 color: Colors.transparent,
@@ -190,9 +190,8 @@ class SettingsPageState extends State<SettingsPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                          height: this.lang != null
-                              ? (this.lang == "en_US" ? 30 : 25)
-                              : 25,
+                          height:
+                              lang != null ? (lang == "en_US" ? 30 : 25) : 25,
                           margin: const EdgeInsets.only(right: 5),
                           alignment: Alignment.center,
                           child: Image.asset(
@@ -203,9 +202,8 @@ class SettingsPageState extends State<SettingsPage> {
                         "English",
                         style: TextStyle(
                             color: white,
-                            fontSize: this.lang != null
-                                ? (this.lang == "en_US" ? 30 : 25)
-                                : 25,
+                            fontSize:
+                                lang != null ? (lang == "en_US" ? 30 : 25) : 25,
                             fontFamily: defaultFont),
                       ),
                     ],
@@ -215,21 +213,21 @@ class SettingsPageState extends State<SettingsPage> {
             ),
           ),
           Container(
-            width: this.lang != null
-                ? (this.lang == "fr_FR" ? double.infinity : size.width * 0.75)
+            width: lang != null
+                ? (lang == "fr_FR" ? double.infinity : size.width * 0.75)
                 : size.width * 0.75,
             margin: EdgeInsets.all(20.0),
             padding: EdgeInsets.symmetric(
-                horizontal: this.lang == "fr_FR" ? 30 : 30,
-                vertical: this.lang == "fr_FR" ? 22 : 20),
+                horizontal: lang == "fr_FR" ? 30 : 30,
+                vertical: lang == "fr_FR" ? 22 : 20),
             decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withAlpha(100), blurRadius: 10.0),
                 ],
                 borderRadius: BorderRadius.all(Radius.circular(15)),
-                gradient: this.lang != null
-                    ? (this.lang == "fr_FR"
+                gradient: lang != null
+                    ? (lang == "fr_FR"
                         ? LinearGradient(
                             colors: [
                               blueblack,
@@ -237,7 +235,7 @@ class SettingsPageState extends State<SettingsPage> {
                             ],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
-                            stops: [0.0, 1.0],
+                            stops: const [0.0, 1.0],
                             tileMode: TileMode.clamp)
                         : LinearGradient(
                             colors: [
@@ -246,7 +244,7 @@ class SettingsPageState extends State<SettingsPage> {
                             ],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
-                            stops: [0.0, 1.0],
+                            stops: const [0.0, 1.0],
                             tileMode: TileMode.clamp))
                     : LinearGradient(
                         colors: [
@@ -255,7 +253,7 @@ class SettingsPageState extends State<SettingsPage> {
                         ],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
-                        stops: [0.0, 1.0],
+                        stops: const [0.0, 1.0],
                         tileMode: TileMode.clamp)),
             child: SizedBox(
               width: double.infinity,
@@ -269,9 +267,8 @@ class SettingsPageState extends State<SettingsPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                          height: this.lang != null
-                              ? (this.lang == "fr_FR" ? 30 : 25)
-                              : 25,
+                          height:
+                              lang != null ? (lang == "fr_FR" ? 30 : 25) : 25,
                           margin: const EdgeInsets.only(right: 5),
                           alignment: Alignment.center,
                           child: Image.asset(
@@ -282,9 +279,8 @@ class SettingsPageState extends State<SettingsPage> {
                         "Française",
                         style: TextStyle(
                             color: white,
-                            fontSize: this.lang != null
-                                ? (this.lang == "en_US" ? 30 : 25)
-                                : 25,
+                            fontSize:
+                                lang != null ? (lang == "en_US" ? 30 : 25) : 25,
                             fontFamily: defaultFont),
                       ),
                     ],
@@ -294,21 +290,21 @@ class SettingsPageState extends State<SettingsPage> {
             ),
           ),
           Container(
-            width: this.lang != null
-                ? (this.lang == "am_ET" ? double.infinity : size.width * 0.75)
+            width: lang != null
+                ? (lang == "am_ET" ? double.infinity : size.width * 0.75)
                 : size.width * 0.75,
             margin: EdgeInsets.all(20.0),
             padding: EdgeInsets.symmetric(
-                horizontal: this.lang == "am_ET" ? 30 : 30,
-                vertical: this.lang == "am_ET" ? 22 : 20),
+                horizontal: lang == "am_ET" ? 30 : 30,
+                vertical: lang == "am_ET" ? 22 : 20),
             decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withAlpha(100), blurRadius: 10.0),
                 ],
                 borderRadius: BorderRadius.all(Radius.circular(15)),
-                gradient: this.lang != null
-                    ? (this.lang == "am_ET"
+                gradient: lang != null
+                    ? (lang == "am_ET"
                         ? LinearGradient(
                             colors: [
                               blueblack,
@@ -316,7 +312,7 @@ class SettingsPageState extends State<SettingsPage> {
                             ],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
-                            stops: [0.0, 1.0],
+                            stops: const [0.0, 1.0],
                             tileMode: TileMode.clamp)
                         : LinearGradient(
                             colors: [
@@ -325,7 +321,7 @@ class SettingsPageState extends State<SettingsPage> {
                             ],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
-                            stops: [0.0, 1.0],
+                            stops: const [0.0, 1.0],
                             tileMode: TileMode.clamp))
                     : LinearGradient(
                         colors: [
@@ -334,7 +330,7 @@ class SettingsPageState extends State<SettingsPage> {
                         ],
                         begin: Alignment.bottomLeft,
                         end: Alignment.topRight,
-                        stops: [0.0, 1.0],
+                        stops: const [0.0, 1.0],
                         tileMode: TileMode.clamp)),
             child: SizedBox(
               width: double.infinity,
@@ -348,9 +344,8 @@ class SettingsPageState extends State<SettingsPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                          height: this.lang != null
-                              ? (this.lang == "am_ET" ? 30 : 25)
-                              : 25,
+                          height:
+                              lang != null ? (lang == "am_ET" ? 30 : 25) : 25,
                           margin: const EdgeInsets.only(right: 5),
                           alignment: Alignment.center,
                           child: Image.asset(
@@ -362,9 +357,8 @@ class SettingsPageState extends State<SettingsPage> {
                         style: TextStyle(
                             color: white,
                             fontWeight: FontWeight.bold,
-                            fontSize: this.lang != null
-                                ? (this.lang == "am_ET" ? 30 : 25)
-                                : 25,
+                            fontSize:
+                                lang != null ? (lang == "am_ET" ? 30 : 25) : 25,
                             fontFamily: defaultFont),
                       ),
                     ],
@@ -375,138 +369,6 @@ class SettingsPageState extends State<SettingsPage> {
           ),
         ],
       );
-
-      // Container(
-      //   height: 150,
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Padding(
-      //         padding: const EdgeInsets.only(top: 10, left: 17, bottom: 5),
-      //         child: Text(
-      //           // AppLocalizations.of(context).translate("choose_lang_text"),
-      //           "Choose Language",
-      //           style: TextStyle(color: black, fontSize: 16),
-      //         ),
-      //       ),
-      //       Row(
-      //         children: [
-      //           Expanded(
-      //             child: SizedBox(
-      //               width: double.infinity,
-      //               child: Material(
-      //                 color: this.lang != null
-      //                     ? (this.lang == "am_ET" ? blueblack : background)
-      //                     : background,
-      //                 child: TextButton(
-      //                   onPressed: () {
-      //                     changeLang("am", "ET");
-      //                   },
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.center,
-      //                     children: [
-      //                       Container(
-      //                           height: 17,
-      //                           margin: const EdgeInsets.only(right: 5),
-      //                           alignment: Alignment.center,
-      //                           child: Image.asset(
-      //                             "assets/images/et.png",
-      //                           )),
-      //                       Text(
-      //                         "አማርኛ",
-      //                         style: TextStyle(
-      //                             color: this.lang != null
-      //                                 ? (this.lang == "am_ET"
-      //                                     ? Colors.white
-      //                                     : black)
-      //                                 : black,
-      //                             fontFamily: defaultFont),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //           ),
-      //           Expanded(
-      //             child: SizedBox(
-      //               width: double.infinity,
-      //               child: Material(
-      //                 color: this.lang != null
-      //                     ? (this.lang == "en_US" ? blueblack : background)
-      //                     : background,
-      //                 child: TextButton(
-      //                   onPressed: () {
-      //                     changeLang("en", "US");
-      //                   },
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.center,
-      //                     children: [
-      //                       Container(
-      //                           height: 17,
-      //                           margin: const EdgeInsets.only(right: 5),
-      //                           alignment: Alignment.center,
-      //                           child: Image.asset(
-      //                             "assets/images/us.png",
-      //                           )),
-      //                       Text(
-      //                         "English",
-      //                         style: TextStyle(
-      //                             color: this.lang != null
-      //                                 ? (this.lang == "en_US"
-      //                                     ? Colors.white
-      //                                     : black)
-      //                                 : black,
-      //                             fontFamily: defaultFont),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //           ),
-      //           Expanded(
-      //             child: SizedBox(
-      //               width: double.infinity,
-      //               child: Material(
-      //                 color: this.lang != null
-      //                     ? (this.lang == "fr_FR" ? blueblack : background)
-      //                     : background,
-      //                 child: TextButton(
-      //                   onPressed: () {
-      //                     changeLang("fr", "FR");
-      //                   },
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.center,
-      //                     children: [
-      //                       Container(
-      //                           height: 17,
-      //                           margin: const EdgeInsets.only(right: 5),
-      //                           alignment: Alignment.center,
-      //                           child: Image.asset(
-      //                             "assets/images/fr.png",
-      //                           )),
-      //                       Text(
-      //                         "Française",
-      //                         style: TextStyle(
-      //                             color: this.lang != null
-      //                                 ? (this.lang == "fr_FR"
-      //                                     ? Colors.white
-      //                                     : black)
-      //                                 : black,
-      //                             fontFamily: defaultFont),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ],
-      //   ),
-      // );
     }
 
     Orientation orientation = MediaQuery.of(context).orientation;
