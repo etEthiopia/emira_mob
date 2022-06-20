@@ -281,27 +281,30 @@ class VisaFormPageState extends State<VisaFormPage> {
                   );
                 },
                 onStepTapped: (step) {
+                  // print(step);
+                  // print(currentStep);
                   if (step < currentStep) {
                     setState(() {
                       currentStep = step;
                     });
-                  } else {
-                    setState(() {
-                      if (currentStep < steps.length - 1) {
-                        if (currentStep == 0 &&
-                            DetailsState.formKey.currentState!.validate()) {
-                          currentStep = currentStep + 1;
-                        } else if (currentStep == 1 &&
-                            ContactState.formKey.currentState!.validate()) {
-                          currentStep = currentStep + 1;
-                        } else if (currentStep == 2) {
-                          currentStep = currentStep + 1;
-                        }
-                      } else {
-                        currentStep = 0;
-                      }
-                    });
                   }
+                  // else {
+                  //   setState(() {
+                  //     if (currentStep < steps.length - 1) {
+                  //       if (currentStep == 0 &&
+                  //           DetailsState.formKey.currentState!.validate()) {
+                  //         currentStep = currentStep + 1;
+                  //       } else if (currentStep == 1 &&
+                  //           ContactState.formKey.currentState!.validate()) {
+                  //         currentStep = currentStep + 1;
+                  //       } else if (currentStep == 2) {
+                  //         currentStep = currentStep + 1;
+                  //       }
+                  //     } else {
+                  //       currentStep = 0;
+                  //     }
+                  //   });
+                  // }
 
                   // setState(() {
                   //   currentStep = step;
@@ -771,6 +774,8 @@ class ContactState extends State<Contact> {
                                   onPressed: () {
                                     passportUploaded = "none";
                                     selectFile(context).then((value) {
+                                      //print("value");
+                                      //print(value);
                                       if (value != null) {
                                         setState(() {
                                           fileuploaded = "uploading";

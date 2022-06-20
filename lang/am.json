@@ -46,7 +46,7 @@
     "travel_date": "የጉዞ ቀን",
     "purpose": "የጉዞ ዓላማ",
     "passport": "ፓስፖርት",
-    "scanned_passport": "ስካን የተደረገ ፓስፖርት (JPG, PNG)",
+    "scanned_passport": "ፓስፖርት ስካን (JPG, PNG)",
     "passport_uploaded": "የፓስፖርት ስካን ተጭኗል!",
     "couldn't_upload_passport": "ፓስፖርት መስቀል አልተቻለም!",
     "review": "ግምገማ",

@@ -34,7 +34,7 @@
 
     "visa_form": "Visa Form",
     "visa_app_sent": "Visa Application Submitted",
-    "reference_number" : "Reference Number",
+    "reference_number" : "Ref. Number",
     "check_inbox": "Please, Check Your Email Inbox",
     
     "e_visa": "E-Visa",
@@ -46,7 +46,7 @@
     "travel_date": "Travel Date",
     "purpose": "Purpose of Travel",
     "passport": "Passport",
-    "scanned_passport": "Scanned Passport (JPG, PNG)",
+    "scanned_passport": "Passport Scan (JPG, PNG)",
     "passport_uploaded": "Passport Scan Uploaded!",
     "couldn't_upload_passport": "Couldn't Upload Passport Scan!",
     "review": "Review",
@@ -96,7 +96,7 @@
     "weekend_contents": "Applications made on weekends (Friday & Saturday) and public holidays may take longer to process.",
     "none_found": "None Found",
     "apply": "Apply",
-    "enter_ref_number": "Enter your Reference Number To Track",
+    "enter_ref_number": "Enter your Ref. Number To Track",
 
     "status": "Status",
     "approved": "Approved",

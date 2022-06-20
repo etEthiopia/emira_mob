@@ -44,8 +44,8 @@ class VisasPageState extends State<VisasPage> {
       currency = "MGA";
       //AppLocalizations.currency = "MGA";
     } else if (currency == "") {
-      currency = "USD";
-      AppLocalizations.currency = "USD";
+      currency = "MGA";
+      AppLocalizations.currency = "MGA";
     }
 
     for (var post in responseList) {
@@ -73,8 +73,8 @@ class VisasPageState extends State<VisasPage> {
           );
         },
         child: Container(
-            height: 150,
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            height: 130,
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                 color: Colors.white,
@@ -459,7 +459,7 @@ class VisasPageState extends State<VisasPage> {
                                                                             "weekend_contents"),
                                                                     style: const TextStyle(
                                                                         fontSize:
-                                                                            15,
+                                                                            13,
                                                                         color: Colors
                                                                             .grey),
                                                                   ),

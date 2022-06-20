@@ -34,7 +34,7 @@
 
     "visa_form": "Formulaire de visa",
     "visa_app_sent": "Demande de visa soumise",
-    "reference_number" : "Numéro de réference",
+    "reference_number" : "Numéro de réf.",
     "check_inbox": "S'il vous plaît, vérifiez votre boîte de réception",
 
     "e_visa": "E-Visa",
@@ -62,7 +62,7 @@
     "weekend_contents": "Les demandes faites le week-end (vendredi et samedi) et les jours fériés peuvent prendre plus de temps à traiter.",
     "none_found": "Personne n'est trouve",
     "apply": "Appliquer",
-    "enter_ref_number": "Entrez votre numéro de référence à suivre",
+    "enter_ref_number": "Entrez votre numéro de réf. à suivre",
 
     "status": "Statut",
     "approved": "Approuvé",
