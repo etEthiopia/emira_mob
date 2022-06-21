@@ -767,6 +767,7 @@ class ContactState extends State<Contact> {
                                   onPressed: () {
                                     passportUploaded = "none";
                                     selectFile(context).then((value) {
+                                      print(value)
                                       if (value != null) {
                                         setState(() {
                                           fileuploaded = "uploading";
