@@ -29,15 +29,15 @@ class APIService {
               body: jsonEncode(<String, dynamic>{
                 "id": selectedvisa,
                 "applicant": {
-                  "fname": fname,
-                  "lname": lname,
-                  "phone": phone,
-                  "email": email,
-                  "passno": passno,
-                  "profes": profes,
+                  "fname": fname.trim(),
+                  "lname": lname.trim(),
+                  "phone": phone.trim(),
+                  "email": email.trim(),
+                  "passno": passno.trim(),
+                  "profes": profes.trim(),
                   "tdate": tdate.toIso8601String(),
-                  "from": from,
-                  "purpo": purpo,
+                  "from": from.trim(),
+                  "purpo": purpo.trim(),
                   "passportscan": passportscan,
                 },
                 "selectedvisa": selectedvisa,
@@ -91,10 +91,10 @@ class APIService {
           .post(url,
               headers: {'Content-Type': 'application/json; charset=UTF-8'},
               body: jsonEncode(<String, dynamic>{
-                "hfname": fname,
-                "hlname": lname,
-                "hphone": phone,
-                "hemail": email,
+                "hfname": fname.trim(),
+                "hlname": lname.trim(),
+                "hphone": phone.trim(),
+                "hemail": email.trim(),
                 "hotel_id": selectedhotel,
                 "client": "android"
               }))
