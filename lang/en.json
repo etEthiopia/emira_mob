@@ -110,6 +110,13 @@
 
     "address": "Address",
     "whatsapp": "WhatsApp",
-    "messenger": "Messenger"
+    "messenger": "Messenger",
+
+    "sending_text": "Texting Verification Code",
+    "verification": "Verfication",
+    "verfication_code": "Verification Code",
+    "cancel": "Cancel",
+    "verification_success": "Verification Successful",
+    "verification_failure": "Verification Failed"
 
 }

@@ -20,13 +20,9 @@ class VisasPage extends StatefulWidget {
 
 class VisasPageState extends State<VisasPage> {
   ScrollController controller = ScrollController();
-  static TextEditingController controllerReference =
-      new TextEditingController();
   bool closeTopContainer = false;
   double topContainer = 0;
-  bool track = false;
   String currentAppState = "none";
-  dynamic visaResponse = {};
   String visaStatus = FBService.visaStatus;
   String currencyStatus = FBService.currencyStatus;
 
@@ -189,9 +185,7 @@ class VisasPageState extends State<VisasPage> {
 
   @override
   void dispose() {
-    controllerReference.text = "";
     currentAppState = "none";
-    track = false;
 
     super.dispose();
   }
@@ -209,6 +203,11 @@ class VisasPageState extends State<VisasPage> {
     } else {
       getVisaAndRateData();
     }
+
+    if (FBService.apiStatus != "done") {
+      FBService.fetchAPI();
+    }
+
     //getVisaAndRateData();
     controller.addListener(() {
       double value = controller.offset / 119;
@@ -236,407 +235,109 @@ class VisasPageState extends State<VisasPage> {
                             FBService.rateTypes.isNotEmpty
                         ? Column(
                             children: <Widget>[
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    right: 20, left: 20, bottom: 30, top: 5),
-                                decoration: BoxDecoration(
-                                    color: grey,
-                                    borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(20),
-                                        bottomRight: Radius.circular(20))),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .translate("already_applied"),
-                                      style:
-                                          TextStyle(color: white, fontSize: 20),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    TextField(
-                                      controller: controllerReference,
-                                      decoration: InputDecoration(
-                                          hintText: AppLocalizations.of(
-                                                  context)!
-                                              .translate("enter_ref_number"),
-                                          fillColor: white,
-                                          filled: true,
-                                          suffixIcon: IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                track = true;
-                                                currentAppState = "loading";
-                                              });
-                                              //"EMV3406110248"
-                                              FBService.trackVisa(
-                                                      reference:
-                                                          controllerReference
-                                                              .text
-                                                              .toUpperCase())
-                                                  .then((value) {
-                                                if (value != null) {
-                                                  setState(() {
-                                                    currentAppState = "done";
-                                                    visaResponse = value;
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    currentAppState = "error";
-                                                  });
-                                                }
-                                              }).catchError((e) {
-                                                //print("error");
-                                                setState(() {
-                                                  currentAppState = "error";
-                                                });
-                                              });
-                                            },
-                                            icon: const Icon(Icons.search),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              borderSide: const BorderSide(
-                                                  color: Colors.transparent)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              borderSide: const BorderSide(
-                                                  color: Colors.transparent)),
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 5)),
-                                    )
-                                  ],
-                                ),
-                              ),
                               const SizedBox(
                                 height: 20,
                               ),
-                              if (track)
-                                const SizedBox(
-                                  height: 20,
-                                )
-                              else
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 25),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .translate("select_visa_type"),
-                                          style: TextStyle(
-                                              color: black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20),
-                                        ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .translate("select_visa_type"),
+                                        style: TextStyle(
+                                            color: black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
                                       ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .translate("currency"),
-                                            style: TextStyle(
-                                                color: blueblack, fontSize: 15),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          DropdownButton(
-                                            value:
-                                                AppLocalizations.currency == ""
-                                                    ? "MGA"
-                                                    : AppLocalizations.currency,
-                                            icon: const Icon(
-                                                Icons.keyboard_arrow_down),
-                                            style: TextStyle(
-                                                color: blueblack, //<-- SEE HERE
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold),
-                                            items: FBService.rateTypes.keys
-                                                .map((String item) {
-                                              return DropdownMenuItem(
-                                                  enabled: FBService
-                                                          .rateTypes[item] !=
-                                                      0,
-                                                  value: item,
-                                                  child: Text(item));
-                                            }).toList(),
-                                            onChanged: (String? newValue) {
-                                              if (newValue is String) {
-                                                AppLocalizations.currency =
-                                                    newValue;
-                                                // setState(() {
-                                                //   AppLocalizations.currency = newValue;
-                                                // });
-                                                AppLocalizations.storecurrency(
-                                                    newValue);
-                                                getPostsData();
-                                              }
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              this.track
-                                  ? this.currentAppState == "loading"
-                                      ? Center(
-                                          child: loadingWidget(context),
-                                        )
-                                      : this.currentAppState == "error"
-                                          ? Center(
-                                              child: errorWidget(
-                                                  context,
-                                                  AppLocalizations.of(context)!
-                                                      .translate("none_found")),
-                                            )
-                                          : this.currentAppState == "done"
-                                              ? Container(
-                                                  height: 150,
-                                                  margin: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 10),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                                  .all(
-                                                              Radius.circular(
-                                                                  20.0)),
-                                                      color: Colors.white,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                            color: Colors.black
-                                                                .withAlpha(100),
-                                                            blurRadius: 10.0),
-                                                      ]),
-                                                  child: Container(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 20.0,
-                                                        vertical: 10),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Expanded(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: <Widget>[
-                                                              Text(
-                                                                visaResponse[
-                                                                    "visa_name"],
-                                                                style: TextStyle(
-                                                                    color:
-                                                                        blueblack,
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              Expanded(
-                                                                child:
-                                                                    Container(
-                                                                  child: Text(
-                                                                    AppLocalizations.of(
-                                                                            context)!
-                                                                        .translate(
-                                                                            "weekend_contents"),
-                                                                    style: const TextStyle(
-                                                                        fontSize:
-                                                                            13,
-                                                                        color: Colors
-                                                                            .grey),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                              AppLocalizations.of(
-                                                                      context)!
-                                                                  .translate(
-                                                                      "status"),
-                                                              style: TextStyle(
-                                                                color: grey,
-                                                                fontSize: 15,
-                                                              ),
-                                                            ),
-                                                            visaResponse[
-                                                                        "status"] ==
-                                                                    1
-                                                                ? Text(
-                                                                    AppLocalizations.of(
-                                                                            context)!
-                                                                        .translate(
-                                                                            "approved"),
-                                                                    style: const TextStyle(
-                                                                        color: Colors
-                                                                            .green,
-                                                                        fontSize:
-                                                                            20,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
-                                                                  )
-                                                                : visaResponse[
-                                                                            "status"] ==
-                                                                        2
-                                                                    ? Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .translate("rejected"),
-                                                                        style: const TextStyle(
-                                                                            color: Colors
-                                                                                .red,
-                                                                            fontSize:
-                                                                                20,
-                                                                            fontWeight:
-                                                                                FontWeight.bold),
-                                                                      )
-                                                                    : Text(
-                                                                        AppLocalizations.of(context)!
-                                                                            .translate("pending"),
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                grey,
-                                                                            fontSize:
-                                                                                20,
-                                                                            fontWeight:
-                                                                                FontWeight.bold),
-                                                                      ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            visaResponse["status"] ==
-                                                                        1 &&
-                                                                    visaResponse[
-                                                                            "evisa"] !=
-                                                                        null
-                                                                ? Link(
-                                                                    target:
-                                                                        LinkTarget
-                                                                            .blank,
-                                                                    uri: Uri.parse(
-                                                                        visaResponse[
-                                                                            "evisa"]),
-                                                                    builder: (context,
-                                                                            followLink) =>
-                                                                        ElevatedButton(
-                                                                            style:
-                                                                                ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: grey))), backgroundColor: MaterialStateProperty.all(blueblack)),
-                                                                            onPressed: followLink,
-                                                                            child: Text(
-                                                                              AppLocalizations.of(context)!.translate("e_visa"),
-                                                                              style: const TextStyle(fontSize: 25),
-                                                                            )))
-                                                                : const SizedBox(
-                                                                    height: 50,
-                                                                  ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ))
-                                              : const SizedBox(
-                                                  height: 0,
-                                                )
-                                  : Expanded(
-                                      child: ListView.builder(
-                                          controller: controller,
-                                          itemCount: itemsData.length,
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            double scale = 1.0;
-                                            if (topContainer > 0.5) {
-                                              scale =
-                                                  index + 0.5 - topContainer;
-                                              if (scale < 0) {
-                                                scale = 0;
-                                              } else if (scale > 1) {
-                                                scale = 1;
-                                              }
-                                            }
-                                            return Opacity(
-                                              opacity: scale,
-                                              child: Transform(
-                                                transform: Matrix4.identity()
-                                                  ..scale(scale, scale),
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                child: Align(
-                                                    heightFactor: 0.7,
-                                                    alignment:
-                                                        Alignment.topCenter,
-                                                    child: itemsData[index]),
-                                              ),
-                                            );
-                                          })),
-                              this.track
-                                  ? this.currentAppState == "done" ||
-                                          this.currentAppState == "error"
-                                      ? Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 30.0, vertical: 10),
-                                          child: SizedBox(
-                                              width: double.maxFinite,
-                                              height: 60,
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  this.setState(() {
-                                                    track = false;
-                                                  });
-                                                },
-                                                style: ButtonStyle(
-                                                    shape: MaterialStateProperty.all<
-                                                            RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20.0),
-                                                            side: BorderSide(
-                                                                color: grey))),
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all(grey)),
-                                                child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .translate("go_back"),
-                                                  style: const TextStyle(
-                                                      fontSize: 20),
-                                                ),
-                                              )),
-                                        )
-                                      : const SizedBox(
-                                          height: 20,
-                                        )
-                                  : const SizedBox(
-                                      height: 20,
                                     ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .translate("currency"),
+                                          style: TextStyle(
+                                              color: blueblack, fontSize: 15),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        DropdownButton(
+                                          value: AppLocalizations.currency == ""
+                                              ? "MGA"
+                                              : AppLocalizations.currency,
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_down),
+                                          style: TextStyle(
+                                              color: blueblack, //<-- SEE HERE
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold),
+                                          items: FBService.rateTypes.keys
+                                              .map((String item) {
+                                            return DropdownMenuItem(
+                                                enabled:
+                                                    FBService.rateTypes[item] !=
+                                                        0,
+                                                value: item,
+                                                child: Text(item));
+                                          }).toList(),
+                                          onChanged: (String? newValue) {
+                                            if (newValue is String) {
+                                              AppLocalizations.currency =
+                                                  newValue;
+                                              // setState(() {
+                                              //   AppLocalizations.currency = newValue;
+                                              // });
+                                              AppLocalizations.storecurrency(
+                                                  newValue);
+                                              getPostsData();
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                  child: Container(
+                                margin: const EdgeInsets.only(bottom: 20),
+                                child: ListView.builder(
+                                    controller: controller,
+                                    itemCount: itemsData.length,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      double scale = 1.0;
+                                      // if (topContainer > 0.5) {
+                                      //   scale =
+                                      //       index + 0.5 - topContainer;
+                                      //   if (scale < 0) {
+                                      //     scale = 0;
+                                      //   } else if (scale > 1) {
+                                      //     scale = 1;
+                                      //   }
+                                      // }
+                                      return Opacity(
+                                        opacity: scale,
+                                        child: Transform(
+                                          transform: Matrix4.identity()
+                                            ..scale(scale, scale),
+                                          alignment: Alignment.bottomCenter,
+                                          child: Align(
+                                              heightFactor: 0.7,
+                                              alignment: Alignment.topCenter,
+                                              child: itemsData[index]),
+                                        ),
+                                      );
+                                    }),
+                              )),
                             ],
                           )
                         : Column(

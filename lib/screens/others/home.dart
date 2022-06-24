@@ -2,6 +2,7 @@
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/screens/hotel/hotels.dart';
+import 'package:emira_all_in_one_mob/screens/visa/track.dart';
 import 'package:emira_all_in_one_mob/screens/visa/visas.dart';
 import 'package:emira_all_in_one_mob/services/const_data.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
@@ -71,6 +72,7 @@ class HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       welcomeList[ix],
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                           shadows: const <Shadow>[
                                             Shadow(
@@ -255,7 +257,9 @@ class HomePageState extends State<HomePage> {
               ]))
             : page == 1
                 ? const VisasPage()
-                : const HotelsPage(),
+                : page == 2
+                    ? const HotelsPage()
+                    : const TrackPage(),
         bottomNavigationBar: CurvedNavigationBar(
           index: page,
           key: _bottomNavigationKey,
@@ -303,6 +307,22 @@ class HomePageState extends State<HomePage> {
                   const Icon(Icons.hotel, size: 30),
                   Text(
                     AppLocalizations.of(context)!.translate("hotel"),
+                    style: TextStyle(
+                        fontFamily: defaultFont,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.track_changes, size: 30),
+                  Text(
+                    AppLocalizations.of(context)!.translate("track"),
                     style: TextStyle(
                         fontFamily: defaultFont,
                         fontWeight: FontWeight.bold,

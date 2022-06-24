@@ -76,5 +76,13 @@
 
     "address": "Adresse",
     "whatsapp": "WhatsApp",
-    "messenger": "Messenger"
+    "messenger": "Messenger",
+
+    "sending_text": "Code de vérification des SMS",
+    "verification": "vérification",
+    "verfication_code": "Code de vérification",
+    "cancel": "Annuler",
+    
+    "verification_success": "Vérification réussie",
+    "verification_failure": "Échec de la vérification"
 }

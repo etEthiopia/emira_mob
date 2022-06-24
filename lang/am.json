@@ -76,5 +76,12 @@
 
     "address": "አድራሻ",
     "whatsapp": "ዋትስአፕ",
-    "messenger": "ሜሴንጀር"
+    "messenger": "ሜሴንጀር",
+
+    "sending_text": "ማረጋገጫ ኮድ በመላክ ላይ",
+    "verification": "ማረጋገጫ",
+    "verfication_code": "ማረጋገጫ ኮድ",
+    "cancel": "ተመለስ",
+    "verification_success": "ማረጋገጫው ተሳክቷል",
+    "verification_failure": "ማረጋገጫው አልተሳካም"
 }

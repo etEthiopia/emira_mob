@@ -3,6 +3,7 @@
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
 import 'package:emira_all_in_one_mob/services/api_service.dart';
+import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
@@ -36,8 +37,17 @@ class HotelFormPageState extends State<HotelFormPage> {
   }
 
   @override
+  void initState() {
+    if (FBService.apiStatus != "done") {
+      FBService.fetchAPI();
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
+    final Size size = MediaQuery.of(context).size;
 
     Widget firstName() {
       return TextFormField(
@@ -229,7 +239,7 @@ class HotelFormPageState extends State<HotelFormPage> {
               orientation == Orientation.portrait
                   ? Container(
                       padding: const EdgeInsets.only(top: 20, bottom: 10),
-                      height: 300,
+                      height: size.height / 3,
                       decoration: BoxDecoration(
                           color: black,
                           image: DecorationImage(
@@ -247,7 +257,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                 height: double.maxFinite,
                 color: Colors.transparent,
                 margin: orientation == Orientation.portrait
-                    ? const EdgeInsets.only(top: 290)
+                    ? EdgeInsets.only(top: size.height / 3 - (10))
                     : const EdgeInsets.only(
                         top: 0,
                       ),

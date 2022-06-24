@@ -85,6 +85,11 @@ class HotelsPageState extends State<HotelsPage> {
     } else {
       getHotelData();
     }
+
+    if (FBService.apiStatus != "done") {
+      FBService.fetchAPI();
+    }
+    super.initState();
   }
 
   @override

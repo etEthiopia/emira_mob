@@ -1,6 +1,7 @@
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
+import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 String formatAmount(price, currency) {
   String oprice = price.toString();
@@ -30,4 +31,12 @@ Future<FilePickerResult?> selectFile(BuildContext context) async {
   } else {
     return null;
   }
+}
+
+void errorSnack(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    backgroundColor: red,
+    content: Text(message),
+    duration: const Duration(seconds: 5),
+  ));
 }

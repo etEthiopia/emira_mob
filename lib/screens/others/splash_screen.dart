@@ -16,6 +16,7 @@ class SplashPage extends StatefulWidget {
 class SplashPageState extends State<SplashPage> {
   @override
   void initState() {
+    FBService.fetchAPI();
     FBService.fetchVisas();
     FBService.fetchRate();
     FBService.fetchHotels();
@@ -38,6 +39,9 @@ class SplashPageState extends State<SplashPage> {
         height: 300); //<- Creates a widget that displays an image.
 
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.grey,
+      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         /* appBar: AppBar(

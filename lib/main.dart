@@ -47,6 +47,9 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.grey,
+      ),
       debugShowCheckedModeBanner: false,
       locale: locale,
       supportedLocales: const [
@@ -98,6 +101,10 @@ class MainPageState extends State<MainPage> {
       container = HomePage(
         page: 2,
       );
+    } else if (currentPage == DrawerSections.track) {
+      container = HomePage(
+        page: 3,
+      );
     } else if (currentPage == DrawerSections.faq) {
       container = const FAQPage();
     } else if (currentPage == DrawerSections.contact) {
@@ -145,24 +152,24 @@ class MainPageState extends State<MainPage> {
               currentPage == DrawerSections.visa ? true : false),
           menuItem(3, AppLocalizations.of(context)!.translate("hotel"),
               Icons.hotel, currentPage == DrawerSections.hotel ? true : false),
-          // menuItem(
-          //     3,
-          //     AppLocalizations.of(context)!.translate("track"),
-          //     Icons.track_changes,
-          //     currentPage == DrawerSections.track ? true : false),
           menuItem(
               4,
+              AppLocalizations.of(context)!.translate("track"),
+              Icons.track_changes,
+              currentPage == DrawerSections.track ? true : false),
+          menuItem(
+              5,
               AppLocalizations.of(context)!.translate("faq"),
               Icons.question_mark_rounded,
               currentPage == DrawerSections.faq ? true : false),
           menuItem(
-              5,
+              6,
               AppLocalizations.of(context)!.translate("contact"),
               Icons.phone,
               currentPage == DrawerSections.contact ? true : false),
           const Divider(),
           menuItem(
-              6,
+              7,
               AppLocalizations.of(context)!.translate("settings"),
               Icons.settings_outlined,
               currentPage == DrawerSections.settings ? true : false),
@@ -188,12 +195,15 @@ class MainPageState extends State<MainPage> {
               currentPage = DrawerSections.hotel;
               currentTitle = "emira_full_name";
             } else if (id == 4) {
+              currentPage = DrawerSections.track;
+              currentTitle = "emira_full_name";
+            } else if (id == 5) {
               currentPage = DrawerSections.faq;
               currentTitle = "faq";
-            } else if (id == 5) {
+            } else if (id == 6) {
               currentPage = DrawerSections.contact;
               currentTitle = "contact";
-            } else if (id == 6) {
+            } else if (id == 7) {
               currentPage = DrawerSections.settings;
               currentTitle = "settings";
             }
@@ -229,4 +239,4 @@ class MainPageState extends State<MainPage> {
   }
 }
 
-enum DrawerSections { home, visa, hotel, faq, contact, settings }
+enum DrawerSections { home, visa, hotel, faq, track, contact, settings }

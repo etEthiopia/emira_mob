@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class APIService {
-  static const String serverIP = "serene-ocean-60681.herokuapp.com";
+  static String serverIP = "serene-ocean-60681.herokuapp.com";
 
   // Apply For A Visa
   static Future<String> applyVisa({

@@ -19,9 +19,17 @@ class VisaDetailPage extends StatefulWidget {
 
 class VisaDetailPageState extends State<VisaDetailPage> {
   @override
+  void initState() {
+    if (FBService.apiStatus != "done") {
+      FBService.fetchAPI();
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    int convertedPrice = (widget.visa["price"].toDouble() *
-            FBService.rateTypes[AppLocalizations.currency])
+    int convertedPrice = (double.parse(widget.visa["price"].toString()) *
+            FBService.rateTypes[AppLocalizations.currency]!)
         .round();
     String formatedPrice =
         "${formatAmount(convertedPrice, AppLocalizations.currency)} ${AppLocalizations.currency}";
