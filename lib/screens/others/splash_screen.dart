@@ -39,9 +39,6 @@ class SplashPageState extends State<SplashPage> {
         height: 300); //<- Creates a widget that displays an image.
 
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         /* appBar: AppBar(
