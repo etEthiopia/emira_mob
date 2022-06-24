@@ -141,7 +141,7 @@ class FBService {
     } catch (e) {
       hotelTypes = [];
       hotelStatus = "error";
-      //print(e);
+      ////print(e);
       return [];
     }
   }
@@ -187,10 +187,10 @@ class FBService {
         downloadTask.snapshotEvents.listen((taskSnapshot) async {
           switch (taskSnapshot.state) {
             case TaskState.running:
-              //print("running");
+              ////print("running");
               break;
             case TaskState.paused:
-              //print("paused");
+              ////print("paused");
               break;
             case TaskState.success:
               downloadToFile.create(recursive: true);
@@ -198,10 +198,10 @@ class FBService {
               await downloadToFile.writeAsBytes(bytes);
               break;
             case TaskState.canceled:
-              //print("canceled");
+              ////print("canceled");
               break;
             case TaskState.error:
-              //print("error");
+              ////print("error");
               break;
           }
         });
@@ -212,10 +212,10 @@ class FBService {
       }
     } on FirebaseException {
       // e.g, e.code == 'canceled'
-      //print('Download error: $e');
+      ////print('Download error: $e');
       return false;
     } catch (e) {
-      // print(e);
+      // //print(e);
       return false;
     }
   }
@@ -261,19 +261,19 @@ class FBService {
         content: Text("Couldn't Upload Your Passport"),
         duration: Duration(seconds: 2),
       ));
-      //print('error occured');
+      ////print('error occured');
       return "";
     }
   }
 
   static Future<bool> askPermission(BuildContext context) async {
     final status = await Permission.storage.request();
-    //print("ask permission");
+    ////print("ask permission");
     if (status == PermissionStatus.granted) {
-      //print('Permission granted');
+      ////print('Permission granted');
       return true;
     } else if (status == PermissionStatus.denied) {
-      // print(
+      // //print(
       //     'Denied. Show a dialog with a reason and again ask for the permission.');
       //askPermission(context);
     } else if (status == PermissionStatus.permanentlyDenied) {}
@@ -291,36 +291,36 @@ class FBService {
 
   static Future<bool> loginWithPhone(String phone) async {
     bool status = false;
-    print("fbb: starting");
+    //print("fbb: starting");
     try {
       await auth
           .verifyPhoneNumber(
             phoneNumber: phone,
             verificationCompleted: (PhoneAuthCredential credential) async {
-              print("fbb: verification completed");
+              //print("fbb: verification completed");
               await auth.signInWithCredential(credential).then((value) {
-                print("fbb: You are logged in successfully");
+                //print("fbb: You are logged in successfully");
                 status = true;
               });
             },
             verificationFailed: (FirebaseAuthException e) {
-              print("fbb: " + e.message.toString());
+              //print("fbb: " + e.message.toString());
               status = false;
             },
             codeSent: (String verificationId, int? resendToken) {
-              print("fbb: coderesent" + verificationId);
+              //print("fbb: coderesent" + verificationId);
               FBService.verificationID = verificationId;
               status = true;
             },
             codeAutoRetrievalTimeout: (String verificationId) {
-              print("fbb: timeout" + verificationID);
+              //print("fbb: timeout" + verificationID);
               status = false;
             },
           )
           .then((value) => status);
       return status;
     } catch (e) {
-      print("fbb: e: " + e.toString());
+      //print("fbb: e: " + e.toString());
       return false;
     }
   }
@@ -330,10 +330,10 @@ class FBService {
         verificationId: verificationID, smsCode: text);
     bool status = false;
     await auth.signInWithCredential(credential).then((value) {
-      print("You are logged in successfully");
+      //print("You are logged in successfully");
       status = true;
     }).catchError((e) {
-      print(e);
+      //print(e);
       status = false;
     });
     return status;

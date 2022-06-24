@@ -8,7 +8,6 @@ import 'package:emira_all_in_one_mob/services/utils.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
-import 'package:url_launcher/link.dart';
 
 class VisasPage extends StatefulWidget {
   final bool title;

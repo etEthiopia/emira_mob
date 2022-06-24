@@ -34,7 +34,7 @@ class TrackPageState extends State<TrackPage> {
     return Scaffold(
         backgroundColor: background,
         appBar: widget.title ? cleanAppBar(title: "Track Emira") : null,
-        body: Container(
+        body: SizedBox(
             height: size.height,
             child: Column(children: <Widget>[
               Container(
@@ -113,7 +113,7 @@ class TrackPageState extends State<TrackPage> {
                 height: 20,
               ),
               Expanded(
-                  child: this.currentAppState == "none"
+                  child: currentAppState == "none"
                       ? Container(
                           height: 150,
                           width: 150,
@@ -122,22 +122,22 @@ class TrackPageState extends State<TrackPage> {
                               colorFilter: ColorFilter.mode(
                                   background.withOpacity(0.5),
                                   BlendMode.dstATop),
-                              image: AssetImage('assets/images/logo.png'),
+                              image: const AssetImage('assets/images/logo.png'),
                             ),
                           ),
                         )
-                      : this.currentAppState == "loading"
+                      : currentAppState == "loading"
                           ? Center(
                               child: loadingWidget(context),
                             )
-                          : this.currentAppState == "error"
+                          : currentAppState == "error"
                               ? Center(
                                   child: errorWidget(
                                       context,
                                       AppLocalizations.of(context)!
                                           .translate("none_found")),
                                 )
-                              : this.currentAppState == "done"
+                              : currentAppState == "done"
                                   ? Column(children: [
                                       const SizedBox(
                                         height: 30,
