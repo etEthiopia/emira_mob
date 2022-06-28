@@ -40,6 +40,7 @@ class SplashPageState extends State<SplashPage> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
       home: Scaffold(
         /* appBar: AppBar(
           title: Text("MyApp"),

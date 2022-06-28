@@ -82,6 +82,7 @@ class APIService {
     required String lname,
     required String phone,
     required String email,
+    required String from,
     required String selectedhotel,
   }) async {
     try {
@@ -95,6 +96,7 @@ class APIService {
                 "hlname": lname.trim(),
                 "hphone": phone.trim(),
                 "hemail": email.trim(),
+                "from": from.trim(),
                 "hotel_id": selectedhotel,
                 "client": "android"
               }))

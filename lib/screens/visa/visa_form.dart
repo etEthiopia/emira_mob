@@ -796,7 +796,7 @@ class DetailsState extends State<Details> {
           DateTime? pickedDate = await showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime.now().subtract(Duration(days: 1)),
+            firstDate: DateTime.now(),
             lastDate: DateTime(2100),
           );
 

@@ -7,6 +7,7 @@ import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
+import 'package:country_picker/country_picker.dart';
 
 class HotelFormPage extends StatefulWidget {
   final bool title;
@@ -23,6 +24,7 @@ class HotelFormPageState extends State<HotelFormPage> {
   TextEditingController controllerLastName = TextEditingController();
   TextEditingController controllerPhone = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
+  TextEditingController controllerCitizenship = TextEditingController();
   String currentState = "none";
 
   @override
@@ -166,6 +168,63 @@ class HotelFormPageState extends State<HotelFormPage> {
       );
     }
 
+    Widget citizenship() {
+      return TextFormField(
+        keyboardType: TextInputType.name,
+        maxLines: 1,
+        readOnly: true,
+        controller: controllerCitizenship,
+        onTap: () {
+          showCountryPicker(
+              context: context,
+              countryListTheme: CountryListThemeData(
+                flagSize: 25,
+                backgroundColor: Colors.white,
+                textStyle: TextStyle(fontSize: 16, color: grey),
+                bottomSheetHeight: 500, // Optional. Country list modal height
+                //Optional. Sets the border radius for the bottomsheet.
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                ),
+                //Optional. Styles the search field.
+                inputDecoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate("search"),
+                  hintText:
+                      AppLocalizations.of(context)!.translate("type_to_search"),
+                  prefixIcon: const Icon(Icons.search),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  ),
+                ),
+              ),
+              onSelect: (Country country) {
+                controllerCitizenship.text = country.name;
+              });
+        },
+        decoration: InputDecoration(
+          prefixIcon: const Icon(
+            Icons.location_on,
+            color: Colors.grey,
+          ),
+          hintText: AppLocalizations.of(context)!.translate("nationality"),
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          ),
+        ),
+        validator: (value) {
+          if (value!.trim().isEmpty) {
+            return AppLocalizations.of(context)!.translate("nationality_empty");
+          } else if (value.length > 35) {
+            return AppLocalizations.of(context)!.translate("nationality_l_35");
+          } else if (value.length < 2) {
+            return AppLocalizations.of(context)!.translate("nationality_g_2");
+          }
+          return null;
+        },
+      );
+    }
+
     Widget bookBtn() {
       return SizedBox(
           width: double.maxFinite,
@@ -181,6 +240,7 @@ class HotelFormPageState extends State<HotelFormPage> {
                         lname: controllerLastName.text,
                         phone: controllerPhone.text,
                         email: controllerEmail.text,
+                        from: controllerCitizenship.text,
                         selectedhotel: widget.hotel["id"])
                     .then((value) {
                   setState(() {
@@ -230,209 +290,197 @@ class HotelFormPageState extends State<HotelFormPage> {
     return Scaffold(
       backgroundColor: background3,
       appBar: widget.title ? cleanAppBar(title: "VisaDetail Emira") : null,
-      body: SafeArea(
-        child: Container(
-          color: white,
-          height: double.infinity,
-          child: Stack(
-            children: <Widget>[
-              orientation == Orientation.portrait
-                  ? Container(
-                      padding: const EdgeInsets.only(top: 20, bottom: 10),
-                      height: size.height / 3,
-                      decoration: BoxDecoration(
-                          color: black,
-                          image: DecorationImage(
-                            colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.9),
-                                BlendMode.dstATop),
-                            fit: BoxFit.cover,
-                            image: NetworkImage(widget.hotel["image"]),
-                          )),
-                      child: const Center(child: Text("")))
-                  : const SizedBox(
-                      height: 0,
+      body: Container(
+        color: white,
+        height: double.infinity,
+        child: Stack(
+          children: <Widget>[
+            orientation == Orientation.portrait
+                ? Container(
+                    padding: const EdgeInsets.only(top: 20, bottom: 10),
+                    height: size.height / 4,
+                    decoration: BoxDecoration(
+                        color: black,
+                        image: DecorationImage(
+                          colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.9), BlendMode.dstATop),
+                          fit: BoxFit.cover,
+                          image: NetworkImage(widget.hotel["image"]),
+                        )),
+                    child: const Center(child: Text("")))
+                : const SizedBox(
+                    height: 0,
+                  ),
+            Container(
+              height: double.maxFinite,
+              color: Colors.transparent,
+              margin: orientation == Orientation.portrait
+                  ? EdgeInsets.only(top: size.height / 4 - (10))
+                  : const EdgeInsets.only(
+                      top: 0,
                     ),
-              Container(
-                height: double.maxFinite,
-                color: Colors.transparent,
-                margin: orientation == Orientation.portrait
-                    ? EdgeInsets.only(top: size.height / 3 - (10))
-                    : const EdgeInsets.only(
-                        top: 0,
-                      ),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: white,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withAlpha(100),
-                            blurRadius: 10.0),
-                      ],
-                      borderRadius: orientation == Orientation.portrait
-                          ? const BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))
-                          : const BorderRadius.all(Radius.zero)),
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(top: 16.0, bottom: 20.0),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              currentState == "none"
-                                  ? Form(
-                                      key: formKey,
-                                      autovalidateMode:
-                                          AutovalidateMode.disabled,
-                                      child: Container(
-                                        width: double.infinity,
-                                        padding: const EdgeInsets.all(32.0),
-                                        child: orientation ==
-                                                Orientation.portrait
-                                            ? Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: <Widget>[
-                                                  Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .translate(
-                                                            "book_hotel"),
-                                                    style: TextStyle(
-                                                        color: blueblack,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 30),
-                                                  ),
-                                                  smallVSizedBox(),
-                                                  Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .translate(
-                                                            "submit_personal_info"),
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: grey,
-                                                        fontSize: 17),
-                                                  ),
-                                                  smallVSizedBox(),
-                                                  smallVSizedBox(),
-                                                  firstName(),
-                                                  smallVSizedBox(),
-                                                  lastName(),
-                                                  smallVSizedBox(),
-                                                  phone(),
-                                                  smallVSizedBox(),
-                                                  email(),
-                                                  smallVSizedBox(),
-                                                  bookBtn()
-                                                ],
-                                              )
-                                            : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: <Widget>[
-                                                  Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .translate(
-                                                            "book_hotel"),
-                                                    style: TextStyle(
-                                                        color: blueblack,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 30),
-                                                  ),
-                                                  smallVSizedBox(),
-                                                  Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .translate(
-                                                            "submit_personal_info"),
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: grey,
-                                                        fontSize: 17),
-                                                  ),
-                                                  smallVSizedBox(),
-                                                  smallVSizedBox(),
-                                                  Row(
-                                                    children: [
-                                                      Expanded(
-                                                          child: firstName()),
-                                                      smallHSizedBox(),
-                                                      Expanded(
-                                                          child: lastName())
-                                                    ],
-                                                  ),
-                                                  smallVSizedBox(),
-                                                  Row(
-                                                    children: [
-                                                      Expanded(child: phone()),
-                                                      smallHSizedBox(),
-                                                      Expanded(child: email())
-                                                    ],
-                                                  ),
-                                                  smallVSizedBox(),
-                                                  bookBtn()
-                                                ],
-                                              ),
-                                      ),
-                                    )
-                                  : currentState == "loading"
-                                      ? Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 70),
-                                          child: loadingWidget(context))
-                                      : currentState == "error"
-                                          ? errorWidget(
-                                              context,
-                                              AppLocalizations.of(context)!
-                                                  .translate("error"),
-                                            )
-                                          : currentState == "done"
-                                              ? doneWidget(
-                                                  context,
-                                                  "",
+              child: Container(
+                decoration: BoxDecoration(
+                    color: white,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withAlpha(100), blurRadius: 10.0),
+                    ],
+                    borderRadius: orientation == Orientation.portrait
+                        ? const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))
+                        : const BorderRadius.all(Radius.zero)),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 20.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            currentState == "none"
+                                ? Form(
+                                    key: formKey,
+                                    autovalidateMode: AutovalidateMode.disabled,
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.all(32.0),
+                                      child: orientation == Orientation.portrait
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                Text(
+                                                  AppLocalizations.of(context)!
+                                                      .translate("book_hotel"),
+                                                  style: TextStyle(
+                                                      color: blueblack,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 30),
+                                                ),
+                                                smallVSizedBox(),
+                                                Text(
                                                   AppLocalizations.of(context)!
                                                       .translate(
-                                                          "submitted_we_will_contact_you_whatsapp"),
-                                                )
-                                              : const SizedBox(
-                                                  height: 0,
-                                                )
-                            ],
-                          ),
+                                                          "submit_personal_info"),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: grey,
+                                                      fontSize: 17),
+                                                ),
+                                                smallVSizedBox(),
+                                                smallVSizedBox(),
+                                                firstName(),
+                                                smallVSizedBox(),
+                                                lastName(),
+                                                smallVSizedBox(),
+                                                phone(),
+                                                smallVSizedBox(),
+                                                email(),
+                                                smallVSizedBox(),
+                                                citizenship(),
+                                                smallVSizedBox(),
+                                                bookBtn()
+                                              ],
+                                            )
+                                          : Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                Text(
+                                                  AppLocalizations.of(context)!
+                                                      .translate("book_hotel"),
+                                                  style: TextStyle(
+                                                      color: blueblack,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 30),
+                                                ),
+                                                smallVSizedBox(),
+                                                Text(
+                                                  AppLocalizations.of(context)!
+                                                      .translate(
+                                                          "submit_personal_info"),
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: grey,
+                                                      fontSize: 17),
+                                                ),
+                                                smallVSizedBox(),
+                                                smallVSizedBox(),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: firstName()),
+                                                    smallHSizedBox(),
+                                                    Expanded(child: lastName())
+                                                  ],
+                                                ),
+                                                smallVSizedBox(),
+                                                Row(
+                                                  children: [
+                                                    Expanded(child: phone()),
+                                                    smallHSizedBox(),
+                                                    Expanded(child: email())
+                                                  ],
+                                                ),
+                                                smallVSizedBox(),
+                                                bookBtn()
+                                              ],
+                                            ),
+                                    ),
+                                  )
+                                : currentState == "loading"
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(top: 70),
+                                        child: loadingWidget(context))
+                                    : currentState == "error"
+                                        ? errorWidget(
+                                            context,
+                                            AppLocalizations.of(context)!
+                                                .translate("error"),
+                                          )
+                                        : currentState == "done"
+                                            ? doneWidget(
+                                                context,
+                                                "",
+                                                AppLocalizations.of(context)!
+                                                    .translate(
+                                                        "submitted_we_will_contact_you_whatsapp"),
+                                              )
+                                            : const SizedBox(
+                                                height: 0,
+                                              )
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: AppBar(
-                  foregroundColor:
-                      orientation == Orientation.portrait ? white : blueblack,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AppBar(
+                foregroundColor:
+                    orientation == Orientation.portrait ? white : blueblack,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
               ),
-              // Positioned(
-              //   bottom: 0,
-              //   left: 0,
-              //   right: 0,
-              //   child:
-              //   ),
-            ],
-          ),
+            ),
+            // Positioned(
+            //   bottom: 0,
+            //   left: 0,
+            //   right: 0,
+            //   child:
+            //   ),
+          ],
         ),
       ),
     );
