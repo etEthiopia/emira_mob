@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:emira_all_in_one_mob/services/api_service.dart';
+import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -337,5 +339,91 @@ class FBService {
       status = false;
     });
     return status;
+  }
+
+  static Future<String> saveApplication({
+    required String fname,
+    required String lname,
+    required String phone,
+    required String email,
+    required String passno,
+    required String profes,
+    required String tdate,
+    required String purpo,
+    required String from,
+    required String passportscan,
+    required String visaid,
+  }) async {
+    try {
+      //visaStatus = "loading";
+      String ref = "EMV";
+      var rng = Random();
+      for (var i = 0; i < 10; i++) {
+        ref += rng.nextInt(9).toString();
+      }
+
+      final va =
+          FirebaseFirestore.instance.collection("visaapplications").doc(ref);
+      final vt = FirebaseFirestore.instance.collection("visatypes").doc(visaid);
+      final vasnapshot = await va.get();
+
+      if (vasnapshot.exists) {
+        return "";
+      } else {
+        final vtsnapshot = await vt.get();
+
+        Map<String, dynamic> data = <String, dynamic>{
+          "fname": fname,
+          "lname": lname,
+          "phone": phone,
+          "email": email,
+          "passno": passno,
+          "profes": profes,
+          "tdate": DateTime.parse(tdate),
+          "purpo": purpo,
+          "from": from.toLowerCase(),
+          "passportscan": passportscan,
+          "nationalidscan": "",
+          "client": Platform.isAndroid ? "android" : "ios",
+          "visa_id": visaid,
+          "visa_name": vtsnapshot.data()!["duration"] +
+              ", " +
+              vtsnapshot.data()!["entry"],
+          "visa_price": vtsnapshot.data()!["price"],
+          "created_at": DateTime.now(),
+          "updated_at": DateTime.now(),
+          "paid": false,
+          "currency": AppLocalizations.currency,
+          "status": 0,
+          "changed": false
+        };
+
+        //bool success = false;
+        await va.set(data).then((value) async {
+          // success = true;
+          //  final vt = FirebaseFirestore.instance.collection("visatypes").doc(visaid);
+          await vt.update({"applications": FieldValue.increment(1)}).then(
+              (sappone) async {
+            final appscountry = FirebaseFirestore.instance
+                .collection("stats")
+                .doc("applications_per_country");
+            final visastatus =
+                FirebaseFirestore.instance.collection("stats").doc("visa");
+            await appscountry
+                .update({from.toLowerCase(): FieldValue.increment(1)}).then(
+                    (appscountry) async {
+              await visastatus.update({"total": FieldValue.increment(1)}).then(
+                  (visastatusres) {
+                return ref;
+              });
+              return ref;
+            });
+          });
+        });
+        return ref;
+      }
+    } catch (e) {
+      return "";
+    }
   }
 }

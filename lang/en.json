@@ -54,6 +54,7 @@
     "submit_hint": "Form Requirements Complete! Please Submit Your Application.",
     "previous": "Previous",
     "continue": "Continue",
+    "checkout": "Checkout",
 
     "first_name_empty": "First Name cannot be empty",
     "first_name_l_25": "First Name length must be < 25",

@@ -1,9 +1,10 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, must_be_immutable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
+import 'package:emira_all_in_one_mob/components/payment.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
 import 'package:emira_all_in_one_mob/main.dart';
-import 'package:emira_all_in_one_mob/services/api_service.dart';
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/services/utils.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VisaFormPage extends StatefulWidget {
   final bool title;
@@ -25,6 +27,7 @@ class VisaFormPage extends StatefulWidget {
 class VisaFormPageState extends State<VisaFormPage> {
   var currentStep = 0;
   String currentAppState = "none";
+  String refnum = "";
   TextEditingController controllerOTP = TextEditingController();
   bool otpPassed = false;
 
@@ -128,6 +131,7 @@ class VisaFormPageState extends State<VisaFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    Orientation _screenOrientation = MediaQuery.of(context).orientation;
     var mapData = <String, String>{};
     mapData["fname"] = DetailsState.controllerFirstName.text;
     mapData["lname"] = DetailsState.controllerLastName.text;
@@ -149,40 +153,7 @@ class VisaFormPageState extends State<VisaFormPage> {
     // DetailsState.controllerTravelDate.text = "2022-06-23";
     // DetailsState.controllerPurpose.text = "Visit";
 
-    List<Step> steps = [
-      Step(
-        title: Text(AppLocalizations.of(context)!.translate("details")),
-        content: Details(),
-        state: currentStep == 0 ? StepState.editing : StepState.indexed,
-        isActive: true,
-      ),
-      Step(
-        title: Text(AppLocalizations.of(context)!.translate("passport")),
-        content: Contact(),
-        state: currentStep == 1 ? StepState.editing : StepState.indexed,
-        isActive: true,
-      ),
-      Step(
-        title: Text(AppLocalizations.of(context)!.translate("review")),
-        content: Upload(mapData),
-        state: currentStep == 2 ? StepState.editing : StepState.indexed,
-        isActive: true,
-      ),
-      Step(
-        title: Text(AppLocalizations.of(context)!.translate("submit")),
-        content: SizedBox(
-            height: 100,
-            child: Center(
-              child: Text(
-                  AppLocalizations.of(context)!.translate("submit_hint"),
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            )),
-        state: StepState.complete,
-        isActive: true,
-      ),
-    ];
-
-    Future<void> _showMyDialog(ref) async {
+    Future<void> _showMyDialog() async {
       return showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
@@ -212,7 +183,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                           "${AppLocalizations.of(context)!.translate("reference_number")}: ",
                           textAlign: TextAlign.center),
                       Text(
-                        ref,
+                        refnum,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -247,6 +218,225 @@ class VisaFormPageState extends State<VisaFormPage> {
       );
     }
 
+    void paypalvisamastercard() {
+      final Uri url = Uri.parse("https://emirapay.web.app/pay/$refnum");
+
+      launchUrl(url).then((value) {
+        final docRef = FirebaseFirestore.instance
+            .collection("visaapplications")
+            .doc(refnum);
+        docRef.snapshots().listen((event) {
+          if (event.data()!["paid"]) {
+            _showMyDialog();
+          }
+        }, onError: (error) => {});
+      });
+    }
+
+    List<Step> steps = [
+      Step(
+        title: Text(AppLocalizations.of(context)!.translate("details")),
+        content: Details(),
+        state: currentStep == 0 ? StepState.editing : StepState.indexed,
+        isActive: true,
+      ),
+      Step(
+        title: Text(AppLocalizations.of(context)!.translate("passport")),
+        content: Contact(),
+        state: currentStep == 1 ? StepState.editing : StepState.indexed,
+        isActive: true,
+      ),
+      Step(
+        title: Text(AppLocalizations.of(context)!.translate("review")),
+        content: Upload(mapData),
+        state: currentStep == 2 ? StepState.editing : StepState.indexed,
+        isActive: true,
+      ),
+      Step(
+        title: Text(AppLocalizations.of(context)!.translate("checkout")),
+        content: Container(
+            child: Column(
+          children: [
+            // Text("Hello"),
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                      // height: 100,
+                      margin: EdgeInsets.all(8.0),
+                      width: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color:
+                              blueblack, //                   <--- border color
+                          width: 5.0,
+                        ),
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                      child: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: SizedBox(
+                            // height: 100,
+                            width: double.infinity,
+                            child: Image.asset(
+                              'assets/images/mvola.png',
+                              // height: 100,
+                            ),
+                          ))),
+                ),
+                InkWell(
+                  onTap: () {
+                    // print(p.link + "" + ref);
+                  },
+                  child: Container(
+                      // height: 100,
+                      margin: EdgeInsets.all(8.0),
+                      width: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color:
+                              blueblack, //                   <--- border color
+                          width: 5.0,
+                        ),
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                      child: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: SizedBox(
+                            // height: 100,
+                            width: double.infinity,
+                            child: Image.asset(
+                              'assets/images/orangemoney.png',
+                              // height: 100,
+                            ),
+                          ))),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    paypalvisamastercard();
+                  },
+                  child: Container(
+                      margin: EdgeInsets.all(8.0),
+                      width: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color:
+                              blueblack, //                   <--- border color
+                          width: 5.0,
+                        ),
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                      child: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: SizedBox(
+                            // height: 100,
+                            width: double.infinity,
+                            child: Image.asset(
+                              'assets/images/paypal.png',
+                              // height: 100,
+                            ),
+                          ))),
+                ),
+                InkWell(
+                  onTap: () {
+                    paypalvisamastercard();
+                    // print(p.link + "" + ref);
+                  },
+                  child: Container(
+                      margin: EdgeInsets.all(8.0),
+                      width: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color:
+                              blueblack, //                   <--- border color
+                          width: 5.0,
+                        ),
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                      child: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Image.asset(
+                              'assets/images/visacard.png',
+                              // height: 100,
+                            ),
+                          ))),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    paypalvisamastercard();
+                    // print(p.link + "" + ref);
+                  },
+                  child: Container(
+                      margin: EdgeInsets.all(8.0),
+                      width: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color:
+                              blueblack, //                   <--- border color
+                          width: 5.0,
+                        ),
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                      child: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Image.asset(
+                              'assets/images/mastercard.png',
+                              // height: 100,
+                            ),
+                          ))),
+                ),
+              ],
+            ),
+          ],
+        )),
+        state: StepState.complete,
+        isActive: true,
+      ),
+    ];
+
     return Scaffold(
       appBar: widget.title
           ? cleanAppBar(
@@ -269,7 +459,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                     padding: EdgeInsets.only(top: 10),
                     child: Row(
                       children: <Widget>[
-                        currentStep > 0
+                        currentStep > 0 && currentStep < 3
                             ? TextButton(
                                 onPressed: () {},
                                 child: TextButton(
@@ -291,190 +481,332 @@ class VisaFormPageState extends State<VisaFormPage> {
                                 ),
                               )
                             : SizedBox(height: 0),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      side: BorderSide(color: grey))),
-                              backgroundColor: MaterialStateProperty.all(grey)),
-                          child: Padding(
-                              padding: EdgeInsets.all(currentStep == 3 ? 5 : 0),
-                              child: Text(
-                                currentStep == 3
-                                    ? AppLocalizations.of(context)!
-                                        .translate("submit")
-                                    : AppLocalizations.of(context)!
-                                        .translate("continue"),
-                                style: TextStyle(
-                                    fontSize: currentStep == 3 ? 25 : 20),
-                              )),
-                          onPressed: () {
-                            setState(() {
-                              if (currentStep < steps.length - 1) {
-                                if (currentStep == 0 &&
-                                    DetailsState.formKey.currentState!
-                                        .validate()) {
-                                  if (otpPassed) {
-                                    currentStep = currentStep + 1;
-                                  } else {
-                                    try {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text(
-                                            AppLocalizations.of(context)!
-                                                .translate("sending_text")),
-                                        duration: const Duration(seconds: 3),
-                                      ));
-                                      setState(() {
-                                        currentAppState = "loading";
-                                      });
-                                      String phone =
-                                          DetailsState.controllerPhone.text;
-                                      if (phone.substring(0, 2) == "00") {
-                                        phone =
-                                            "+${DetailsState.controllerPhone.text.substring(2)}";
-                                      }
-                                      FBService.auth.verifyPhoneNumber(
-                                        timeout: Duration(seconds: 60),
-                                        phoneNumber: phone,
-                                        verificationCompleted:
-                                            (PhoneAuthCredential
-                                                credential) async {
-                                          //print("fbb: verification completed");
-                                          setState(() {
-                                            currentAppState = "none";
-                                          });
-                                          await FBService.auth
-                                              .signInWithCredential(credential)
-                                              .then((value) {
+                        currentStep < 3
+                            ? ElevatedButton(
+                                style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                            side: BorderSide(color: grey))),
+                                    backgroundColor:
+                                        MaterialStateProperty.all(grey)),
+                                child: Padding(
+                                    padding: EdgeInsets.all(
+                                        currentStep == 3 ? 5 : 0),
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .translate("continue"),
+                                      style: TextStyle(
+                                          fontSize: currentStep == 3 ? 25 : 20),
+                                    )),
+                                onPressed: () {
+                                  setState(() {
+                                    if (currentStep < steps.length - 1) {
+                                      if (currentStep == 0 &&
+                                          DetailsState.formKey.currentState!
+                                              .validate()) {
+                                        if (otpPassed) {
+                                          currentStep = currentStep + 1;
+                                        } else {
+                                          try {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(AppLocalizations.of(
+                                                      context)!
+                                                  .translate("sending_text")),
+                                              duration:
+                                                  const Duration(seconds: 3),
+                                            ));
+                                            setState(() {
+                                              currentAppState = "loading";
+                                            });
+                                            String phone = DetailsState
+                                                .controllerPhone.text;
+                                            if (phone.substring(0, 2) == "00") {
+                                              phone =
+                                                  "+${DetailsState.controllerPhone.text.substring(2)}";
+                                            }
+                                            FBService.auth.verifyPhoneNumber(
+                                              timeout: Duration(seconds: 60),
+                                              phoneNumber: phone,
+                                              verificationCompleted:
+                                                  (PhoneAuthCredential
+                                                      credential) async {
+                                                //print("fbb: verification completed");
+                                                setState(() {
+                                                  currentAppState = "none";
+                                                });
+                                                await FBService.auth
+                                                    .signInWithCredential(
+                                                        credential)
+                                                    .then((value) {
+                                                  setState(() {
+                                                    currentAppState = "none";
+                                                  });
+                                                  // print(
+                                                  //     "fbb: You are logged in successfully");
+                                                });
+                                              },
+                                              verificationFailed:
+                                                  (FirebaseAuthException e) {
+                                                setState(() {
+                                                  currentAppState = "none";
+                                                });
+                                                errorSnack(context,
+                                                    "OTP Failed, Please Try Again");
+                                                //print("fbb: " + e.message.toString());
+                                              },
+                                              codeSent: (String verificationId,
+                                                  int? resendToken) {
+                                                // print("fbb: coderesent" +
+                                                //     verificationId);
+                                                FBService.verificationID =
+                                                    verificationId;
+                                                setState(() {
+                                                  currentAppState = "none";
+                                                });
+                                                showOTPDialog();
+                                                //print("fbb: otp popup");
+                                                // status = true;
+                                              },
+                                              codeAutoRetrievalTimeout:
+                                                  (String verificationId) {
+                                                setState(() {
+                                                  currentAppState = "none";
+                                                });
+                                                errorSnack(
+                                                    context, "Request Timeout");
+                                                // print(
+                                                //     "fbb: timeout" + verificationId);
+                                                // status = false;
+                                              },
+                                            );
+                                          } catch (e) {
                                             setState(() {
                                               currentAppState = "none";
                                             });
-                                            // print(
-                                            //     "fbb: You are logged in successfully");
-                                          });
-                                        },
-                                        verificationFailed:
-                                            (FirebaseAuthException e) {
+                                            errorSnack(context,
+                                                "Phone Verification Failed, Please Try Again");
+                                            // print("fbb: e: " + e.toString());
+                                            //return false;
+                                          }
+                                          // FBService.loginWithPhone(
+                                          //         DetailsState.controllerPhone.text)
+                                          //     .then((value) {
+                                          //   print("fbb: value: " + value.toString());
+                                          //   if (value) {
+                                          //     showOTPDialog();
+                                          //   }
+                                          //});
+                                        }
+                                      } else if (currentStep == 1 &&
+                                          ContactState.passportUploaded !=
+                                              "none") {
+                                        currentStep = currentStep + 1;
+                                      } else if (currentStep == 2) {
+                                        setState(() {
+                                          currentAppState = "loading";
+                                        });
+                                        try {
+                                          DateTime.parse(DetailsState
+                                              .controllerTravelDate.text);
+                                        } catch (e) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            backgroundColor: red,
+                                            content: Text(AppLocalizations.of(
+                                                    context)!
+                                                .translate(
+                                                    "couldnt_submit_try_again")),
+                                            duration: Duration(seconds: 4),
+                                          ));
+                                        }
+                                        FBService.saveApplication(
+                                                fname: DetailsState
+                                                    .controllerFirstName.text,
+                                                lname: DetailsState
+                                                    .controllerLastName.text,
+                                                phone: DetailsState
+                                                    .controllerPhone.text,
+                                                email: DetailsState
+                                                    .controllerEmail.text,
+                                                passno: DetailsState
+                                                    .controllerPassportNumber
+                                                    .text,
+                                                profes: DetailsState
+                                                    .controllerProfession.text,
+                                                tdate: DetailsState
+                                                    .controllerTravelDate.text,
+                                                from: DetailsState
+                                                    .controllerCitizenship.text,
+                                                purpo: DetailsState
+                                                    .controllerPurpose.text,
+                                                passportscan: ContactState
+                                                    .passportUploaded,
+                                                visaid: widget.visa["id"])
+                                            .then((value) {
+                                          if (value != "") {
+                                            currentStep = currentStep + 1;
+                                            refnum = value;
+                                            setState(() {
+                                              currentAppState = "none";
+                                            });
+                                          } else {
+                                            setState(() {
+                                              currentAppState = "none";
+                                            });
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              backgroundColor: red,
+                                              content: Text(AppLocalizations.of(
+                                                      context)!
+                                                  .translate(
+                                                      "couldnt_submit_try_again")),
+                                              duration: Duration(seconds: 4),
+                                            ));
+                                          }
+                                        }).catchError((e) {
                                           setState(() {
                                             currentAppState = "none";
                                           });
-                                          errorSnack(context,
-                                              "OTP Failed, Please Try Again");
-                                          //print("fbb: " + e.message.toString());
-                                        },
-                                        codeSent: (String verificationId,
-                                            int? resendToken) {
-                                          // print("fbb: coderesent" +
-                                          //     verificationId);
-                                          FBService.verificationID =
-                                              verificationId;
-                                          setState(() {
-                                            currentAppState = "none";
-                                          });
-                                          showOTPDialog();
-                                          //print("fbb: otp popup");
-                                          // status = true;
-                                        },
-                                        codeAutoRetrievalTimeout:
-                                            (String verificationId) {
-                                          setState(() {
-                                            currentAppState = "none";
-                                          });
-                                          errorSnack(
-                                              context, "Request Timeout");
-                                          // print(
-                                          //     "fbb: timeout" + verificationId);
-                                          // status = false;
-                                        },
-                                      );
-                                    } catch (e) {
-                                      setState(() {
-                                        currentAppState = "none";
-                                      });
-                                      errorSnack(context,
-                                          "Phone Verification Failed, Please Try Again");
-                                      // print("fbb: e: " + e.toString());
-                                      //return false;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            backgroundColor: red,
+                                            content: Text(AppLocalizations.of(
+                                                    context)!
+                                                .translate(
+                                                    "couldnt_submit_try_again")),
+                                            duration: Duration(seconds: 4),
+                                          ));
+                                          // print(e);
+                                        });
+                                      }
+                                    } else {
+                                      // if (!await launchUrl(_url)) throw 'Could not launch $_url';
+
+                                      // setState(() {
+                                      //   currentAppState = "loading";
+                                      // });
+                                      // try {
+                                      //   DateTime.parse(
+                                      //       DetailsState.controllerTravelDate.text);
+                                      // } catch (e) {
+                                      //   ScaffoldMessenger.of(context)
+                                      //       .showSnackBar(SnackBar(
+                                      //     backgroundColor: red,
+                                      //     content: Text(AppLocalizations.of(context)!
+                                      //         .translate("couldnt_submit_try_again")),
+                                      //     duration: Duration(seconds: 4),
+                                      //   ));
+                                      // }
+                                      // FBService.saveApplication(
+                                      //         fname: DetailsState
+                                      //             .controllerFirstName.text,
+                                      //         lname: DetailsState
+                                      //             .controllerLastName.text,
+                                      //         phone:
+                                      //             DetailsState.controllerPhone.text,
+                                      //         email:
+                                      //             DetailsState.controllerEmail.text,
+                                      //         passno: DetailsState
+                                      //             .controllerPassportNumber.text,
+                                      //         profes: DetailsState
+                                      //             .controllerProfession.text,
+                                      //         tdate: DetailsState
+                                      //             .controllerTravelDate.text,
+                                      //         from: DetailsState
+                                      //             .controllerCitizenship.text,
+                                      //         purpo:
+                                      //             DetailsState.controllerPurpose.text,
+                                      //         passportscan:
+                                      //             ContactState.passportUploaded,
+                                      //         visaid: widget.visa["id"])
+                                      //     .then((value) {
+                                      //   if (value != "") {
+                                      //     setState(() {
+                                      //       refnum:
+                                      //       value;
+                                      //     });
+                                      //     _showMyDialog();
+                                      //     setState(() {
+                                      //       currentAppState = "none";
+                                      //     });
+                                      //   } else {
+                                      //     setState(() {
+                                      //       currentAppState = "none";
+                                      //     });
+                                      //     ScaffoldMessenger.of(context)
+                                      //         .showSnackBar(SnackBar(
+                                      //       backgroundColor: red,
+                                      //       content: Text(
+                                      //           AppLocalizations.of(context)!
+                                      //               .translate(
+                                      //                   "couldnt_submit_try_again")),
+                                      //       duration: Duration(seconds: 4),
+                                      //     ));
+                                      //   }
+                                      // }).catchError((e) {
+                                      //   setState(() {
+                                      //     currentAppState = "none";
+                                      //   });
+                                      //   ScaffoldMessenger.of(context)
+                                      //       .showSnackBar(SnackBar(
+                                      //     backgroundColor: red,
+                                      //     content: Text(AppLocalizations.of(context)!
+                                      //         .translate("couldnt_submit_try_again")),
+                                      //     duration: Duration(seconds: 4),
+                                      //   ));
+                                      //   // print(e);
+                                      // });
+
+                                      // APIService.applyVisa(
+                                      //         fname: DetailsState
+                                      //             .controllerFirstName.text,
+                                      //         lname: DetailsState
+                                      //             .controllerLastName.text,
+                                      //         phone:
+                                      //             DetailsState.controllerPhone.text,
+                                      //         email:
+                                      //             DetailsState.controllerEmail.text,
+                                      //         passno: DetailsState
+                                      //             .controllerPassportNumber.text,
+                                      //         profes: DetailsState
+                                      //             .controllerProfession.text,
+                                      //         tdate: DateTime.parse(DetailsState
+                                      //             .controllerTravelDate.text),
+                                      //         from: DetailsState
+                                      //             .controllerCitizenship.text,
+                                      //         purpo:
+                                      //             DetailsState.controllerPurpose.text,
+                                      //         passportscan:
+                                      //             ContactState.passportUploaded,
+                                      //         selectedvisa: widget.visa["id"])
+                                      //     .then((value) {
+                                      //   //print(value);
+                                      //   _showMyDialog(value);
+                                      //   setState(() {
+                                      //     currentAppState = "none";
+                                      //   });
+                                      // }).catchError((e) {
+                                      //   setState(() {
+                                      //     currentAppState = "none";
+                                      //   });
+                                      //   ScaffoldMessenger.of(context)
+                                      //       .showSnackBar(SnackBar(
+                                      //     backgroundColor: red,
+                                      //     content: Text(AppLocalizations.of(context)!
+                                      //         .translate("couldnt_submit_try_again")),
+                                      //     duration: Duration(seconds: 4),
+                                      //   ));
+                                      //   // print(e);
+                                      // });
                                     }
-                                    // FBService.loginWithPhone(
-                                    //         DetailsState.controllerPhone.text)
-                                    //     .then((value) {
-                                    //   print("fbb: value: " + value.toString());
-                                    //   if (value) {
-                                    //     showOTPDialog();
-                                    //   }
-                                    //});
-                                  }
-                                } else if (currentStep == 1 &&
-                                    ContactState.passportUploaded != "none") {
-                                  currentStep = currentStep + 1;
-                                } else if (currentStep == 2) {
-                                  currentStep = currentStep + 1;
-                                }
-                              } else {
-                                setState(() {
-                                  currentAppState = "loading";
-                                });
-                                try {
-                                  DateTime.parse(
-                                      DetailsState.controllerTravelDate.text);
-                                } catch (e) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    backgroundColor: red,
-                                    content: Text(AppLocalizations.of(context)!
-                                        .translate("couldnt_submit_try_again")),
-                                    duration: Duration(seconds: 4),
-                                  ));
-                                }
-                                APIService.applyVisa(
-                                        fname: DetailsState
-                                            .controllerFirstName.text,
-                                        lname: DetailsState
-                                            .controllerLastName.text,
-                                        phone:
-                                            DetailsState.controllerPhone.text,
-                                        email:
-                                            DetailsState.controllerEmail.text,
-                                        passno: DetailsState
-                                            .controllerPassportNumber.text,
-                                        profes: DetailsState
-                                            .controllerProfession.text,
-                                        tdate: DateTime.parse(DetailsState
-                                            .controllerTravelDate.text),
-                                        from: DetailsState
-                                            .controllerCitizenship.text,
-                                        purpo:
-                                            DetailsState.controllerPurpose.text,
-                                        passportscan:
-                                            ContactState.passportUploaded,
-                                        selectedvisa: widget.visa["id"])
-                                    .then((value) {
-                                  //print(value);
-                                  _showMyDialog(value);
-                                  setState(() {
-                                    currentAppState = "none";
                                   });
-                                }).catchError((e) {
-                                  setState(() {
-                                    currentAppState = "none";
-                                  });
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    backgroundColor: red,
-                                    content: Text(AppLocalizations.of(context)!
-                                        .translate("couldnt_submit_try_again")),
-                                    duration: Duration(seconds: 4),
-                                  ));
-                                  // print(e);
-                                });
-                              }
-                            });
-                          },
-                        )
+                                },
+                              )
+                            : SizedBox(height: 0),
                       ],
                     ),
                   );
@@ -482,7 +814,8 @@ class VisaFormPageState extends State<VisaFormPage> {
                 onStepTapped: (step) {
                   // print(step);
                   // print(currentStep);
-                  if (step < currentStep) {
+
+                  if (currentStep < 3 && step < currentStep && refnum == "") {
                     setState(() {
                       currentStep = step;
                     });
@@ -1188,5 +1521,32 @@ class UploadState extends State<Upload> {
                   ),
                 ],
               ));
+  }
+}
+
+class Checkout extends StatelessWidget {
+  final String ref;
+  Checkout({required this.ref});
+  @override
+  Widget build(BuildContext context) {
+    Orientation _screenOrientation = MediaQuery.of(context).orientation;
+    return Container(
+        child: GridView.builder(
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(12),
+      physics: const BouncingScrollPhysics(),
+      itemCount: PaymentType.paymentTypes.length,
+      itemBuilder: (ctx, index) {
+        return PaymentComponent(
+          p: PaymentType.paymentTypes[index],
+          ref: ref,
+        );
+      },
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: _screenOrientation == Orientation.portrait ? 2 : 3,
+        mainAxisSpacing: 200,
+        crossAxisSpacing: 200,
+      ),
+    ));
   }
 }
