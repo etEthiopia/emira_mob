@@ -426,4 +426,85 @@ class FBService {
       return "";
     }
   }
+
+  static Future<String> saveBooking(
+      {required String fname,
+      required String lname,
+      required String phone,
+      required String email,
+      required String from,
+      required String hotelid}) async {
+    try {
+      //visaStatus = "loading";
+      String ref = "EVH";
+      var rng = Random();
+      for (var i = 0; i < 10; i++) {
+        ref += rng.nextInt(9).toString();
+      }
+
+      final ha =
+          FirebaseFirestore.instance.collection("hotelapplications").doc(ref);
+      final ht =
+          FirebaseFirestore.instance.collection("hoteltypes").doc(hotelid);
+      final hasnapshot = await ha.get();
+
+      if (hasnapshot.exists) {
+        return "";
+      } else {
+        final htsnapshot = await ht.get();
+
+        Map<String, dynamic> data = <String, dynamic>{
+          "hfname": fname,
+          "hlname": lname,
+          "hphone": phone,
+          "hemail": email,
+          "from": from.toLowerCase(),
+          "client": Platform.isAndroid ? "android" : "ios",
+          "hotel_id": hotelid,
+          "hotel_price": htsnapshot.data()!["price"],
+          "hotel_title": htsnapshot.data()!["title"],
+          "created_at": DateTime.now(),
+          "updated_at": DateTime.now(),
+          "paid": false,
+          "status": 0,
+          "changed": false
+        };
+
+        //bool success = false;
+        await ha.set(data).then((value) async {
+          // success = true;
+          //  final vt = FirebaseFirestore.instance.collection("visatypes").doc(visaid);
+          await ht.update({"applications": FieldValue.increment(1)}).then(
+              (sappone) async {
+            final appscountry = FirebaseFirestore.instance
+                .collection("stats")
+                .doc("bookings_per_country");
+            final hotelstatus =
+                FirebaseFirestore.instance.collection("stats").doc("hotel");
+            await appscountry
+                .update({from.toLowerCase(): FieldValue.increment(1)}).then(
+                    (appscountry) async {
+              await hotelstatus.update({"total": FieldValue.increment(1)}).then(
+                  (visastatusres) {
+                APIService.mailBooking(
+                    ref: ref,
+                    fname: fname,
+                    lname: lname,
+                    phone: phone,
+                    email: email,
+                    from: from,
+                    hotelid: hotelid,
+                    hoteltitle: htsnapshot.data()!["title"]);
+                return ref;
+              });
+              return ref;
+            });
+          });
+        });
+        return ref;
+      }
+    } catch (e) {
+      return "";
+    }
+  }
 }

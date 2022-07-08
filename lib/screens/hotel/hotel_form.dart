@@ -235,17 +235,29 @@ class HotelFormPageState extends State<HotelFormPage> {
                 setState(() {
                   currentState = "loading";
                 });
-                APIService.applyHotel(
+                FBService.saveBooking(
                         fname: controllerFirstName.text,
                         lname: controllerLastName.text,
                         phone: controllerPhone.text,
                         email: controllerEmail.text,
                         from: controllerCitizenship.text,
-                        selectedhotel: widget.hotel["id"])
+                        hotelid: widget.hotel["id"])
                     .then((value) {
-                  setState(() {
-                    currentState = "done";
-                  });
+                  if (value != "") {
+                    setState(() {
+                      currentState = "done";
+                    });
+                  } else {
+                    setState(() {
+                      currentState = "none";
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(AppLocalizations.of(context)!
+                          .translate("couldnt_submit_try_again")),
+                      duration: const Duration(seconds: 5),
+                    ));
+                  }
+
                   //print(value);
                   // _showMyDialog(value);
                 }).catchError((e) {
