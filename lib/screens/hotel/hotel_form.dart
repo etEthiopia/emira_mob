@@ -2,7 +2,6 @@
 
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
-import 'package:emira_all_in_one_mob/services/api_service.dart';
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emira_all_in_one_mob/components/app_bars.dart';
-import 'package:emira_all_in_one_mob/components/payment.dart';
 import 'package:emira_all_in_one_mob/components/progress.dart';
 import 'package:emira_all_in_one_mob/main.dart';
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
@@ -131,7 +130,6 @@ class VisaFormPageState extends State<VisaFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    Orientation _screenOrientation = MediaQuery.of(context).orientation;
     var mapData = <String, String>{};
     mapData["fname"] = DetailsState.controllerFirstName.text;
     mapData["lname"] = DetailsState.controllerLastName.text;
@@ -261,7 +259,11 @@ class VisaFormPageState extends State<VisaFormPage> {
             Row(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Not Available'),
+                    ));
+                  },
                   child: Container(
                       // height: 100,
                       margin: EdgeInsets.all(8.0),
@@ -293,6 +295,9 @@ class VisaFormPageState extends State<VisaFormPage> {
                 ),
                 InkWell(
                   onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Not Available'),
+                    ));
                     // print(p.link + "" + ref);
                   },
                   child: Container(
@@ -1521,32 +1526,5 @@ class UploadState extends State<Upload> {
                   ),
                 ],
               ));
-  }
-}
-
-class Checkout extends StatelessWidget {
-  final String ref;
-  Checkout({required this.ref});
-  @override
-  Widget build(BuildContext context) {
-    Orientation _screenOrientation = MediaQuery.of(context).orientation;
-    return Container(
-        child: GridView.builder(
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(12),
-      physics: const BouncingScrollPhysics(),
-      itemCount: PaymentType.paymentTypes.length,
-      itemBuilder: (ctx, index) {
-        return PaymentComponent(
-          p: PaymentType.paymentTypes[index],
-          ref: ref,
-        );
-      },
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: _screenOrientation == Orientation.portrait ? 2 : 3,
-        mainAxisSpacing: 200,
-        crossAxisSpacing: 200,
-      ),
-    ));
   }
 }
