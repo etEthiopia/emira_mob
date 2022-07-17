@@ -1,4 +1,4 @@
-package com.example.emira_all_in_one_mob
+package com.emiravisa.app
 
 import io.flutter.embedding.android.FlutterActivity
 
