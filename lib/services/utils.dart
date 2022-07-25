@@ -1,7 +1,8 @@
 import 'package:emira_all_in_one_mob/services/fb_service.dart';
 import 'package:emira_all_in_one_mob/theme/app_theme.dart';
-import 'package:file_picker/file_picker.dart';
+//import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 String formatAmount(price, currency) {
   String oprice = price.toString();
@@ -24,10 +25,11 @@ String formatAmount(price, currency) {
   return priceInText.trim();
 }
 
-Future<FilePickerResult?> selectFile(BuildContext context) async {
+Future<XFile?> selectFile(BuildContext context) async {
   final pm = await FBService.askPermission(context);
   if (pm) {
-    return FilePicker.platform.pickFiles();
+    return ImagePicker().pickImage(source: ImageSource.gallery);
+    //FilePicker.platform.pickFiles();
   } else {
     return null;
   }

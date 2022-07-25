@@ -10,6 +10,7 @@ import 'package:emira_all_in_one_mob/theme/app_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -180,10 +181,31 @@ class VisaFormPageState extends State<VisaFormPage> {
                       Text(
                           "${AppLocalizations.of(context)!.translate("reference_number")}: ",
                           textAlign: TextAlign.center),
-                      Text(
-                        refnum,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            refnum,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          InkWell(
+                            child: Icon(
+                              Icons.copy,
+                              size: 30,
+                              color: blueblack,
+                            ),
+                            onTap: () {
+                              Clipboard.setData(ClipboardData(text: refnum))
+                                  .then((cd) => {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content: Text('Copied'),
+                                        ))
+                                      });
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -283,7 +305,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                         ),
                       ),
                       child: Padding(
-                          padding: const EdgeInsets.all(0.0),
+                          padding: const EdgeInsets.all(3.0),
                           child: SizedBox(
                             // height: 100,
                             width: double.infinity,
@@ -319,7 +341,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                         ),
                       ),
                       child: Padding(
-                          padding: const EdgeInsets.all(0.0),
+                          padding: const EdgeInsets.all(3.0),
                           child: SizedBox(
                             // height: 100,
                             width: double.infinity,
@@ -355,7 +377,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                         ),
                       ),
                       child: Padding(
-                          padding: const EdgeInsets.all(0.0),
+                          padding: const EdgeInsets.all(3.0),
                           child: SizedBox(
                             // height: 100,
                             width: double.infinity,
@@ -388,7 +410,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                         ),
                       ),
                       child: Padding(
-                          padding: const EdgeInsets.all(0.0),
+                          padding: const EdgeInsets.all(3.0),
                           child: SizedBox(
                             width: double.infinity,
                             child: Image.asset(
@@ -424,7 +446,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                         ),
                       ),
                       child: Padding(
-                          padding: const EdgeInsets.all(0.0),
+                          padding: const EdgeInsets.all(3.0),
                           child: SizedBox(
                             width: double.infinity,
                             child: Image.asset(
@@ -507,6 +529,7 @@ class VisaFormPageState extends State<VisaFormPage> {
                                           fontSize: currentStep == 3 ? 25 : 20),
                                     )),
                                 onPressed: () {
+                                  _showMyDialog();
                                   setState(() {
                                     if (currentStep < steps.length - 1) {
                                       if (currentStep == 0 &&
@@ -1310,9 +1333,54 @@ class ContactState extends State<Contact> {
                               child: TextButton(
                                   onPressed: () {
                                     passportUploaded = "none";
+                                    // selectFile(context).then((value) {
+                                    //   //print("value");
+                                    //   //print(value);
+                                    //   if (value != null) {
+                                    //     setState(() {
+                                    //       fileuploaded = "uploading";
+                                    //     });
+                                    //     FBService.uploadFile(value, context)
+                                    //         .then((v) {
+                                    //       // print("v");
+                                    //       // print(v);
+                                    //       if (v != "") {
+                                    //         passportUploaded = v;
+                                    //         //print(v);
+                                    //         setState(() {
+                                    //           fileuploaded = "done";
+                                    //         });
+                                    //       } else {
+                                    //         passportUploaded = "none";
+                                    //         setState(() {
+                                    //           fileuploaded = "error";
+                                    //         });
+                                    //       }
+                                    //       // print("upload");
+                                    //       // print(v);
+                                    //     }).catchError((e) {
+                                    //       passportUploaded = "none";
+                                    //       //print(e);
+                                    //       setState(() {
+                                    //         fileuploaded = "error";
+                                    //       });
+                                    //     });
+                                    //   } else {
+                                    //     passportUploaded = "none";
+                                    //     setState(() {
+                                    //       fileuploaded = "error";
+                                    //     });
+                                    //   }
+                                    // }).catchError((e) {
+                                    //   passportUploaded = "none";
+                                    //   //print(e);
+                                    //   setState(() {
+                                    //     fileuploaded = "error";
+                                    //   });
+                                    // });
+
                                     selectFile(context).then((value) {
-                                      //print("value");
-                                      //print(value);
+                                      // print(value);
                                       if (value != null) {
                                         setState(() {
                                           fileuploaded = "uploading";

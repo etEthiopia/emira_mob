@@ -5,6 +5,7 @@ import 'package:emira_all_in_one_mob/services/api_service.dart';
 import 'package:emira_all_in_one_mob/services/app_localizations.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -222,14 +223,13 @@ class FBService {
     }
   }
 
-  static Future uploadFile(
-      FilePickerResult passport, BuildContext context) async {
+  static Future uploadFile(XFile passport, BuildContext context) async {
     try {
       final pm = await FBService.askPermission(context);
       if (pm) {
-        final file = File(passport.paths[0]!);
+        final file = File(passport.path);
         final destination =
-            "passports/${DateTime.now().toString().replaceAll('-', '_').substring(0, 10)}_${basename(passport.paths[0]!)}";
+            "passports/${DateTime.now().toString().replaceAll('-', '_').substring(0, 10)}_${basename(passport.path)}";
 
         final length = await file.length();
         if (length > 2097152) {
@@ -240,8 +240,11 @@ class FBService {
           ));
           return "";
         } else {
-          if (["JPEG", "JPG", "PNG"].contains(
-              basename(passport.paths[0]!).split(".").last.toUpperCase())) {
+          if ([
+            "JPEG",
+            "JPG",
+            "PNG"
+          ].contains(basename(passport.path).split(".").last.toUpperCase())) {
             final ref = FirebaseStorage.instance.ref(destination).child('/');
             await ref.putFile(file);
             final url = await ref.getDownloadURL();

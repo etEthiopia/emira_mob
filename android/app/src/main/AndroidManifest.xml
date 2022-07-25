@@ -26,6 +26,7 @@
 
    <application
         android:label="Emira E-Visa"
+        android:requestLegacyExternalStorage="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

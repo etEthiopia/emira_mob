@@ -65,7 +65,10 @@ dependencies:
   path_provider: ^2.0.11
 
   # File Picker to Upload
-  file_picker: ^4.6.1
+  #file_picker: ^4.6.1
+
+  # Image to Upload
+  image_picker: ^0.8.5+3
 
   # # Path to Download File
   # downloads_path_provider_28: ^0.1.2

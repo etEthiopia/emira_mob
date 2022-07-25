@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1076854637047:android:e58fd341aaabf937f6eef2",
+        "mobilesdk_app_id": "1:1076854637047:android:4d9b9de56faf721bf6eef2",
         "android_client_info": {
           "package_name": "com.emiravisa.app"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1076854637047-p4vuup42ogbkvlabfmgs18m1es3kobqo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emiravisa.app",
+            "certificate_hash": "eac16b8c4f5bc3fa3d8c959e8ee617dbe2dcc226"
+          }
+        },
         {
           "client_id": "1076854637047-m3oifgsena4s5t476ijav5vl90g023cl.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +37,57 @@
             {
               "client_id": "1076854637047-m3oifgsena4s5t476ijav5vl90g023cl.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1076854637047-4r72juafa02b8ftr645kfflk2lan5qn7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.emiraAllInOneMob"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076854637047:android:e58fd341aaabf937f6eef2",
+        "android_client_info": {
+          "package_name": "com.example.emira_all_in_one_mob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076854637047-d2tjiq3jm523af39qkm30dheqihtks7l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emira_all_in_one_mob",
+            "certificate_hash": "eac16b8c4f5bc3fa3d8c959e8ee617dbe2dcc226"
+          }
+        },
+        {
+          "client_id": "1076854637047-m3oifgsena4s5t476ijav5vl90g023cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZtwXbWMryxIQ19pk8M0Vd-dGH1kzSyxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076854637047-m3oifgsena4s5t476ijav5vl90g023cl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1076854637047-4r72juafa02b8ftr645kfflk2lan5qn7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.emiraAllInOneMob"
+              }
             }
           ]
         }
