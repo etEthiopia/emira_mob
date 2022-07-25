@@ -529,7 +529,6 @@ class VisaFormPageState extends State<VisaFormPage> {
                                           fontSize: currentStep == 3 ? 25 : 20),
                                     )),
                                 onPressed: () {
-                                  _showMyDialog();
                                   setState(() {
                                     if (currentStep < steps.length - 1) {
                                       if (currentStep == 0 &&
